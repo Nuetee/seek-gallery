@@ -1,0 +1,13 @@
+.mainHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: scale 0.2s;
+    height: calc(var(--vw, 1vw) * 15);
+    
+    .left {
+        height: calc(var(--vw, 1vw) * 8);
+        width: auto;
+    }
+}

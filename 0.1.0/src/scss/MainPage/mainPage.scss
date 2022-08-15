@@ -1,0 +1,8 @@
+#mainPage {
+    ::v-deep(.mainHeader) {
+        .left > img {
+            height: 100%;
+            width: auto;
+        }
+    }
+}
