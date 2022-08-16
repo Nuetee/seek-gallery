@@ -46,9 +46,17 @@ body {
   // ios safari scroll bouncing 막기 => address bar shrink 안됨.
   // position: fixed;
   // overflow: hidden;
+  // ios safari scroll bouncing 막기
+  
   // 탭 할 때 하이라이트 컬러 없애기
   -webkit-tap-highlight-color: rgba($color: #000000, $alpha: 0.0);
-  // ios safari scroll bouncing 막기
+}
+body {
+  width: 100vw;
+  min-height: 0 !important;
+  overflow: scroll;
+  display: flex;
+  justify-content: center;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -58,10 +66,7 @@ body {
   color: #2c3e50;
 
   > div[id$="Page"] {
-    min-height: calc(var(--vh, 1vh) * 100);
     width: calc(var(--vw, 1vw) * 100);
-    // overflow-y: scroll;
-    // -webkit-overflow-scrolling: touch;
     padding-left: var(--padding, 5vw);
     padding-right: var(--padding, 5vw);
     box-shadow: 0 0 calc(var(--vw, 1vw) * 3) rgba(128, 128, 128, 0.1);
