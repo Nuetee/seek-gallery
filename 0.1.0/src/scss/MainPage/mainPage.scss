@@ -6,47 +6,32 @@
         }
     }
 
+    // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
     .body {
-        position: relative;
-        top: calc(var(--vw, 1vw) * 15);
         width: 100%;
+        padding-top: calc(var(--var, 1vw) * 15);
         overflow-x: visible;
 
-        .poster {
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            left: calc(-1 * var(--padding, 5vw));
-            width: calc(100% + 2 * var(--padding, 5vw));
-            height: calc(var(--vh, 1vh) * 100 - var(--vw, 1vw) * 15);
-            overflow-y: scroll;
+        .top {
+            overflow-x: visible;
+            height: auto;
+            .poster {
+                position: relative;
+                left: calc(-1 * var(--padding, 5vw));
+                width: calc(100% + 2 * var(--padding, 5vw));
 
-            img {
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .exhibitionTitle {
                 width: 100%;
-                height: auto;
-                padding-bottom: calc(var(--vw, 1vw) * 100);
             }
         }
-
-        .poster::-webkit-scrollbar {
-            display: none;
-            /* Chrome, Safari, Opera*/
-            height: 0;
-            background: transparent;
-            /* Optional: just make scrollbar invisible */
-            -webkit-appearance: none;
-        }
-
-        .ghost {
-            width: 100%;
-            height: calc(var(--vh, 1vh) * 100 - var(--vw, 1vw) * 30);
-        }
-
-        .exhibitionTitle {
-            height: 20vw;
-        }
-        .exhibitionArtworks {
-            height: 40vw;
+        .bottom {
+            height: 100vh;
         }
     }
 }
