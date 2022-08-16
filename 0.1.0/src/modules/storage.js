@@ -252,24 +252,38 @@ async function sendStorageDeleteOriginal (target, target_id) {
 }
 
 // Get signed urls for artwork's images
-// - target_id : artwork's id
+// - target_id : artwork's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getArtworkImages (target_id) {
     return await sendStorageRequest('image', 'artwork', 'all', target_id)
 }
 
 // Get signed urls for artwork's images
-// - target_id : artwork's id
+// - target_id : artwork's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getArtworkThumbnailImage (target_id) {
     return await sendStorageRequest('image', 'artwork', 'thumbnail', target_id)
 }
 
 // Get signed url for artwork's represenative image
-// - target_id : artwork's id
+// - target_id : artwork's page_id
 // return signed url of the image, or empty string if the respond is not given successfully
 export async function getArtworkRepresentImage (target_id) {
     return await sendStorageRequest('image', 'artwork', 'represent', target_id)
+}
+
+// Get signed urls for exhibition's images
+// - target_id : exhibition's page_id
+// return an array of signed urls, or [] if the respond is not given successfully
+export async function getExhibitionImages (target_id) {
+    return await sendStorageRequest('image', 'exhibition', 'all', target_id)
+}
+
+// Get signed urls for exhibition's images
+// - target_id : exhibition's page_id
+// return an array of signed urls, or [] if the respond is not given successfully
+export async function getExhibitionThumbnailImage (target_id) {
+    return await sendStorageRequest('image', 'exhibition', 'thumbnail', target_id)
 }
 
 // Upload artwork's thumbnail (representative) image

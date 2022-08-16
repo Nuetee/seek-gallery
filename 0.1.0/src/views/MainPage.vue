@@ -30,6 +30,7 @@
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
+
     export default {
         name: 'MainPage',
         components: {

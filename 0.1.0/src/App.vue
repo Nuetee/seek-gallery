@@ -7,7 +7,7 @@
     created () {
       this.setVwVh()
       window.addEventListener('resize', this.setVwVh)
-      console.log('app')
+
       // Kakao SDK initialization
       Kakao.init('26b87aab90f717f43d0f8c22cb55c629')
     },
