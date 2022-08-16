@@ -40,6 +40,7 @@
         data() {
             return {
                 exhibition_title: null,
+                top_position: null,
                 is_fixed: false
             };
         },
@@ -67,6 +68,7 @@
                 }
 
                 top.style.setProperty('height', `${poster_image.clientHeight + padding_bottom}px`)
+                this.top_position = top.getBoundingClientRect().bottom
             },
             scrollEvent () {
                 if (this.exhibition_title.getBoundingClientRect().bottom < window.innerHeight && !this.is_fixed) {
