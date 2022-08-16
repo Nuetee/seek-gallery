@@ -1,12 +1,13 @@
 // Deploying axios module, Setting base url for production mode
 import axios from 'axios'
 import { sendRequest } from '../modules/api'
-// import { 
-//     getArtworkImages,
-//     getArtworkThumbnailImage,
-//     getArtworkRepresentImage
-// } from '../modules/storage'
+import { 
+    getExhibitionImages, 
+    getExhibitionThumbnailImage
+} from '@/modules/storage'
+
 import { User } from './user'
+import { Artwork } from './artwork'
 
 if (process.env.NODE_ENV === 'production') {
     axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL
@@ -23,8 +24,8 @@ export class Exhibition {
     information
 
     owner
-    category_list
-    artwork_list
+    artwork_list = []
+    category_list = []
 
     constructor (page_id) {
         this.page_id = page_id
@@ -36,21 +37,38 @@ export class Exhibition {
         })
         if (status < 400) {
             const exhibition_data = data[0][0]
-            console.log(exhibition_data)
+            this.id = exhibition_data.id
+            this.name = exhibition_data.name
+            this.information = exhibition_data.information
 
-            return this
+            this.owner = await new User(exhibition_data.owner_id).init()
+            const { status: list_status, data: list_data } = await sendRequest(
+                'post', 
+                '/exhibition/artwork_list', {
+                target_id : this.id
+            })
+
+            if (list_status < 400) {
+                const artworks = list_data[0]
+
+                for (let i = 0 ; i < artworks.length ; i++) {
+                    const artwork_data = artworks[i]
+                    const artwork = await new Artwork(artwork_data.page_id).init()
+                    this.artwork_list.push(artwork)
+                    this.category_list.push(artwork_data.category)
+                }
+                return this
+            }
         }
-        else {
-            return null
-        }
+        return null
+    }
+
+    getImages = async function () {
+        return await getExhibitionImages(this.page_id)
     }
 
     getThumbnailImage = async function () {
-        return await getArtworkThumbnailImage(this.page_id)
-    }
-
-    getRepresentImage = async function () {
-        return await getArtworkRepresentImage(this.page_id)
+        return await getExhibitionThumbnailImage(this.page_id)
     }
 
     getID () {
