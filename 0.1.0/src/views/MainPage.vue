@@ -1,12 +1,17 @@
 <template>
     <div id="mainPage">
-        <MainHeader :background-vue="'white'">
+        <MainHeader :background_color="'white'">
             <template v-slot:default>
                 <img src="../assets/seek_logo.png">
             </template>
         </MainHeader>
         <div class="body">
-            <div class="poster"></div>
+            <div class="poster">
+                <img src="../assets/766f3bd97f3c9cbc47e7347ba6c665c2.jpg">
+            </div>
+            <div class="ghost">
+
+            </div>
             <div class="exhibitionTitle">
                 <TitleHeader></TitleHeader>
             </div>

@@ -1,10 +1,16 @@
 .mainHeader {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: calc(var(--vw, 1vw) * 15);
+    padding-left: var(--padding, 5vw);
+    padding-right: var(--padding, 5vw);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: scale 0.2s;
-    height: calc(var(--vw, 1vw) * 15);
     
     .left {
         height: calc(var(--vw, 1vw) * 8);

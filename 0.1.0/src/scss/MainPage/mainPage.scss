@@ -5,4 +5,48 @@
             width: auto;
         }
     }
+
+    .body {
+        position: relative;
+        top: calc(var(--vw, 1vw) * 15);
+        width: 100%;
+        overflow-x: visible;
+
+        .poster {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: calc(-1 * var(--padding, 5vw));
+            width: calc(100% + 2 * var(--padding, 5vw));
+            height: calc(var(--vh, 1vh) * 100 - var(--vw, 1vw) * 15);
+            overflow-y: scroll;
+
+            img {
+                width: 100%;
+                height: auto;
+                padding-bottom: calc(var(--vw, 1vw) * 100);
+            }
+        }
+
+        .poster::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera*/
+            height: 0;
+            background: transparent;
+            /* Optional: just make scrollbar invisible */
+            -webkit-appearance: none;
+        }
+
+        .ghost {
+            width: 100%;
+            height: calc(var(--vh, 1vh) * 100 - var(--vw, 1vw) * 30);
+        }
+
+        .exhibitionTitle {
+            height: 20vw;
+        }
+        .exhibitionArtworks {
+            height: 40vw;
+        }
+    }
 }
