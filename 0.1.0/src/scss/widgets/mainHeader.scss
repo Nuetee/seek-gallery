@@ -3,7 +3,7 @@
     z-index: 2;
     top: 0;
     left: 0;
-    width: 100%;
+    width: calc(var(--vw, 1vw) * 100);
     height: calc(var(--vw, 1vw) * 15);
     padding-left: var(--padding, 5vw);
     padding-right: var(--padding, 5vw);

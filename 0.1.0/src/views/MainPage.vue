@@ -8,7 +8,7 @@
         <div class="body">
             <div class="top">
                 <div class="poster">
-                    <img class="posterImage" @load="this.setTopHeight()" src="../assets/ee8eabd8df23a4f9b29100d59217586e.jpeg">
+                    <img class="posterImage" @load="this.setTopHeight()" :src="this.poster_image">
                 </div>
                 <div class="exhibitionTitle">
                     <TitleHeader></TitleHeader>
@@ -31,6 +31,8 @@
     import TitleHeader from '@/widgets/TitleHeader.vue';
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
 
+    import { Exhibition } from '@/classes/exhibition';
+
     export default {
         name: 'MainPage',
         components: {
@@ -40,13 +42,20 @@
         },
         data() {
             return {
+                id: this.$route.query.id,
+                exhibition: null,
+                poster_image: null,
                 exhibition_title: null,
                 top_position: null,
                 is_fixed: false
             };
         },
         beforeCreate() {},
-        created() {
+        async created() {
+            this.exhibition = await new Exhibition(this.id).init(id)
+            let images = await this.exhibition.getImages()
+            this.poster_image = images[0]
+
             window.addEventListener('scroll', this.scrollEvent)
         },
         beforeMount() {},
@@ -60,7 +69,7 @@
         unmounted() {},
         methods: {
             setTopHeight () {
-                let poster_image = document.getElementsByClassName('posterImage')[0]
+                let poster_image_element = document.getElementsByClassName('posterImage')[0]
                 let top = document.getElementsByClassName('top')[0]
 
                 let padding_bottom = window.innerWidth * 0.5
@@ -68,7 +77,7 @@
                     padding_bottom = 480 * 0.5
                 }
 
-                top.style.setProperty('height', `${poster_image.clientHeight + padding_bottom}px`)
+                top.style.setProperty('height', `${poster_image_element.clientHeight + padding_bottom}px`)
                 this.top_position = top.getBoundingClientRect().bottom
             },
             scrollEvent () {
