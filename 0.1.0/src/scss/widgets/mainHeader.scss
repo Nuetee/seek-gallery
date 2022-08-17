@@ -2,7 +2,8 @@
     position: fixed;
     z-index: 2;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     width: calc(var(--vw, 1vw) * 100);
     height: calc(var(--vw, 1vw) * 15);
     padding-left: var(--padding, 5vw);

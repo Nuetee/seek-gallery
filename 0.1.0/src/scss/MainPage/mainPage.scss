@@ -8,32 +8,21 @@
 
     // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
     .body {
+        position: relative;
         width: 100%;
-        padding-top: calc(var(--var, 1vw) * 15);
+        margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
+        height: 1000px;
 
-        .top {
-            overflow-x: visible;
-            height: auto;
-            
-            .poster {
-                position: relative;
-                left: calc(-1 * var(--padding, 5vw));
-                width: calc(100% + 2 * var(--padding, 5vw));
-
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
-
-            .exhibitionTitle {
-                width: 100%;
-            }
+        > div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
         }
-
-        .bottom {
-            height: 100vh;
+        .poster {
+            left: calc(-1 * var(--padding, 5vw));
+            width: calc(100% + 2 * var(--padding, 5vw));
         }
     }
 }
