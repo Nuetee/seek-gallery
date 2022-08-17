@@ -2,6 +2,7 @@
     <div class="titleHeader">
         {{ this.title }}
     </div>
+    <div class="underLine"></div>
 </template>
 <script>
     export default {
@@ -29,3 +30,4 @@
         methods: {}
     }
 </script>
+<style lang="scss" scoped src="../scss/widgets/titleHeader.scss"></style>

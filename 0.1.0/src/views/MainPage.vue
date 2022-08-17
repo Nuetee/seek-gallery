@@ -5,23 +5,34 @@
                 <img src="../assets/seek_logo.png">
             </template>
         </MainHeader>
-        <div class="body">
-            <div class="top">
-                <div class="poster">
-                    <img class="posterImage" @load="this.setTopHeight()" :src="this.poster_image">
-                </div>
-                <div class="exhibitionTitle">
-                    <TitleHeader></TitleHeader>
+        <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
+            <div class="poster">
+                <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
+                    :style="this.poster_image_style">
+            </div>
+            <div class="exhibitionInformation">
+                <TitleHeader></TitleHeader>
+                <div class="exhibitionIntroduction">
+                    {{ this.exhibition.getInformation() }}
                 </div>
             </div>
-            <div class="bottom">
-                <div class="exhibitionIntroduction">
+            <div class="exhibitionArtworks">
+                <TitleHeader></TitleHeader>
+                <ArtworkTrackList></ArtworkTrackList>
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
+                sad<br />
 
-                </div>
-                <div class="exhibitionArtworks">
-                    <TitleHeader></TitleHeader>
-                    <ArtworkTrackList></ArtworkTrackList>
-                </div>
+                sad<br />
+                sad<br />
             </div>
         </div>
     </div>
@@ -32,6 +43,7 @@
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
 
     import { Exhibition } from '@/classes/exhibition';
+    import { cropImage } from '@/modules/image';
 
     export default {
         name: 'MainPage',
@@ -45,48 +57,81 @@
                 id: this.$route.query.id,
                 exhibition: null,
                 poster_image: null,
-                exhibition_title: null,
-                top_position: null,
-                is_fixed: false
+                poster_image_style: null,
+                bodyShowFlag: false,
+                vw: null,
+                poster_element: null,
+                information_element: null,
+                artworks_element: null,
             };
         },
         beforeCreate() {},
         async created() {
-            this.exhibition = await new Exhibition(this.id).init(id)
-            let images = await this.exhibition.getImages()
-            this.poster_image = images[0]
+            this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
-            window.addEventListener('scroll', this.scrollEvent)
+            window.addEventListener('scroll', this.setTopPosition)
+
+            this.exhibition = await new Exhibition(this.id).init()
+            let images = await this.exhibition.getImages()
+            this.poster_image_style = await cropImage(images[0], 1)
+            this.poster_image = images[0]
+            
+            const poster_image_element = document.getElementById('posterImage')
+            poster_image_element.onload = () => {
+                this.poster_element = document.getElementsByClassName('poster')[0]
+                this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
+                this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
+                
+                this.poster_element.style.setProperty('top', '0')
+                this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
+                this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight}px`)
+            }
+            
+           
         },
         beforeMount() {},
-        mounted() {
-            this.exhibition_title = document.getElementsByClassName('exhibitionTitle')[0]
-        },
+        mounted() {},
         beforeUpdate() {},
         updated() {
         },
         beforeUnmount() {},
         unmounted() {},
         methods: {
-            setTopHeight () {
-                let poster_image_element = document.getElementsByClassName('posterImage')[0]
-                let top = document.getElementsByClassName('top')[0]
-
-                let padding_bottom = window.innerWidth * 0.5
-                if (window.innerWidth >= 480) {
-                    padding_bottom = 480 * 0.5
+            setTopPosition () {
+                if (window.scrollY < (50 * this.vw)) {
+                    this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + window.scrollY}px`)
+                    this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + window.scrollY}px`)
                 }
+                else {
+                    
+                }
+            },
+            topScroll (event) {
+                let scrollY = this.top_element.scrollTop
+                
+                if(scrollY == 195) {
+                    
+                }
+                // up scroll
+                // if (scrollY < this.last_top_scroll) {
+                //     if (this.last_window_scroll > 0) {
 
-                top.style.setProperty('height', `${poster_image_element.clientHeight + padding_bottom}px`)
-                this.top_position = top.getBoundingClientRect().bottom
+                //         event.preventDefault()
+                //     }
+                // }
+                // else {
+                    
+                // }
+                this.last_top_scroll = scrollY
             },
             scrollEvent () {
-                if (this.exhibition_title.getBoundingClientRect().bottom < window.innerHeight && !this.is_fixed) {
-                    this.exhibition_title.style.setProperty('position', 'fixed')
-                    this.exhibition_title.style.setProperty('bottom', '0')
-                    this.exhibition_title.style.setProperty('left', '0')
-                    this.is_fixed = true
-                }
+                this.last_window_scroll = window.scrollY
+                // if (this.exhibition_title.getBoundingClientRect().bottom < window.innerHeight && !this.is_fixed) {
+                //     this.exhibition_title.style.setProperty('position', 'fixed')
+                //     this.exhibition_title.style.setProperty('bottom', '0')
+                //     this.exhibition_title.style.setProperty('left', '0')
+                //     this.is_fixed = true
+                // }
                 // else {
                 //     console.log('else')
                 //     this.exhibition_title.style.setProperty('position', 'static')
