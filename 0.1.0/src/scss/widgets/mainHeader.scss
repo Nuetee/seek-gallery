@@ -3,9 +3,10 @@
     z-index: 2;
     top: 0;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform-origin: 50% 0;
+    transform: translate(-50%, 0) scaleY(1);
     width: calc(var(--vw, 1vw) * 100);
-    height: calc(var(--vw, 1vw) * 15);
+    height: calc(var(--vw, 1vw) * 17.5);
     padding-left: var(--padding, 5vw);
     padding-right: var(--padding, 5vw);
     display: flex;
@@ -14,7 +15,11 @@
     transition: scale 0.2s;
     
     .left {
+        transform-origin: 0 50%;
         height: calc(var(--vw, 1vw) * 8);
         width: auto;
+    }
+    .right {
+        transform-origin: 100% 50%;
     }
 }

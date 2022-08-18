@@ -4,12 +4,14 @@
             <slot></slot>
         </div>
         <div class="right">
-            <RoundProfile></RoundProfile>
+            <RoundProfile :profile="this.profile"></RoundProfile>
         </div>
     </div>
 </template>
 <script>
-import RoundProfile from './RoundProfile.vue';
+    import RoundProfile from './RoundProfile.vue';
+    import { isAuth, getAuth } from '@/modules/auth';
+
     export default {
         name: 'MainHeader',
         components: { RoundProfile },
@@ -21,11 +23,16 @@ import RoundProfile from './RoundProfile.vue';
         },
         data() {
             return {
-                sampleData: ''
+                profile: ''
             };
         },
         beforeCreate() {},
-        created() {},
+        created() {
+            if (isAuth()) {
+                let user = getAuth()
+                this.profile = user.getProfile()
+            }
+        },
         beforeMount() {},
         mounted() {},
         beforeUpdate() {},
