@@ -20,9 +20,30 @@
             left: 0;
             width: 100%;
         }
+
         .poster {
             left: calc(-1 * var(--padding, 5vw));
             width: calc(100% + 2 * var(--padding, 5vw));
         }
+
+        .exhibitionIntroduction {
+            text-align: left;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 150%;
+            letter-spacing: -0.06em;
+        
+            color: #000000;
+        }
     }
+
+    // .body::-webkit-scrollbar {
+    //     display: none;
+    //     /* Chrome, Safari, Opera*/
+    //     // 스크롤바 잔상 없애기
+    //     height: 0;
+    //     background: transparent;
+    //     /* Optional: just make scrollbar invisible */
+    //     -webkit-appearance: none;
+    // }
 }
