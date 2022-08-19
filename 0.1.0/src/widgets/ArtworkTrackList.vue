@@ -1,8 +1,12 @@
 <template>
     <div class="artworkTrackList">
-        <ArtworkTrack v-for="(track, i) in this.track_array" :key="i" :track="track" :track_number="i.toString()"
-            @track_loaded="this.getTrackListHeight()"></ArtworkTrack>
-        <DotScrollBar :position_array="this.position_array" :height="this.track_list_height" :position="this.track_list_position"></DotScrollBar>
+        <DotScrollBar :position_array="this.position_array" :contents_height="this.track_list_height"
+            :contents_top_position="this.track_list_position">
+        </DotScrollBar>
+        <div class="artworkTracksContainer">
+            <ArtworkTrack v-for="(track, i) in this.track_array" :key="i" :track="track" :track_number="i.toString()"
+                @track_loaded="this.getTrackListProperty()"></ArtworkTrack>
+        </div>
     </div>
 </template>
 <script>
@@ -22,6 +26,10 @@
             category_list: {
                 type: Array,
                 default: []
+            },
+            proper_position_flag: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -30,6 +38,11 @@
                 track_list_height: null,
                 track_list_position: null,
             };
+        },
+        watch: {
+            proper_position_flag () {
+                this.getTrackListProperty(0)
+            }
         },
         computed: {
             track_array () {
@@ -75,14 +88,22 @@
         beforeUnmount() {},
         unmounted() {},
         methods: {
-            getTrackListHeight() {
-                this.track_total_number += 1
-                if (this.track_total_number !== this.artwork_track_list.length){
-                    return
+            getTrackListProperty(track_load_number = 1) {
+                // proper_position_flag 값 변화(false -> true)에 의해 호출된 경우
+                if (this.proper_position_flag) {
+                    this.track_list_position = parseInt(document.getElementsByClassName('artworkTrack 0')[0].getBoundingClientRect().top + window.scrollY)
                 }
+                // artworkTrack들의 load event 수신자로써 호출된 경우
+                else {
+                    this.track_total_number += track_load_number
+                    if (this.track_total_number === this.artwork_track_list.length) {
+                        this.track_list_height = parseInt(document.getElementsByClassName('artworkTracksContainer')[0].clientHeight)
 
-                this.track_list_height = parseInt(document.getElementsByClassName('artworkTrackList')[0].clientHeight)
-                this.track_list_position = parseInt(document.getElementsByClassName('artworkTrackList')[0].getBoundingClientRect().top)
+                        document.getElementsByClassName('artworkTrackList')[0].style.setProperty('height', `${document.getElementsByClassName('artworkTrackList')[0].clientHeight + this.track_list_height}px`)
+                    }
+                }
+                
+                return
             }
         }
     }

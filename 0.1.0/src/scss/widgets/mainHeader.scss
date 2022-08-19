@@ -13,13 +13,4 @@
     justify-content: space-between;
     align-items: center;
     transition: scale 0.2s;
-    
-    .left {
-        transform-origin: 0 50%;
-        height: calc(var(--vw, 1vw) * 8);
-        width: auto;
-    }
-    .right {
-        transform-origin: 100% 50%;
-    }
 }

@@ -22,7 +22,8 @@
                 <TitleHeader ref="artworksTitle" :title="'Artworks'" :startHeight="(this.vw * 30)"
                     :heightUnit="this.vw / 2">
                 </TitleHeader>
-                <ArtworkTrackList :artwork_track_list="this.artwork_track_list" :category_list="this.category_list">
+                <ArtworkTrackList ref="artworkTrackList" :artwork_track_list="this.artwork_track_list"
+                    :category_list="this.category_list" :proper_position_flag="this.proper_position_flag">
                 </ArtworkTrackList>
             </div>
         </div>
@@ -49,6 +50,7 @@
                 exhibition: null,
                 artwork_track_list: [],
                 category_list: [],
+                proper_position_flag: false,
 
                 poster_image: null,
                 poster_image_style: null,
@@ -68,6 +70,8 @@
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
             window.addEventListener('scroll', this.setAbsolutePosition)
+
+            window.addEventListener('scroll', this.getTrackListProperty)
 
             this.exhibition = await new Exhibition(this.id).init()
             let images = await this.exhibition.getImages()
@@ -122,10 +126,12 @@
                     this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + window.scrollY}px`)
                     this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + window.scrollY}px`)
                 }
-                else {
-                    
-                }
             },
+            getTrackListProperty () {
+                if (window.scrollY >= (50 * this.vw)) {
+                    this.proper_position_flag = true
+                }
+            }
         }
     }
 </script>
