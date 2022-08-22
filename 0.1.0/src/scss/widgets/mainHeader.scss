@@ -2,18 +2,15 @@
     position: fixed;
     z-index: 2;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(var(--vw, 1vw) * 15);
+    left: 50%;
+    transform-origin: 50% 0;
+    transform: translate(-50%, 0) scaleY(1);
+    width: calc(var(--vw, 1vw) * 100);
+    height: calc(var(--vw, 1vw) * 17.5);
     padding-left: var(--padding, 5vw);
     padding-right: var(--padding, 5vw);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: scale 0.2s;
-    
-    .left {
-        height: calc(var(--vw, 1vw) * 8);
-        width: auto;
-    }
 }

@@ -1,0 +1,30 @@
+.archiveInfo {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--vw, 1vw) * 1);
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    .archiveLogo {
+        width: calc(var(--vw, 1vw) * 9);
+        height: calc(var(--vw, 1vw) * 4.8);
+        display: flex;
+        justify-content: center;
+        gap: 3px;
+        align-items: center;
+        overflow: visible;
+
+        svg {
+            overflow: visible;
+        }
+    }
+
+    .archiveCount {
+        height: 20px;
+        overflow: visible;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 22px;
+        text-align: right;
+    }
+}

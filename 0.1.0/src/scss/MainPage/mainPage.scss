@@ -1,37 +1,66 @@
 #mainPage {
     ::v-deep(.mainHeader) {
-        .left > img {
-            height: 100%;
+        .left {
+            transform-origin: 0 50%;
+            height: calc(var(--vw, 1vw) * 8);
             width: auto;
+            > img {
+                height: 100%;
+                width: auto;
+            }
+        } 
+
+        .right {
+            transform-origin: 100% 50%;
         }
     }
 
     // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
     .body {
+        position: relative;
         width: 100%;
-        padding-top: calc(var(--var, 1vw) * 15);
+        margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
+        height: 4000px;
 
-        .top {
-            overflow-x: visible;
-            height: auto;
-            .poster {
-                position: relative;
-                left: calc(-1 * var(--padding, 5vw));
-                width: calc(100% + 2 * var(--padding, 5vw));
-
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
-
-            .exhibitionTitle {
-                width: 100%;
-            }
+        > div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
         }
-        .bottom {
-            height: 100vh;
+
+        .poster {
+            left: calc(-1 * var(--padding, 5vw));
+            width: calc(100% + 2 * var(--padding, 5vw));
+        }
+        
+        .exhibitionInformation {
+            padding-bottom: calc(var(--vw, 1vw) * 10);
+
+            ::v-deep(.underLine) {
+                margin-bottom: calc(var(--vw, 1vw) * 3);
+            }
+            
+            .exhibitionIntroduction {
+                text-align: left;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 150%;
+                letter-spacing: -0.06em;
+        
+                color: #000000;
+            }
         }
     }
+
+    // .body::-webkit-scrollbar {
+    //     display: none;
+    //     /* Chrome, Safari, Opera*/
+    //     // 스크롤바 잔상 없애기
+    //     height: 0;
+    //     background: transparent;
+    //     /* Optional: just make scrollbar invisible */
+    //     -webkit-appearance: none;
+    // }
 }

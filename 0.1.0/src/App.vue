@@ -51,6 +51,7 @@ body {
   // 탭 할 때 하이라이트 컬러 없애기
   -webkit-tap-highlight-color: rgba($color: #000000, $alpha: 0.0);
 }
+
 body {
   width: 100vw;
   min-height: 0 !important;
@@ -58,6 +59,17 @@ body {
   display: flex;
   justify-content: center;
 }
+
+html::-webkit-scrollbar, body::-webkit-scrollbar, #app::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera*/
+  // 스크롤바 잔상 없애기
+  height: 0;
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+  -webkit-appearance: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -74,16 +86,6 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-  }
-
-  > div[id$="Page"]::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari, Opera*/
-    // 스크롤바 잔상 없애기
-    height: 0;
-    background: transparent;
-    /* Optional: just make scrollbar invisible */
-    -webkit-appearance: none;
   }
 
   > img[src$=".jpg"] {

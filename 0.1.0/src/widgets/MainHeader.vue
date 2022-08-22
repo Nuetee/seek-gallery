@@ -1,18 +1,17 @@
 <template>
     <div class="mainHeader" :style="'background-color:' + this.background_color">
         <div class="left">
-            <slot></slot>
+            <slot name="left"></slot>
         </div>
         <div class="right">
-            <RoundProfile></RoundProfile>
+            <slot name="right"></slot>
         </div>
     </div>
 </template>
 <script>
-import RoundProfile from './RoundProfile.vue';
     export default {
         name: 'MainHeader',
-        components: { RoundProfile },
+        components: {},
         props: {
             background_color: {
                 type: String,
@@ -21,18 +20,9 @@ import RoundProfile from './RoundProfile.vue';
         },
         data() {
             return {
-                sampleData: ''
+                sample: ''
             };
         },
-        beforeCreate() {},
-        created() {},
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
-        methods: {}
     }
 </script>
 <style lang="scss" scoped src="../scss/widgets/mainHeader.scss"></style>

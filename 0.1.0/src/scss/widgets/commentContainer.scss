@@ -1,0 +1,109 @@
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: calc(var(--vw, 1vw) * 3.5);
+    padding-bottom: calc(var(--vw, 1vw) * 2.5);
+    border-bottom: 1px solid #CACACA;
+
+    .commentBody {
+        flex: 1 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .writer {
+            display: flex;
+            flex: 0 0 auto;
+            justify-content: space-between;
+            width: 100%;
+            padding-right: calc(var(--vw, 1vw) * 1.5);
+            text-align: start;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            .name {
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 17px;
+                letter-spacing: -0.06em;
+                color: #878787;
+            }
+
+            .reportButton {
+                text-align: center;
+                vertical-align: text-top;
+                font-weight: 300;
+                font-size: 10px;
+                line-height: 14px;
+                letter-spacing: -0.06em;
+                color: #000000;
+            }
+        }
+
+        .body {
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 100%;
+            text-align: left;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 127.3%;
+            letter-spacing: -0.06em;
+            margin-top: calc(var(--vw, 1vw) * 1);
+            margin-bottom: calc(var(--vw, 1vw) * 2);
+        }
+    }
+
+    .likeContainer {
+        flex: 0 0 calc(var(--vw, 1vw) * 5);
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .likeButton {
+            text-align: left;
+            flex: 0 0 calc(var(--vw, 1vw) * 6);
+            display: flex;
+            justify-items: center;
+            align-items: center;
+
+            .liked {
+                animation-name: like_effect;
+                animation-duration: 1s;
+                animation-iteration-count: 1;
+                animation-timing-function: ease-in-out;
+            }
+        }
+
+        .likeCount {
+            line-height: 70%;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 18px;
+            color: #1D1D1D;
+        }
+    }
+}
+
+@keyframes like_effect {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.5, 1.5);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
+}

@@ -1,16 +1,13 @@
 .snsLink {
-    padding-left: calc(var(--vw, 1vw) * 2);
+
     display: flex;
     align-items: center;
     justify-items: center;
     flex-wrap: nowrap;
+
     a {
         svg {
             flex: 0 0 auto;
-        }
-        .tshirt {
-            width: 29px;
-            height: 29px;
         }
     }
 }

@@ -37,10 +37,19 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/LoginPage.vue')
-  }
+  },
+  {
+    path: '/auth',
+    name: 'AuthPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AuthPage.vue')
+  },
 ]
 
 const router = createRouter({
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 }
+  },
   history: createWebHistory(process.env.BASE_URL),
   routes
 })

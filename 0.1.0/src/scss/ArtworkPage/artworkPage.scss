@@ -1,0 +1,67 @@
+#artworkPage {
+    height: calc(var(--vh, 1vh) * 150);
+
+    .body {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(var(--vw, 1vw) * 100);
+        padding-left: var(--padding, 5vw);
+        padding-right: var(--padding, 5vw);
+        height: calc(var(--vh, 1vh) * 100);
+
+        .artworkInformation {
+            position: relative;
+            z-index: 1;
+            // mainHeader의 높이
+            top: calc(var(--vw, 1vw) * 17.5);
+
+            .top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+        
+                .artworkTitle {
+                    font-weight: 600;
+                    font-size: 24px;
+                    line-height: 115%;
+                    letter-spacing: -0.04em;
+                    text-align: left;
+                }
+            }
+        
+            .bottom {
+                padding-top: calc(var(--vw, 1vw) * 3);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: calc(var(--vw, 1vw) * 2);
+        
+                .artist {
+                    font-weight: 700;
+                    font-size: 13px;
+                    line-height: 115%;
+                    letter-spacing: -0.06em;
+                }
+            }
+        }
+
+        ::v-deep(.artworkImageSlider) {
+            z-index: 0;
+        }
+
+        .buttonContainer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: calc(var(--vw, 1vw) * 30);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+    }
+}

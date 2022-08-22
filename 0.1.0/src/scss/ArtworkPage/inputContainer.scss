@@ -1,0 +1,51 @@
+.inputContainer {
+    >div {
+        text-align: start;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 115%;
+        letter-spacing: -0.04em;
+        padding-bottom: calc(var(--vw, 1vw) * 2);
+    }
+
+    form {
+        textarea {
+            display: block;
+            width: calc(100% - calc(var(--vw, 1vw) * 6));
+            resize: none;
+            border: none;
+            border-radius: calc(var(--vw, 1vw) * 3);
+            background-color: #F5F5F5;
+            padding: calc(var(--vw, 1vw) * 3);
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 127.3%;
+            letter-spacing: -0.06em;
+        }
+
+        textarea::placeholder {
+            color: #acacac;
+        }
+
+        >div:nth-child(2) {
+            padding-top: calc(var(--vw, 1vw) * 3);
+            display: flex;
+            justify-content: flex-end;
+
+            input {
+                border: none;
+                box-shadow: none;
+                outline: none;
+                width: calc(var(--vw, 1vw) * 25);
+                height: calc(var(--vw, 1vw) * 9);
+                border-radius: calc(var(--vw, 1vw) * 4.5);
+                background-color: black;
+                color: white;
+                font-weight: 350;
+                font-size: 13px;
+                line-height: 19px;
+                letter-spacing: -0.06em;
+            }
+        }
+    }
+}

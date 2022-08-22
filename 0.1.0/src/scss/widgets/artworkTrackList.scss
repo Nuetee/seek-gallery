@@ -1,0 +1,15 @@
+.artworkTrackList {
+    position: relative;
+    margin-top: calc(var(--vw, 1vw) * 5);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    .artworkTracksContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+    }
+}
