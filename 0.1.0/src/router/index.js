@@ -55,7 +55,7 @@ const router = createRouter({
 })
 
 const guard_path = [
-  'mypage'
+  '/mypage'
 ]
 
 // Global navigation guard
