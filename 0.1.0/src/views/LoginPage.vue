@@ -40,7 +40,7 @@
             return {
                 redirect: (this.$route.query.redirect) 
                     ? this.$route.query.redirect
-                    : '/'
+                    : '/mypage'
             }
         },
         methods: {

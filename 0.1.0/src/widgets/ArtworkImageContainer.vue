@@ -28,7 +28,7 @@
         mounted () {
             const _this = this;
 
-            const oberver = new ResizeObserver(async entries => {
+            const observer = new ResizeObserver(async entries => {
                 for (let entry of entries) {
                     const cr = entry.contentRect;
                     let ratio = cr.width / cr.height;
@@ -37,7 +37,7 @@
             })
 
             let artworkImageContainer = document.getElementsByClassName(this.ownClass)[0]
-            oberver.observe(artworkImageContainer, {box : 'content-box'});
+            observer.observe(artworkImageContainer, {box : 'content-box'});
         },
         methods: {
             loaded(event) {
