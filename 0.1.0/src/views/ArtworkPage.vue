@@ -25,7 +25,7 @@
             <ArtworkImageSlider :artwork_image_information_list="this.artwork_image_information_list"></ArtworkImageSlider>
             <div class="buttonContainer">
                 <CommentButton ref="commentButton" :color="this.artwork.getColor()" @click="this.showComment()"></CommentButton>
-                <ArchiveButton ref="archiveButton" :color="this.artwork.getColor()">
+                <ArchiveButton ref="archiveButton" :artwork="this.artwork" :color="this.artwork.getColor()">
                 </ArchiveButton>
                 <ShareButton ref="shareButton" :color="this.artwork.getColor()" :artwork="this.artwork">
                 </ShareButton>
