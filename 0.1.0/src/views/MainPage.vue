@@ -42,7 +42,10 @@
 
     import { Exhibition } from '@/classes/exhibition';
     import { cropImage } from '@/modules/image';
-    import { isAuth, getAuth } from '@/modules/auth';
+    import { 
+        isAuth, 
+        getAuth 
+    } from '@/modules/auth';
 
 
     export default {
@@ -81,23 +84,6 @@
         },
         beforeCreate() {},
         async created() {
-            if(isAuth()) {
-                // Fetch profile thumbnail and set
-                this.user = getAuth()
-                this.userThumbnail = this.user.getThumbnail()
-
-                // Update history
-                if (this.source === 'qrcode' || true) {
-                    const is_history = await this.user.isExhibitionHistory(this.exhibition)
-                    if (!is_history) {
-                        await this.user.putExhibitionHistory(this.exhibition)
-                    }
-                    else {
-                        await this.user.updateExhibitionHistory(this.exhibition)
-                    }
-                }
-            }
-
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
             window.addEventListener('scroll', this.setAbsolutePosition)
@@ -126,6 +112,23 @@
 
                 this.$refs.informationTitle.setInitialPosition()
                 this.$refs.artworksTitle.setInitialPosition()
+            }
+
+            if(isAuth()) {
+                // Fetch profile thumbnail and set
+                this.user = getAuth()
+                this.userThumbnail = this.user.getThumbnail()
+
+                // Update history
+                if (this.source === 'qrcode' || true) {
+                    const is_history = await this.user.isExhibitionHistory(this.exhibition)
+                    if (!is_history) {
+                        await this.user.putExhibitionHistory(this.exhibition)
+                    }
+                    else {
+                        await this.user.updateExhibitionHistory(this.exhibition)
+                    }
+                }
             }
         },
         mounted() {
