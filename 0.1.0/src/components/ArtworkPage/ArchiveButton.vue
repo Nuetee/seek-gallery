@@ -1,11 +1,5 @@
 <template>
     <button class="archiveButton" @click="this.archive()">
-        <!-- <div class="inner poppins" v-if="this.isEdit" @click="this.goEdit()"
-            :style="'background-color: ' + this.color + '; color: ' + ((this.color==='black' ) ? 'white' : 'black' )">
-            <div class="phrase">
-                Edit
-            </div>
-        </div> -->
         <div class="notArchive inner">
             <div class="eye">
                 <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,6 +107,7 @@
         name: 'ArchiveButton',
         components: {},
         props: {
+            artwork: Object,
             color: String,
         },
         data() {
@@ -154,7 +149,7 @@
                 document.getElementsByClassName('archiveButton')[0].style.
                 setProperty('--archive', 'black')
             }
-            
+
             await this.setButtonAnimation()
         },
         beforeUpdate() {},
