@@ -5,7 +5,7 @@
                 <img src="../assets/seek_logo.png">
             </template>
             <template v-slot:right>
-                <RoundProfile :profile="this.profile" @click="this.openSideBar($event)"></RoundProfile>
+                <RoundProfile :profile="this.userThumbnail" @click="this.openSideBar($event)"></RoundProfile>
             </template>
         </MainHeader>
         <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
@@ -14,7 +14,7 @@
                     :style="this.poster_image_style">
             </div>
             <div class="exhibitionInformation">
-                <TitleHeader ref="informationTitle" :title="'전시제목'" :startHeight="(this.vw * 30)"
+                <TitleHeader ref="informationTitle" :title="this.exhibition.getName()" :startHeight="(this.vw * 30)"
                     :heightUnit="this.vw / 2">
                 </TitleHeader>
                 <div class="exhibitionIntroduction">
@@ -79,7 +79,7 @@
                 artworks_element: null,
                 
                 header_scale: 1,
-                profile: ''
+                userThumbnail: ''
             };
         },
         beforeCreate() {},
