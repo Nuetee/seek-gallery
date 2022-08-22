@@ -44,6 +44,7 @@
     import { cropImage } from '@/modules/image';
     import { isAuth, getAuth } from '@/modules/auth';
 
+
     export default {
         name: 'MainPage',
         components: {
@@ -55,6 +56,9 @@
     },
         data() {
             return {
+                source: (this.$route.query.utm_source) 
+                    ? this.$route.query.utm_source 
+                    : '',
                 id: this.$route.query.id,
                 exhibition: null,
                 artwork_track_list: [],
@@ -77,10 +81,21 @@
         },
         beforeCreate() {},
         async created() {
-            if (isAuth()) {
-                let user = getAuth()
-                this.profile = user.getProfile()
-            }
+            if(isAuth()) {
+                // Fetch profile thumbnail and set
+                this.user = getAuth()
+                this.userThumbnail = this.user.getThumbnail()
+
+                // Update history
+                if (this.source === 'qrcode' || true) {
+                    const is_history = await this.user.isExhibitionHistory(this.exhibition)
+                    if (!is_history) {
+                        await this.user.putExhibitionHistory(this.exhibition)
+                    }
+                    else {
+                        await this.user.updateExhibitionHistory(this.exhibition)
+                    }
+                }
 
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 

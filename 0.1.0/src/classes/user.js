@@ -80,8 +80,8 @@ export class User {
         return await isArchived(artwork.getID(), this.id)
     } 
 
-    isArtworkHistory = async function (artwork) {
-        return await isHistory(artwork.getID(), this.id)
+    isExhibitionHistory = async function (exhibition) {
+        return await isHistory(exhibition.getID(), this.id)
     } 
 
     isCommentLiked = async function (comment) {
@@ -102,7 +102,7 @@ export class User {
         }
     }
 
-    getHistoryArtworks = async function (offset, limit) {
+    getHistoryExhibitions = async function (offset, limit) {
         const { status, data } = await sendRequest('post', '/user/history', {
             target_id : this.id,
             offset : offset,
@@ -139,12 +139,12 @@ export class User {
         return await doSession(this.id)
     }
 
-    putArtworkHistory = async function (artwork) {
-        return await doHistory(artwork.getID(), this.id)
+    putExhibitionHistory = async function (exhibition) {
+        return await doHistory(exhibition.getID(), this.id)
     }
 
-    updateArtworkHistory = async function (artwork) {
-        return await updateHistory(artwork.getID(), this.id)
+    updateExhibitionHistory = async function (exhibition) {
+        return await updateHistory(exhibition.getID(), this.id)
     }
 
     putArtworkArchive = async function (artwork) {

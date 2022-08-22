@@ -46,11 +46,11 @@ export async function doLike (target_id, user_id, is_unlike = false) {
         : await sendEventRequest('post', 'like', 'comment', target_id, user_id) 
 }
 
-// User visit artwork 
-// - target_id : artwork's id
+// User visit exhibition
+// - target_id : exhibition's id
 // return true if logging has been done successfully, false if not
 export async function doHistory (target_id, user_id) {
-    return await sendEventRequest('post', 'history', 'artwork', target_id, user_id) 
+    return await sendEventRequest('post', 'history', 'exhibition', target_id, user_id) 
 }
 
 // User visit after registration
@@ -84,5 +84,5 @@ export async function isLiked (target_id, user_id) {
 // - target_id : artwork's id
 // return true if user has seen the artwork, false if not
 export async function isHistory (target_id, user_id) {
-    return await sendEventRequest('post', 'user/history', 'artwork', target_id, user_id) 
+    return await sendEventRequest('post', 'user/history', 'exhibition', target_id, user_id) 
 }
