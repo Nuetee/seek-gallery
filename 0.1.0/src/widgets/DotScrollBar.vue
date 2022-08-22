@@ -75,6 +75,10 @@
 
             this.scroll_bar_style = 'height: ' + scroll_bar_height + 'px; top:' + scroll_bar_top + 'px;'
         },
+        unmounted () {
+             window.removeEventListener('scroll', this.setProgressBar)
+             window.removeEventListener('scroll', this.getTrackListProperty)
+        },
         methods: {
             setProgressBar () {
                 if (!this.position_array || !this.contents_height || !this.contents_top_position) {
