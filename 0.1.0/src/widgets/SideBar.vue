@@ -19,7 +19,7 @@
                 <va-sidebar-item active-color="black" hover-color="white">
                     <va-sidebar-item-content>
                         <va-sidebar-item-title>
-                            <router-link :to="'/'" replace>
+                            <router-link :to="'/mypage'" replace>
                                 {{ '마이페이지' }}
                             </router-link>
                         </va-sidebar-item-title>

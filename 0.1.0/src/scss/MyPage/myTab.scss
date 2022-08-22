@@ -1,0 +1,10 @@
+.myTab {
+    padding-top: calc(var(--vw, 1vw) * 2);
+    .tabBody {
+        margin-top: calc(var(--vw, 1vw) * 4);
+    }
+    ::v-deep(.tab) {
+        width: 100%;
+        min-height: calc(var(--vw, 1vw) * 20);
+    }
+}
