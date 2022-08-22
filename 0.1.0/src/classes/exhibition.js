@@ -91,6 +91,10 @@ export class Exhibition {
         return this.owner
     }
 
+    getOwnerName () {
+        return this.owner.getName()
+    }
+
     getCategoryList () {
         return this.category_list
     }

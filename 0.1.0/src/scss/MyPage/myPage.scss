@@ -1,0 +1,45 @@
+#myPage {
+    position: relative;
+    .top {
+        height: calc(var(--vw, 1vw) * 15);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+            height: calc(var(--vw, 1vw) * 8);
+            width: auto;
+            border: none;
+            background-color: transparent;
+            box-shadow: none;
+            outline: none;
+            img, svg {
+                height: 100%;
+                width: auto;
+            }
+        }
+        .myMenu {
+            height: calc(var(--vw, 1vw) * 6);
+        }
+        
+    }
+    .middle {
+        display: flex;
+        flex-direction: column;
+        ::v-deep(.profileContainer) {
+            flex: 1 0 calc(var(--vw, 1vw) * 33);
+        }
+        ::v-deep(.profileShareButton) {
+            margin-top: calc(var(--vw, 1vw) * 2);
+        }
+    }
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+}

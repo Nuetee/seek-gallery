@@ -1,0 +1,15 @@
+.artworkCardList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .column1, .column2 {
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex: 0 1 auto;
+            margin-left: calc(var(--vw, 1vw) * 0.5);
+            margin-right: calc(var(--vw, 1vw) * 0.5);
+        }
+    }
+}

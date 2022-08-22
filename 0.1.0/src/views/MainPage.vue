@@ -30,6 +30,10 @@
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
+    import { 
+        isAuth,
+        getAuth
+    } from '@/modules/auth';
 
     export default {
         name: 'MainPage',
@@ -42,12 +46,32 @@
             return {
                 exhibition_title: null,
                 top_position: null,
-                is_fixed: false
+                is_fixed: false,
+                source: (this.$route.query.utm_source) 
+                    ? this.$route.query.utm_source 
+                    : '',
             };
         },
         beforeCreate() {},
-        created() {
+        async created() {
             window.addEventListener('scroll', this.scrollEvent)
+
+            if(isAuth()) {
+                // Fetch profile thumbnail and set
+                this.user = getAuth()
+                this.userThumbnail = this.user.getThumbnail()
+
+                // Update history
+                if (this.source === 'qrcode' || true) {
+                    const is_history = await this.user.isExhibitionHistory(this.exhibition)
+                    if (!is_history) {
+                        await this.user.putExhibitionHistory(this.exhibition)
+                    }
+                    else {
+                        await this.user.updateExhibitionHistory(this.exhibition)
+                    }
+                }
+            }
         },
         beforeMount() {},
         mounted() {

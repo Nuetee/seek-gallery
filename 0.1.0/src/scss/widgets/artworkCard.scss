@@ -1,0 +1,38 @@
+.artworkCard {
+    width: calc(var(--vw, 1vw) * 43);
+    height: auto;
+    border: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--vw, 1vw) * 1);
+    margin-bottom: calc(var(--vw, 1vw) * 2);
+    z-index: 0;
+    ::v-deep(.artworkImageContainer) {
+        border: none;
+        width: 100%;
+        height: calc(var(--vw, 1vw) * 43);
+        border-radius: calc(var(--vw, 1vw) * 2);
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    ::v-deep(.artworkInfo) {
+        margin: 0;
+        width: 100%;
+        grid-template-rows: calc(var(--vw, 1vw) * 4) calc(var(--vw, 1vw) * 4);
+        .artworkTitle {
+            font-size: 13px;
+        }
+        .artist {
+            font-size: 12px;
+            font-weight: 400;
+            color: #868686 !important;
+            .snsLink {
+                flex: 0 1 calc(var(--vw, 1vw) * 0);
+                overflow: hidden;
+            }
+        }
+    }
+}
