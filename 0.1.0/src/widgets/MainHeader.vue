@@ -1,20 +1,17 @@
 <template>
     <div class="mainHeader" :style="'background-color:' + this.background_color">
         <div class="left">
-            <slot></slot>
+            <slot name="left"></slot>
         </div>
         <div class="right">
-            <RoundProfile :profile="this.profile"></RoundProfile>
+            <slot name="right"></slot>
         </div>
     </div>
 </template>
 <script>
-    import RoundProfile from './RoundProfile.vue';
-    import { isAuth, getAuth } from '@/modules/auth';
-
     export default {
         name: 'MainHeader',
-        components: { RoundProfile },
+        components: {},
         props: {
             background_color: {
                 type: String,
@@ -23,23 +20,9 @@
         },
         data() {
             return {
-                profile: ''
+                sample: ''
             };
         },
-        beforeCreate() {},
-        created() {
-            if (isAuth()) {
-                let user = getAuth()
-                this.profile = user.getProfile()
-            }
-        },
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
-        methods: {}
     }
 </script>
 <style lang="scss" scoped src="../scss/widgets/mainHeader.scss"></style>

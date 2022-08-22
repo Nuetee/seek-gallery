@@ -33,14 +33,12 @@
         created() {
             window.addEventListener('scroll', this.setProgression)
         },
-        beforeMount() {},
         mounted() {
             this.setInitialPosition()
         },
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
+        unmounted() {
+            window.removeEventListener('scroll', this.setProgression)
+        },
         methods: {
             setInitialPosition () {
                 this.under_line_element = document.getElementById(this.title)

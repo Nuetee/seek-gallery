@@ -1,8 +1,11 @@
 <template>
     <div id="mainPage">
         <MainHeader :background_color="'white'">
-            <template v-slot:default>
+            <template v-slot:left>
                 <img src="../assets/seek_logo.png">
+            </template>
+            <template v-slot:right>
+                <RoundProfile :profile="this.profile" @click="this.openSideBar($event)"></RoundProfile>
             </template>
         </MainHeader>
         <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
@@ -27,23 +30,29 @@
                 </ArtworkTrackList>
             </div>
         </div>
+        <SideBar ref="sideBar"></SideBar>
     </div>
 </template>
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
+    import SideBar from '@/widgets/SideBar.vue';
+    import RoundProfile from '@/widgets/RoundProfile.vue';
 
     import { Exhibition } from '@/classes/exhibition';
     import { cropImage } from '@/modules/image';
+    import { isAuth, getAuth } from '@/modules/auth';
 
     export default {
         name: 'MainPage',
         components: {
-            MainHeader,
-            TitleHeader,
-            ArtworkTrackList
-        },
+        MainHeader,
+        TitleHeader,
+        ArtworkTrackList,
+        SideBar,
+        RoundProfile
+    },
         data() {
             return {
                 id: this.$route.query.id,
@@ -63,10 +72,16 @@
                 artworks_element: null,
                 
                 header_scale: 1,
+                profile: ''
             };
         },
         beforeCreate() {},
         async created() {
+            if (isAuth()) {
+                let user = getAuth()
+                this.profile = user.getProfile()
+            }
+
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
             window.addEventListener('scroll', this.setAbsolutePosition)
@@ -97,16 +112,18 @@
                 this.$refs.artworksTitle.setInitialPosition()
             }
         },
-        beforeMount() {},
         mounted() {
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
         },
-        beforeUpdate() {},
-        updated() {
+        unmounted () {
+             window.removeEventListener('scroll', this.setAbsolutePosition)
+             window.removeEventListener('scroll', this.getTrackListProperty)
         },
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
+            // SideBar component의 openSideBar함수를 실행시켜 sideBar가 열리도록 하는 함수
+            openSideBar (event) {
+                this.$refs.sideBar.openSideBar(event)
+            },
             /*
             * - MainPage 스크롤 시 MainPage의 각 DOMElement들의 절대 위치를 재설정하는 함수.
             * : 각 DOMElement들의 position 속성은 'absolute' 이므로 top 속성을 변경하여 절대 위치를 재설정한다.
@@ -115,7 +132,12 @@
             * 2. 스크롤한 거리가 50vw 이하일 때, 각 DOMElement들의 top 속성을 변경한다.
             */
             setAbsolutePosition () {
-                let header_scale = (window.scrollY/this.vw > 10) ? (0.7) : (1 - (window.scrollY/(this.vw * 10)) * 0.3)
+                if (this.main_header_element === null || this.information_element === null || this.poster_element === null || this.artworks_element === null) {
+                    console.log('Failed to get dom elements.')
+                    return
+                }
+                
+                let header_scale = (window.scrollY/this.vw > 10) ? (0.7) : (1 - (window.scrollY / (this.vw * 10)) * 0.3)
                 this.main_header_element.style.setProperty('transform', `translate(-50%, 0) scaleY(${header_scale})`)
 
                 for (let i = 0; i < this.main_header_element.children.length; i++) {
@@ -127,9 +149,14 @@
                     this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + window.scrollY}px`)
                 }
             },
+            /*
+            * - poster이미지와 전시정보 사이 거리가 최대로 벌어졌을 때, this.proper_position_flag = true로 설정하여 ArtworkTrackList가 현재 자신의 위치(최상단으로부터의 거리)를 정확히 구할 수 있도록 하는 함수
+            : 정확한 거리를 구할 수 있을 때 한번만 실행되면 되므로 함수 실행으로 인한 부하를 줄이기 위해 첫 실행 후 eventListener를 제거한다.
+            */
             getTrackListProperty () {
                 if (window.scrollY >= (50 * this.vw)) {
                     this.proper_position_flag = true
+                    window.removeEventListener('scroll', this.getTrackListProperty)
                 }
             }
         }

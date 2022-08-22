@@ -60,7 +60,7 @@ body {
   justify-content: center;
 }
 
-html::-webkit-scrollbar, body::-webkit-scrollbar {
+html::-webkit-scrollbar, body::-webkit-scrollbar, #app::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera*/
   // 스크롤바 잔상 없애기
