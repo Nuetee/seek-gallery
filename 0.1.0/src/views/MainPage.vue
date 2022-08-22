@@ -48,12 +48,12 @@
     export default {
         name: 'MainPage',
         components: {
-        MainHeader,
-        TitleHeader,
-        ArtworkTrackList,
-        SideBar,
-        RoundProfile
-    },
+            MainHeader,
+            TitleHeader,
+            ArtworkTrackList,
+            SideBar,
+            RoundProfile
+        },
         data() {
             return {
                 source: (this.$route.query.utm_source) 
@@ -96,6 +96,7 @@
                         await this.user.updateExhibitionHistory(this.exhibition)
                     }
                 }
+            }
 
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
