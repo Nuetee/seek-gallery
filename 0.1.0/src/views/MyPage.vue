@@ -1,26 +1,25 @@
 <template>
     <div id="myPage">
-        <div class="top">
-            <button class="logo">
-                <img src="@/assets/seek_logo.png">
-            </button>
-            <button class="myMenu" @click="this.openSideBar($event)">
-                <svg width="30" height="23" viewBox="0 0 30 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <MainHeader :background_color="'white'">
+            <template v-slot:left>
+                <img src="../assets/seek_logo.png">
+            </template>
+            <template v-slot:right>
+                <svg width="30" height="23" viewBox="0 0 30 23" fill="none" xmlns="http://www.w3.org/2000/svg" @click="this.openSideBar($event)">
                     <rect width="30" height="1.5" rx="0.75" fill="black" />
                     <rect y="21" width="30" height="1.5" rx="0.75" fill="black" />
                     <rect y="10.5" width="30" height="1.5" rx="0.75" fill="black" />
                 </svg>
-            </button>
-        </div>
-        <div class="middle">
+            </template>
+        </MainHeader>
+        <div class="top">
             <ProfileContainer></ProfileContainer>
             <ProfileShareButton></ProfileShareButton>
         </div>
         <div class="bottom">
             <MyTab ref="myTab"></MyTab>
         </div>
-        <SideBar :minimized="this.minimized"></SideBar>
-        <div class="background" :style="this.setBackground()" @click="this.closeSideBar"></div>
+        <SideBar ref="sideBar"></SideBar>
     </div>
 </template>
 <script>
@@ -29,14 +28,16 @@
     import MyTab from '@/components/MyPage/MyTab.vue';
     import { isAuth, getAuth } from '@/modules/auth';
     import SideBar from '@/widgets/SideBar.vue';
+    import MainHeader from '@/widgets/MainHeader.vue';
 
     export default {
         name: 'MyPage',
-        components: { 
-            ProfileContainer, 
-            ProfileShareButton, 
+        components: {
+            ProfileContainer,
+            ProfileShareButton,
             MyTab,
-            SideBar
+            SideBar,
+            MainHeader
         },
         data() {
             return {
@@ -76,24 +77,8 @@
         unmounted() {},
         methods: {
             openSideBar (event) {
-                if (event.stopPropagation) event.stopPropagation();
-                else event.cancelBubble = true; // IE 대응
-                
-                window.history.pushState(null, '', location.href)
-                this.minimized = false
+                this.$refs.sideBar.openSideBar(event)
             },
-            closeSideBar () {
-                if (!this.minimized) {
-                    window.history.back()
-                    this.minimized = true
-                }
-            },
-            setBackground() {
-                if (this.minimized) {
-                    return 'display: none'
-                }
-                else return
-            }
         }
     }
 </script>

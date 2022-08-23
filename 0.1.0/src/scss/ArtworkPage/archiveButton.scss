@@ -1,6 +1,6 @@
 .archiveButton {
-    --not-archive: black;
-    --archive: white;
+    --background-color: black;
+    --color: white;
     
     border: none;
     box-shadow: none;
@@ -10,6 +10,18 @@
     width: calc(var(--vw, 1vw) * 33);
     height: calc(var(--vw, 1vw) * 18);
     background-color: transparent;
+
+    > div {
+        background-color: var(--background-color, black);
+        
+        svg {
+            fill: var(--color, white);
+
+            g {
+                fill: var(--color, white);
+            }
+        }
+    }
 
     .inner {
         transition-property: opacity, padding;
@@ -58,7 +70,7 @@
     }
 
     .notArchive {
-        background-color: var(--not-archive, black);
+        // background-color: var(--not-archive, black);
 
         .phrase {
             position: absolute;
@@ -125,12 +137,6 @@
             animation-direction: normal;
             animation-fill-mode: none;
         }
-    }
-
-    .archiving,
-    .archived {
-        background-color: var(--archive, white);
-        border: 1.3px solid var(--not-archive, black);
     }
 
     .archived {

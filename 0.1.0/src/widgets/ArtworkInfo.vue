@@ -8,7 +8,7 @@
             <SNSLink v-if="this.sns" :artwork="this.artwork"></SNSLink>
         </div>
     </div>
-    <div v-else class="artworkInfo poppins">
+    <div v-else-if="this.exhibition" class="artworkInfo poppins">
         <div :style="(this.isBack) ? { color : 'black' } : { color: this.color }" class="artworkTitle">
             {{ this.exhibition.getName() }}
         </div>
@@ -37,9 +37,9 @@
         },
         data() {
             return {
-                color: (this.artwork.getColor()) 
+                color: (this.artwork) 
                     ? this.artwork.getColor()
-                    : this.exhibition.getColor(),
+                    : 'black',
                 sns: (this.artwork) 
                     ? this.artwork.getSNS()
                     : null
