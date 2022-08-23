@@ -24,7 +24,7 @@
             </div>
             <ArtworkImageSlider :artwork_image_information_list="this.artwork_image_information_list"></ArtworkImageSlider>
             <div class="buttonContainer">
-                <CommentButton ref="commentButton" :color="this.artwork.getColor()" @click="this.showComment()"></CommentButton>
+                <CommentButton ref="commentButton" :color="this.artwork.getColor()" @click="this.showComment($event)"></CommentButton>
                 <ArchiveButton ref="archiveButton" :artwork="this.artwork" :color="this.artwork.getColor()">
                 </ArchiveButton>
                 <ShareButton ref="shareButton" :color="this.artwork.getColor()" :artwork="this.artwork">
@@ -34,6 +34,11 @@
                 <template v-slot:default>
                     <CommentComponent ref="commentComponent" @commentUpdate="this.updateDone" :artwork="this.artwork">
                     </CommentComponent>
+                </template>
+            </Drawer>
+            <Drawer ref="informationDrawer" :class="'information'">
+                <template v-slot:default>
+                    <ArtworkInformation :artwork="this.artwork"></ArtworkInformation>
                 </template>
             </Drawer>
             <SideBar ref="sideBar"></SideBar>
@@ -56,6 +61,7 @@
     import { cropImage } from '@/modules/image';
     import { isAuth, getAuth } from '@/modules/auth';
     import Drawer from '@/widgets/Drawer.vue';
+    import ArtworkInformation from '@/components/ArtworkPage/ArtworkInformation.vue';
 
     export default {
         name: 'ArtworkPage',
@@ -70,7 +76,8 @@
             ArchiveButton,
             ShareButton,
             Drawer,
-            CommentComponent
+            CommentComponent,
+            ArtworkInformation
         },
         data() {
             return {
@@ -88,19 +95,35 @@
             }
 
             this.artwork = await new Artwork(this.id).init()
+            
+            const _this = this
 
             // 모바일 웹에서 주소창을 줄이거나 없애는 코드
-            const _this = this
             setTimeout(function() {
                 _this.scrollBottom()
                 window.addEventListener('scroll', _this.scrollBottom)
             }, 0)
 
             await this.getArtworkImages()
+            await this.$nextTick()
 
             if (this.artwork.getColor() === 'black') {
                 document.getElementsByClassName('artworkImageSlider')[0].style.setProperty('--color', 'black')
             }
+            
+            // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
+            document.getElementById('artworkPage').addEventListener('click', function () {
+                if (_this.$refs.informationDrawer.drawer_opened) {
+                    _this.$refs.informationDrawer.closeDrawer()
+                    _this.$refs.commentDrawer.closeDrawer()
+                }
+                else if (!_this.$refs.commentDrawer.drawer_opened) {
+                    _this.$refs.informationDrawer.showDrawer()
+                }
+                else {
+                    _this.$refs.commentDrawer.closeDrawer()
+                }
+            })
         },
         updated () {
             const _this = this
@@ -153,7 +176,10 @@
                     this.artwork_image_information_list.push(image_information)
                 }
             },
-            showComment () {
+            showComment (event) {
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+
                 this.$refs.commentDrawer.showDrawer()
             },
             updateDone () {

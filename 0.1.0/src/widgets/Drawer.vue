@@ -66,6 +66,13 @@
                     _this.drawer_opened = true
                 }, 500)
             },
+            closeDrawer() {
+                if (this.drawer_opened === false) {
+                    return
+                }
+                this.drawer.style.setProperty('bottom', '0')
+                this.drawer_opened = false
+            },
             setTouchStart(event) {
                 this.touch_start = event.changedTouches[0].clientY
                 this.drawer.style.setProperty('transition', 'none')

@@ -140,14 +140,14 @@
         async mounted() {
             // artwork.getColor()의 값에 따라 Archive button의 배경 및 색상 변경
             if (this.color === 'black') {
-                document.getElementsByClassName('archiveButton')[0].style.setProperty('--not-archive', 'black')
+                document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'black')
                 document.getElementsByClassName('archiveButton')[0].style.
-                setProperty('--archive', 'white')
+                setProperty('--color', 'white')
             }
             else if (this.color === 'white') {
-                document.getElementsByClassName('archiveButton')[0].style.setProperty('--not-archive', 'white')
+                document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'white')
                 document.getElementsByClassName('archiveButton')[0].style.
-                setProperty('--archive', 'black')
+                setProperty('--color', 'black')
             }
 
             await this.setButtonAnimation()
@@ -191,7 +191,7 @@
                 // Authorized user exist
                 else if (!this.archiveInProgress) {
                     const is_archive = await this.user.isArtworkArchived(this.artwork)
-
+                    
                     if (this.user === null) {
                         this.user = getAuth()
                     }
@@ -224,7 +224,6 @@
                             _this.archived_element.classList.add('activate')
                         }, 1000)
                         
-                        this.$emit('archived')
                         await this.user.putArtworkArchive(this.artwork)
                     }
                 }

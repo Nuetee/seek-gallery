@@ -47,7 +47,7 @@
             </div>
         </va-sidebar>
     </div>
-    <Background :background_display="this.minimized" @click="this.popHistory"></Background>
+    <Background :background_display="this.minimized" @click="this.popHistory($event)"></Background>
 </template>
 <script>
     import RoundProfile from './RoundProfile.vue';
@@ -100,6 +100,12 @@
             }
             this.userThumbnailLoadFlag = true
         },
+        mounted () {
+            document.getElementsByClassName('sideBarContainer')[0].addEventListener('click', function(event) {
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+            })
+        },
         methods: {
             /*
             * - sideBarOpenButton(class)에 click event가 발생하면 호출되는 함수.
@@ -120,7 +126,10 @@
             * 2. sideBar가 펼쳐진 상태에서 background를 터치한 경우라면 history.back() 메서드를 통해 뒤로가기 이벤트를 발생시킴.
             * 3. 뒤로가기 이벤트는 window.onpopstate를 발생시키고, 여기서 this.minimized = true로 바꿔줌.
             */
-            popHistory() {
+            popHistory(event) {
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+
                 if (!this.minimized) {
                     window.history.back()
                 }
