@@ -3,6 +3,7 @@
     import {
         check,
         refresh,
+        register,
         save
     } from '@/modules/auth'
     import { 
@@ -42,6 +43,7 @@
                     // Receive user data successfully
                     if (user_data) {
                         const provider_id = user_data.id
+                        const nickname = user_data.nickname
                         const user_id = await check(this.provider, provider_id)
 
                         // Given user is already registered
@@ -55,13 +57,29 @@
                                 user_data.profile_image, user_data.thumbnail_image)
                             result = true
                         } 
+
+                        // Given user is not registered
+                        else {
+                            const register_result = await register(
+                                provider_id, nickname, this.provider, access_token,
+                                refresh_token, expire_time
+                            )
+
+                            // Update successfully
+                            if (register_result) {
+                                await save(
+                                    register_result, this.provider, access_token,
+                                    user_data.profile_image, user_data.thumbnail_image)
+                                result = true
+                            }
+                        }
                     }
                 }
             }
 
             // If fail, go back to login page
             if (result) {
-                this.$router.replace('/')
+                this.$router.replace(this.$route.query.state)
             }
             else {
                 this.$router.replace('/login')

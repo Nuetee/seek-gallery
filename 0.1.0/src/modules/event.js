@@ -63,7 +63,7 @@ export async function doSession (user_id) {
 // - target_id : artwork's id
 // return true if logging has been done successfully, false if not
 export async function updateHistory (target_id, user_id) {
-    return await sendEventRequest('put', 'history', 'artwork', target_id, user_id) 
+    return await sendEventRequest('put', 'history', 'exhibition', target_id, user_id) 
 }
 
 // Check if user has archived the artwork
