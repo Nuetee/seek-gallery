@@ -1,8 +1,8 @@
 <template>
     <div class="myTab">
-        <NavigationBar ref="navigationBar" @clickNavigationButton="this.changeSlide"></NavigationBar>
+        <NavigationBar ref="navigationBar" @clickNavigationButton="this.slideChangeByNavigation"></NavigationBar>
         <div class="tabBody">
-            <swiper v-bind="this.swiperOptions" @slideChange="this.slideChange">
+            <swiper v-bind="this.swiperOptions" @slideChange="this.slideChangeBySwiper">
                 <swiper-slide>
                     <QRTab ref="qrTab"></QRTab>
                 </swiper-slide>
@@ -45,7 +45,8 @@
                         prevEl: '.prevButton'
                     }
                 },
-                updateInProgress: false
+                updateInProgress: false,
+                slideChangeLock: false
             };
         },
         beforeCreate() {},
@@ -66,21 +67,24 @@
             * 5. clickedButton의 order를 activeSlideOrder에 저장
             * 6. 부모 component에 바뀐 활성 버튼의 순서를 전달.
             */
-            changeSlide (preActivatedButton, clickedButton) {
+            slideChangeByNavigation (preActivatedButton, clickedButton) {
                 if (preActivatedButton === clickedButton) {
                     return
                 }
-                else if (preActivatedButton < clickedButton) {
+                else if (preActivatedButton < clickedButton) { 
+                    this.slideChangeLock = true
                     document.getElementsByClassName('nextButton')[0].click()
                 }
                 else {
+                    this.slideChangeLock = true
                     document.getElementsByClassName('prevButton')[0].click()
                 }
-
-                this.activeSlideOrder = clickedButton
-                this.$emit('activatedSlide', clickedButton)
             },
-            slideChange (swiper) {
+            slideChangeBySwiper (swiper) {
+                if (this.slideChangeLock) {
+                    this.slideChangeLock = false
+                    return
+                }
                 let activeIndex = swiper.activeIndex
                 this.$refs.navigationBar.index = activeIndex
                 this.$refs.navigationBar.preActivatedButton = activeIndex

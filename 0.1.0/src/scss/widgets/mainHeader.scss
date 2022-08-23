@@ -1,7 +1,7 @@
 .mainHeader {
     position: fixed;
     z-index: 2;
-    top: 0;
+    top: -1px;
     left: 50%;
     transform-origin: 50% 0;
     transform: translate(-50%, 0) scaleY(1);

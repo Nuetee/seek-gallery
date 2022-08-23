@@ -43,7 +43,7 @@
                 this.artwork = artwork
                 this.cardImage = await this.artwork.getThumbnailImage()
             }
-            else {
+            else if(this.exhibitionId){
                 const exhibition = await new Exhibition(this.exhibitionId).init()
                 this.exhibition = exhibition
                 this.cardImage = await this.exhibition.getThumbnailImage()
@@ -60,19 +60,22 @@
         methods: {
             redirectMain () {
                 const _this = this
-                (this.artworkId)
-                ? this.$router.replace({
-                    path: '/artwork',
-                    query: {
-                        id: _this.artworkId
-                    }
-                })
-                : this.$router.replace({
-                    path: '/',
-                    query: {
-                        id: _this.exhibitionId
-                    }
-                })
+                if (this.artworkId) {
+                    this.$router.push({
+                        path: '/artwork',
+                        query: {
+                            id: _this.artworkId
+                        }
+                    })
+                }
+                else if (this.exhibitionId) {
+                    this.$router.push({
+                        path: '/',
+                        query: {
+                            id: _this.exhibitionId
+                        }
+                    })
+                }
             }
         }
     }
