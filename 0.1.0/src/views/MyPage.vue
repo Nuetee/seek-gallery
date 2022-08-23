@@ -41,7 +41,9 @@
         },
         data() {
             return {
-                minimized: true
+                minimized: true,
+                main_header_element: null,
+                vw: null
             };
         },
         beforeCreate() {},
@@ -67,10 +69,26 @@
                 if (scroll_height === scroll_top + offset_height) {
                     await _this.$refs.myTab.load()
                 }
+                
+                if (_this.main_header_element === null) {
+                    console.log('Failed to get dom elements.')
+                    return
+                }
+                
+                let header_scale = (scroll_top/_this.vw > 10) ? (0.7) : (1 - (scroll_top / (_this.vw * 10)) * 0.3)
+                _this.main_header_element.style.setProperty('transform', `translate(-50%, 0) scaleY(${header_scale})`)
+
+                for (let i = 0; i < _this.main_header_element.children.length; i++) {
+                    _this.main_header_element.children[i].style.setProperty('transform', `scaleX(${header_scale})`)
+                }
+
             })
         },
         beforeMount() {},
-        mounted() {},
+        mounted() {
+            this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
+            this.main_header_element = document.getElementsByClassName('mainHeader')[0]
+        },
         beforeUpdate() {},
         updated() {},
         beforeUnmount() {},
