@@ -92,7 +92,7 @@ export class Exhibition {
     }
 
     getOwnerName () {
-        return this.owner.getName()
+        return this.owner.getNickname()
     }
 
     getCategoryList () {

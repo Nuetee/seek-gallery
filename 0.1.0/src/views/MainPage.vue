@@ -31,6 +31,7 @@
             </div>
         </div>
         <SideBar ref="sideBar"></SideBar>
+        <div style="display: none">{{this.posterImageElement}}</div>
     </div>
 </template>
 <script>
@@ -75,6 +76,7 @@
 
                 main_header_element: null,
                 poster_element: null,
+                poster_image_element: null,
                 information_element: null,
                 artworks_element: null,
                 
@@ -82,8 +84,37 @@
                 userThumbnail: ''
             };
         },
+        computed: {
+            posterImageElement () {
+                /*
+                * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들의 초기 position('top')을 설정한다.
+                */
+                if (this.poster_image_element) {
+                    this.poster_image_element.onload = () => {
+                        this.poster_element = document.getElementsByClassName('poster')[0]
+                        this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
+                        this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
+                        
+                        this.poster_element.style.setProperty('top', '0')
+                        this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
+                        this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight}px`)
+
+                        this.$refs.informationTitle.setInitialPosition()
+                        this.$refs.artworksTitle.setInitialPosition()
+                    }
+                }
+                return this.poster_image_element
+            }
+        },
         beforeCreate() {},
         async created() {
+            // 유저 썸네일을 빠르게 로드하기 위해 Update history 코드와 분리
+            if(isAuth()) {
+                // Fetch profile thumbnail and set
+                this.user = getAuth()
+                this.userThumbnail = this.user.getThumbnail()
+            }
+            
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
             window.addEventListener('scroll', this.setAbsolutePosition)
@@ -97,28 +128,11 @@
             this.artwork_track_list = this.exhibition.getArtworkList()
             this.category_list = this.exhibition.getCategoryList()
             
-            /*
-            * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들의 초기 position('top')을 설정한다.
-            */
-            const poster_image_element = document.getElementById('posterImage')
-            poster_image_element.onload = () => {
-                this.poster_element = document.getElementsByClassName('poster')[0]
-                this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
-                this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
-                
-                this.poster_element.style.setProperty('top', '0')
-                this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
-                this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight}px`)
+            
+            this.poster_image_element = document.getElementById('posterImage')
+            
 
-                this.$refs.informationTitle.setInitialPosition()
-                this.$refs.artworksTitle.setInitialPosition()
-            }
-
-            if(isAuth()) {
-                // Fetch profile thumbnail and set
-                this.user = getAuth()
-                this.userThumbnail = this.user.getThumbnail()
-
+            if (isAuth()) {
                 // Update history
                 if (this.source === 'qrcode' || true) {
                     const is_history = await this.user.isExhibitionHistory(this.exhibition)

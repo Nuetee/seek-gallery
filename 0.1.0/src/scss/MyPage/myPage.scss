@@ -1,29 +1,29 @@
 #myPage {
-    position: relative;
-    .top {
-        height: calc(var(--vw, 1vw) * 15);
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        button {
-            height: calc(var(--vw, 1vw) * 8);
+    height: calc(var(--vh, 1vh) * 100);
+    
+    ::v-deep(.mainHeader) {
+        > div {
             width: auto;
             border: none;
-            background-color: transparent;
-            box-shadow: none;
-            outline: none;
-            img, svg {
+
+            img,
+            svg {
                 height: 100%;
                 width: auto;
             }
         }
-        .myMenu {
+
+        .left {
+            height: calc(var(--vw, 1vw) * 8);
+            width: auto;
+        }
+
+        .right {
             height: calc(var(--vw, 1vw) * 6);
         }
-        
     }
-    .middle {
+    .top {
+        padding-top: calc(var(--vw, 1vw) * 17.5);
         display: flex;
         flex-direction: column;
         ::v-deep(.profileContainer) {
@@ -32,14 +32,5 @@
         ::v-deep(.profileShareButton) {
             margin-top: calc(var(--vw, 1vw) * 2);
         }
-    }
-    .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-        z-index: 1;
     }
 }

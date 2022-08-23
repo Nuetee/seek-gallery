@@ -11,7 +11,7 @@
         padding-right: var(--padding, 5vw);
         height: calc(var(--vh, 1vh) * 100);
 
-        .artworkInformation {
+        > .artworkInformation {
             position: relative;
             z-index: 1;
             // mainHeader의 높이
