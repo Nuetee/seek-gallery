@@ -1,0 +1,7 @@
+#newArtworkPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(var(--vh, 1vh) * 100);
+    width: calc(var(--vw, 1vw) * 100);
+}

@@ -36,3 +36,8 @@
         }
     }
 </script>
+<style lang="scss" scoped>
+    .commentList {
+        color: black;
+    }
+</style>

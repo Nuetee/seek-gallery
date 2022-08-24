@@ -23,6 +23,7 @@
         width: 100%;
         grid-template-rows: calc(var(--vw, 1vw) * 4) calc(var(--vw, 1vw) * 4);
         .artworkTitle {
+            color: black !important;
             font-size: 13px;
         }
         .artist {

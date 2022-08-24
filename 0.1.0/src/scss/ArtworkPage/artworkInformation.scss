@@ -3,6 +3,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
+    height: calc(100% - var(--vw, 1vw) * 12);
     width: 100%;
 }
