@@ -9,7 +9,8 @@
     position: relative;
     width: calc(var(--vw, 1vw) * 33);
     height: calc(var(--vw, 1vw) * 18);
-    background-color: transparent;
+    background-color: var(--background-color, black);
+    border-radius: calc(var(--vw, 1vw) * 9);
 
     > div {
         background-color: var(--background-color, black);
@@ -17,7 +18,7 @@
         svg {
             fill: var(--color, white);
 
-            g {
+            path, g {
                 fill: var(--color, white);
             }
         }
@@ -37,7 +38,7 @@
         align-items: center;
         padding-left: calc(var(--vw, 1vw) * 6);
         padding-right: calc(var(--vw, 1vw) * 6);
-        border-radius: calc(var(--vw, 1vw) * 9);
+        
 
         .eye {
             width: 50%;

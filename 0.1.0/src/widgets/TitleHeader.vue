@@ -29,7 +29,6 @@
                 progression: 0
             };
         },
-        beforeCreate() {},
         created() {
             window.addEventListener('scroll', this.setProgression)
         },

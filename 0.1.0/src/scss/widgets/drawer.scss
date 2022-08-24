@@ -11,7 +11,7 @@
     border-top-left-radius: calc(var(--vw, 1vw) * 5);
     border-top-right-radius: calc(var(--vw, 1vw) * 5);
     padding: var(--padding, 5vw);
-    padding-top: calc(var(--vw, 1vw) * 12);
+    padding-top: 0;
     overflow-y: scroll;
     -ms-overflow-style: none;
     /* IE and Edge */
@@ -19,11 +19,14 @@
     /* Firefox */
 
     .header {
-        position: absolute;
+        position: sticky;
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(var(--vw, 1vw) * 8);
+        height: calc(var(--vw, 1vw) * 12);
+        padding-bottom: calc(var(--vw, 1vw) * 4);
+        background-color: white;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -43,7 +46,7 @@
     }
 }
 
-#drawer::-webkit-scrollbar {
+.drawer::-webkit-scrollbar {
     display: none;
     /* Chrome, Safari, Opera*/
     // 스크롤바 잔상 없애기

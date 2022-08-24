@@ -1,5 +1,5 @@
 <template>
-    <button class="archiveButton" @click="this.archive()">
+    <button class="archiveButton" @click="this.archive($event)">
         <div class="notArchive inner">
             <div class="eye">
                 <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +178,11 @@
                     this.not_archive_element.classList.add('activate')
                 }
             },
-            async archive () {
+            async archive (event) {
+                // event 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+
                 // No authorization information
                 if (!isAuth()) {
                     this.$router.push({
