@@ -1,9 +1,9 @@
 <template>
     <div class="artworkInfo poppins">
-        <div :style="'color: ' + this.artwork.getColor()" class="artworkTitle">
+        <div class="artworkTitle">
             {{ this.artwork.getName() }}
         </div>
-        <div :style="'color: ' + this.artwork.getColor()" class="artist">
+        <div class="artist">
             {{ this.artwork.getArtist().getNickname() }}
             <SNSLink :sns_link="this.artwork.getArtist().getSNS()"></SNSLink>
         </div>

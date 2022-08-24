@@ -169,7 +169,7 @@
             openSideBar (event) {
                 this.$refs.sideBar.openSideBar(event)
             },
-            /*
+            /**
             * - MainPage 스크롤 시 MainPage의 각 DOMElement들의 절대 위치를 재설정하는 함수.
             * : 각 DOMElement들의 position 속성은 'absolute' 이므로 top 속성을 변경하여 절대 위치를 재설정한다.
             * : 절대 위치를 재설정하는 이유는 Poster와 전시제목이 동시에 움직이지 않고 일정 거리를 벌리는 작업이 필요하기 때문.
@@ -194,7 +194,7 @@
                     this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + window.scrollY}px`)
                 }
             },
-            /*
+            /**
             * - poster이미지와 전시정보 사이 거리가 최대로 벌어졌을 때, this.proper_position_flag = true로 설정하여 ArtworkTrackList가 현재 자신의 위치(최상단으로부터의 거리)를 정확히 구할 수 있도록 하는 함수
             : 정확한 거리를 구할 수 있을 때 한번만 실행되면 되므로 함수 실행으로 인한 부하를 줄이기 위해 첫 실행 후 eventListener를 제거한다.
             */

@@ -51,12 +51,6 @@
 
             this.loadFlag = true
         },
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             redirectMain () {
                 const _this = this

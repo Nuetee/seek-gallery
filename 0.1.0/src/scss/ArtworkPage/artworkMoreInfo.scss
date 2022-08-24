@@ -1,5 +1,6 @@
 .artworkMoreInfo {
     position: relative;
+    z-index: 0;
     flex: 1 0 calc(var(--vw, 1vw) * 10);
     display: flex;
     flex-direction: column;
@@ -10,18 +11,37 @@
 
     .content {
         position: relative;
+        color: black;
         width: 100%;
         flex: 1 0 calc(var(--vw, 1vw) * 6);
         display: inline-block;
         overflow: scroll;
         vertical-align: top;
-        white-space: normal;
-        word-break: break-all;
+        
+        .information {
+            position: absolute;
+            top: 0;
+            left: 0;
+            white-space: normal;
+            word-break: break-all;
+        }
+        .overflowEffect {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     }
 
-    .artworkMoreInfoContent.more {
-        display: inline;
-        white-space: normal;
+    .content::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera*/
+        // 스크롤바 잔상 없애기
+        height: 0;
+        background: transparent;
+        /* Optional: just make scrollbar invisible */
+        -webkit-appearance: none;
     }
 
     .opacity-gradient {
