@@ -1,4 +1,6 @@
 .artworkTableInfo {
+    position: relative;
+    z-index: 1;
     flex: 0 0 calc(var(--vw, 1vw) * 15);
     padding-top: var(--padding, 5vw);
     padding-bottom: var(--padding, 5vw);
