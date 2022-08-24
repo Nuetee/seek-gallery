@@ -1,6 +1,6 @@
 <template>
     <div class="shareButton">
-        <svg @click="this.share()" width="38" height="38" viewBox="0 0 38 38" fill="none"
+        <svg @click="this.share($event)" width="38" height="38" viewBox="0 0 38 38" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M33.3364 21.7637V28.097C33.3364 28.9369 33.0028 29.7423 32.4089 30.3362C31.8151 30.93 31.0096 31.2637 30.1698 31.2637H8.00309C7.16324 31.2637 6.35779 30.93 5.76392 30.3362C5.17006 29.7423 4.83643 28.9369 4.83643 28.097V21.7637"
@@ -36,7 +36,11 @@
         beforeUnmount() {},
         unmounted() {},
         methods: {
-            share () {
+            share (event) {
+                // 이벤트 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+
                 let shareTitle = this.artwork.getName()
                 let shareText = this.artwork.getName() + ' ' + this.artwork.getArtist()
                 let shareUrl = 'https://se-ek.com' + this.$route.path + '?id=' + this.$route.query.id

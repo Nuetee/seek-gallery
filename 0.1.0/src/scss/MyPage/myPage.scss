@@ -37,3 +37,13 @@
         }
     }
 }
+
+#myPage::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera*/
+    // 스크롤바 잔상 없애기
+    height: 0;
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
+    -webkit-appearance: none;
+}

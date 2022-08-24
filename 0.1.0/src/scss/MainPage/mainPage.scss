@@ -64,4 +64,29 @@
     //     /* Optional: just make scrollbar invisible */
     //     -webkit-appearance: none;
     // }
+    .before-enter {
+        opacity: 0;
+    }
+
+    .enter {
+        transition: opacity 1s ease;
+    }
+    ::v-deep(.before-enter) {
+        opacity: 0;
+        transform: translate(0, 20px);
+    }
+    ::v-deep(.enter) {
+        transition: opacity 1.5s ease, transform 1s ease;
+    }
 }
+
+
+// ::v-deep(#mainPage) {
+//     .before-enter {
+//         opacity: 0;
+//     }
+
+//     .enter {
+//         transition: opacity 1s ease;
+//     }
+// }
