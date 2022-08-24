@@ -8,28 +8,30 @@
                 <RoundProfile :profile="this.userThumbnail" @click="this.openSideBar($event)"></RoundProfile>
             </template>
         </MainHeader>
-        <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
-            <div class="poster">
-                <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
-                    :style="this.poster_image_style">
-            </div>
-            <div class="exhibitionInformation">
-                <TitleHeader ref="informationTitle" :title="this.exhibition.getName()" :startHeight="(this.vw * 30)"
-                    :heightUnit="this.vw / 2">
-                </TitleHeader>
-                <div class="exhibitionIntroduction">
-                    {{ this.exhibition.getInformation() }}
+        <transition-group name="slide-fade" tag="div">
+            <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
+                <div class="poster">
+                    <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
+                        :style="this.poster_image_style">
+                </div>
+                <div class="exhibitionInformation">
+                    <TitleHeader ref="informationTitle" :title="this.exhibition.getName()" :startHeight="(this.vw * 30)"
+                        :heightUnit="this.vw / 2">
+                    </TitleHeader>
+                    <div class="exhibitionIntroduction">
+                        {{ this.exhibition.getInformation() }}
+                    </div>
+                </div>
+                <div class="exhibitionArtworks">
+                    <TitleHeader ref="artworksTitle" :title="'Artworks'" :startHeight="(this.vw * 30)"
+                        :heightUnit="this.vw / 2">
+                    </TitleHeader>
+                    <ArtworkTrackList ref="artworkTrackList" :artwork_track_list="this.artwork_track_list"
+                        :category_list="this.category_list" :proper_position_flag="this.proper_position_flag">
+                    </ArtworkTrackList>
                 </div>
             </div>
-            <div class="exhibitionArtworks">
-                <TitleHeader ref="artworksTitle" :title="'Artworks'" :startHeight="(this.vw * 30)"
-                    :heightUnit="this.vw / 2">
-                </TitleHeader>
-                <ArtworkTrackList ref="artworkTrackList" :artwork_track_list="this.artwork_track_list"
-                    :category_list="this.category_list" :proper_position_flag="this.proper_position_flag">
-                </ArtworkTrackList>
-            </div>
-        </div>
+        </transition-group>
         <SideBar ref="sideBar"></SideBar>
         <div style="display: none">{{this.posterImageElement}}</div>
     </div>
@@ -47,7 +49,6 @@
         isAuth, 
         getAuth 
     } from '@/modules/auth';
-
 
     export default {
         name: 'MainPage',
@@ -101,6 +102,17 @@
 
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
+
+                        let elementList = [this.information_element, this.artworks_element]
+                        elementList.forEach(function(element) {
+                            let children = Array.from(element.children)
+                            children.forEach(function(child) {
+                                child.classList.add('before-enter')
+                            })
+                        })
+                        this.fadeInEffect()
+
+                        window.addEventListener('scroll', this.fadeInEffect)
                     }
                 }
                 return this.poster_image_element
@@ -191,6 +203,26 @@
                     this.proper_position_flag = true
                     window.removeEventListener('scroll', this.getTrackListProperty)
                 }
+            },
+            fadeInEffect () {
+                let elementList = [this.information_element, this.artworks_element]
+
+                const _this = this
+                elementList.forEach(function(element) {
+                    let children = Array.from(element.children)
+
+                    const __this = _this
+                    children.forEach(function(child) {
+                        var rect = child.getBoundingClientRect()
+                        var in_viewport =  !(rect.bottom < 0 || rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
+                        
+                        if (in_viewport) {
+                            child.classList.add('enter')
+                            child.classList.remove('before-enter')     
+                        }
+                    })
+                })
+
             }
         }
     }
