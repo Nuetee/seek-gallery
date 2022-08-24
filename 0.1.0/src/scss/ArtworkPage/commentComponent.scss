@@ -1,0 +1,8 @@
+.commentComponent {
+    ::v-deep(.inputContainer) {
+        position: sticky;
+        // drawingBar 높이
+        top: calc(var(--vw, 1vw) * 12);
+        background-color: white;
+    }
+}

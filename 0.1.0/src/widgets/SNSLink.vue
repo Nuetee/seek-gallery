@@ -1,6 +1,6 @@
 <template>
     <div class="snsLink" v-if="this.sns_link">
-        <a :href="this.sns_link">
+        <a :href="this.sns_link" @click="this.stopEventPropagation($event)">
             <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M14.1667 1.66699H5.83332c-2.30118 0-4.16666 1.86548-4.16666 4.16667V14.167c0 2.3012 1.86548 4.1667 4.16666 4.1667h8.33338c2.3011 0 4.1666-1.8655 4.1666-4.1667V5.83366c0-2.30119-1.8655-4.16667-4.1666-4.16667Z"
@@ -30,6 +30,13 @@
                 sampleData: ''
             };
         },
+        methods: {
+            stopEventPropagation (event) {
+                // 이벤트 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+            }
+        }
     }
 </script>
 <style lang="scss" scoped src="../scss/widgets/snsLink.scss"></style>
