@@ -22,7 +22,7 @@
         width: 100%;
         margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
-        height: 4000px;
+        height: auto;
 
         > div {
             position: absolute;
@@ -53,40 +53,19 @@
                 color: #000000;
             }
         }
-    }
 
-    // .body::-webkit-scrollbar {
-    //     display: none;
-    //     /* Chrome, Safari, Opera*/
-    //     // 스크롤바 잔상 없애기
-    //     height: 0;
-    //     background: transparent;
-    //     /* Optional: just make scrollbar invisible */
-    //     -webkit-appearance: none;
-    // }
-    .before-enter {
-        opacity: 0;
+        .exhibitionArtworks {
+            padding-bottom: calc(var(--vh, 1vh) * 100);
+        }
     }
-
-    .enter {
-        transition: opacity 1s ease;
-    }
+    
     ::v-deep(.before-enter) {
         opacity: 0;
         transform: translate(0, 20px);
     }
+
     ::v-deep(.enter) {
         transition: opacity 1.5s ease, transform 1s ease;
     }
 }
 
-
-// ::v-deep(#mainPage) {
-//     .before-enter {
-//         opacity: 0;
-//     }
-
-//     .enter {
-//         transition: opacity 1s ease;
-//     }
-// }
