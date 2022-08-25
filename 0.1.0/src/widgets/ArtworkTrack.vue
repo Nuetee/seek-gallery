@@ -19,8 +19,10 @@
         name: 'ArtworkTrack',
         components: {},
         props: {
+            track_page_id_array: Array,
             track: Object,
-            track_number: String
+            track_number: String,
+            key: Number
         },
         data() {
             return {
@@ -31,7 +33,6 @@
             this.artwork_thumbnail = await this.track?.artwork.getThumbnailImage()
         },
         mounted() {
-
             let thumbnail_image_element_class = 'thumbnailImage' + ' ' + this.track_number
 
             const thumbnail_image_element = document.getElementsByClassName(thumbnail_image_element_class)[0]
@@ -44,10 +45,17 @@
             redirectArtworkPage () {
                 let artwork_page_id = this.track?.artwork.getPageID()
                 
+                // this.$router.push({
+                //     path: '/artwork',
+                //     query: {
+                //         id: artwork_page_id
+                //     }
+                // })
                 this.$router.push({
-                    path: '/artwork',
+                    path: '/new_artwork',
                     query: {
-                        id: artwork_page_id
+                        array: this.track_page_id_array,
+                        index: this.track_number
                     }
                 })
             }

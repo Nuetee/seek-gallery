@@ -3,10 +3,12 @@
         <div class="body" :style="'color: ' + this.artwork.getColor()">
             <MainHeader :background_color="'transparent'">
                 <template v-slot:left>
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" @click="this.back()">
-                        <path d="M7 13L1 7L7 1" :stroke="this.artwork.getColor()" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+                    <div class="backButton" @click="this.back($event)">
+                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 13L1 7L7 1" :stroke="this.artwork.getColor()" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
                 </template>
                 <template v-slot:right>
                     <RoundProfile :profile="this.profile" @click="this.openSideBar($event)"></RoundProfile>
@@ -147,7 +149,10 @@
             window.removeEventListener('scroll', this.scrollBottom)
         },
         methods: {
-            back () {
+            back (event) {
+                // event 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
                 window.history.back()
             },
             scrollBottom () {

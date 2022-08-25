@@ -1,11 +1,12 @@
 <template>
     <div class="artworkImageSlider">
-        <swiper v-bind="this.swiperOptions">
+        <swiper v-bind="this.swiperOptions" v-if="this.artwork_image_information_list">
             <swiper-slide v-for="(image_information, i) in this.artwork_image_information_list" :key="i">
                 <img :src="image_information.src" :style="image_information.style">
             </swiper-slide>
             <div class="swiper-pagination"></div>
         </swiper>
+        <div class="blankSpace" v-else></div>
     </div>
 </template>
 <script>

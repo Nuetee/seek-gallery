@@ -60,7 +60,14 @@ body {
   justify-content: center;
 }
 
-html::-webkit-scrollbar, body::-webkit-scrollbar, #app::-webkit-scrollbar {
+body::-webkit-scrollbar {
+  display: none;
+  height: 0;
+  background: transparent;
+  -webkit-appearance: none;
+}
+
+#app::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, Opera*/
   // 스크롤바 잔상 없애기
@@ -76,6 +83,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, #app::-webkit-scrollbar {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  overflow: scroll;
 
   > div[id$="Page"] {
     width: calc(var(--vw, 1vw) * 100);

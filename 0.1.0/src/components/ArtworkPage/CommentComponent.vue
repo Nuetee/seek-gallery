@@ -35,11 +35,16 @@
                 nothingToUpdate: false
             }
         },
+        watch: {
+            async artwork () {
+                await this.rebuild(0, 20)
+            }
+        },
         async created() {
             if (isAuth()) {
                 this.user = getAuth()
             }
-            await this.rebuild(0, 20)
+            // await this.rebuild(0, 20)
         },
         methods: {
             async rebuild (offset, length) {

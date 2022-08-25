@@ -9,6 +9,10 @@
         name: 'TitleHeader',
         components: {},
         props: {
+            document_element_id: {
+                type: String,
+                default: 'app'
+            },
             title: {
                 type: String,
                 default: 'Default'
@@ -30,13 +34,10 @@
             };
         },
         created() {
-            window.addEventListener('scroll', this.setProgression)
+            document.getElementById(this.document_element_id).addEventListener('scroll', this.setProgression)
         },
         mounted() {
             this.setInitialPosition()
-        },
-        unmounted() {
-            window.removeEventListener('scroll', this.setProgression)
         },
         methods: {
             setInitialPosition () {
