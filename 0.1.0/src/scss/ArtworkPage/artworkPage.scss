@@ -11,6 +11,18 @@
         padding-right: var(--padding, 5vw);
         height: calc(var(--vh, 1vh) * 100);
 
+        ::v-deep(.mainHeader) {
+            .left {
+                .backButton {
+                    width: calc(var(--vw, 1vw) * 8);
+                    height: calc(var(--vw, 1vw) * 8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                }
+            }
+        }
+
         > .artworkInformation {
             position: relative;
             z-index: 1;

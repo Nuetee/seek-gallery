@@ -18,16 +18,20 @@
     </div>
 </template>
 <script>
+
     export default {
         name: 'DotScrollBar',
         components: {},
         props: {
+            document_element_id: {
+                type: String,
+                default: null
+            },
             position_array: {
                 type: Array,
                 default: []
             },
             contents_height: Number,
-            // 스크롤해서 일정 위치에 올랐을 때, fade-in과 살짝 위로올라오는 애니메이션을 주기 위해선 top_position을 부모요소 또는 dotscrollbar가 해당 위치에 도달한 경우에 설정되도록 해야 한다. 또는 transform: translate이 위치에 영향을 미치는지 확인(절대/상대 모두)
             contents_top_position: Number,
         },
         data() {
@@ -63,7 +67,11 @@
             },
         },
         mounted () {
-            window.addEventListener('scroll', this.setProgressBar)
+            if (this.document_element_id)
+                document.getElementById(this.document_element_id).addEventListener('scroll', this.setProgressBar)
+            else
+                window.addEventListener('scroll', this.setProgressBar)
+
             this.dotScrollBar = document.getElementsByClassName('dotScrollBar')[0]
 
             // 이식 시 변경해야 되는 부분 --
@@ -76,8 +84,8 @@
             this.scroll_bar_style = 'height: ' + scroll_bar_height + 'px; top:' + scroll_bar_top + 'px;'
         },
         unmounted () {
-             window.removeEventListener('scroll', this.setProgressBar)
-             window.removeEventListener('scroll', this.getTrackListProperty)
+            if (this.document_element_id === null)
+                window.removeEventListener('scroll', this.setProgressBar)
         },
         methods: {
             setProgressBar () {
@@ -85,7 +93,14 @@
                     return
                 }
                 
-                let scroll_distance = window.scrollY + this.header.getBoundingClientRect().height - this.contents_top_position
+                
+                let scroll_distance = this.header.getBoundingClientRect().height - this.contents_top_position
+                
+                if (this.document_element_id) {
+                    scroll_distance += document.getElementById(this.document_element_id).scrollTop
+                }
+                else
+                    scroll_distance += window.scrollY
 
                 if (scroll_distance <= 0) {
                     this.progression = 0
@@ -125,7 +140,10 @@
                 let percentile = category_position / 100
                 let scroll_position = this.contents_height * percentile + this.contents_top_position - this.header.getBoundingClientRect().height
 
-                window.scrollTo({ top: scroll_position, behavior: "smooth" })
+                if (this.document_element_id)
+                    document.getElementById(this.document_element_id).scrollTo({ top: scroll_position, behavior: "smooth" })
+                else
+                    window.scrollTo({ top: scroll_position, behavior: "smooth" })
                 
                 document.getElementsByClassName('categoryCircle')[button_index].style.setProperty('opacity', '1')
                 document.getElementsByClassName('categoryCircle')[button_index].style.setProperty('z-index', '1')

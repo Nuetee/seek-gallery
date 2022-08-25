@@ -14,6 +14,7 @@
 
     > div {
         background-color: var(--background-color, black);
+        border-radius: calc(var(--vw, 1vw) * 9);
         
         svg {
             fill: var(--color, white);

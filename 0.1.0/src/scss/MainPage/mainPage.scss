@@ -1,5 +1,8 @@
 #mainPage {
-    min-height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 150);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
     ::v-deep(.mainHeader) {
         .left {
             transform-origin: 0 50%;
@@ -17,7 +20,15 @@
     }
 
     // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
-    .body {
+    #viewPort {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(var(--vh, 1vh) * 100);
+        overflow: scroll;
+    }
+    #body {
         position: relative;
         width: 100%;
         margin-top: calc(var(--vw, 1vw) * 15);
@@ -29,6 +40,11 @@
             top: 0;
             left: 0;
             width: 100%;
+        }
+
+        > div[class^="exhibition"] {
+            padding-left: var(--padding, 5vw);
+            padding-right: var(--padding, 5vw);
         }
 
         .poster {
@@ -69,3 +85,9 @@
     }
 }
 
+#viewPort::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    background: transparent;
+    -webkit-appearance: none;
+}

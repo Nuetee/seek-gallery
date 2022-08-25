@@ -1,5 +1,5 @@
 <template>
-    <div class="drawer" :class="this.class">
+    <div class="drawer" :class="this.class" @click="this.stopPropagation($event)">
         <div class="header">
             <div class="drawingBar">
                 <div></div>
@@ -45,6 +45,11 @@
         beforeUnmount() {},
         unmounted() {},
         methods: {
+            stopPropagation (event) {
+                // event 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+            },
             showDrawer () {
                 const _this = this
                 if (this.drawer === null) {

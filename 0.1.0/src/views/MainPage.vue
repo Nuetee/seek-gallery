@@ -8,30 +8,40 @@
                 <RoundProfile :profile="this.userThumbnail" @click="this.openSideBar($event)"></RoundProfile>
             </template>
         </MainHeader>
-        <transition-group name="slide-fade" tag="div">
-            <div class="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
-                <div class="poster">
-                    <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
-                        :style="this.poster_image_style">
-                </div>
-                <div class="exhibitionInformation">
-                    <TitleHeader ref="informationTitle" :title="this.exhibition.getName()" :startHeight="(this.vw * 30)"
-                        :heightUnit="this.vw / 2">
-                    </TitleHeader>
-                    <div class="exhibitionIntroduction">
-                        {{ this.exhibition.getInformation() }}
+        <div id="viewPort">
+            <transition-group name="slide-fade" tag="div">
+                <div id="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
+                    <div class="poster">
+                        <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
+                            :style="this.poster_image_style">
+                    </div>
+                    <div class="exhibitionInformation">
+                        <TitleHeader ref="informationTitle" 
+                            :document_element_id="'viewPort'" 
+                            :title="this.exhibition.getName()" 
+                            :startHeight="(this.vw * 30)"
+                            :heightUnit="this.vw / 2">
+                        </TitleHeader>
+                        <div class="exhibitionIntroduction">
+                            {{ this.exhibition.getInformation() }}
+                        </div>
+                    </div>
+                    <div class="exhibitionArtworks">
+                        <TitleHeader ref="artworksTitle" 
+                            :title="'Artworks'" 
+                            :startHeight="(this.vw * 30)"
+                            :heightUnit="this.vw / 2"
+                            :document_element_id="'viewPort'">
+                        </TitleHeader>
+                        <ArtworkTrackList ref="artworkTrackList" 
+                            :artwork_track_list="this.artwork_track_list"
+                            :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
+                            :document_element_id="'viewPort'">
+                        </ArtworkTrackList>
                     </div>
                 </div>
-                <div class="exhibitionArtworks">
-                    <TitleHeader ref="artworksTitle" :title="'Artworks'" :startHeight="(this.vw * 30)"
-                        :heightUnit="this.vw / 2">
-                    </TitleHeader>
-                    <ArtworkTrackList ref="artworkTrackList" :artwork_track_list="this.artwork_track_list"
-                        :category_list="this.category_list" :proper_position_flag="this.proper_position_flag">
-                    </ArtworkTrackList>
-                </div>
-            </div>
-        </transition-group>
+            </transition-group>
+        </div>
         <SideBar ref="sideBar"></SideBar>
         <div style="display: none">{{this.posterImageElement}}</div>
     </div>
@@ -112,7 +122,7 @@
                         })
                         this.fadeInEffect()
 
-                        window.addEventListener('scroll', this.fadeInEffect)
+                        document.getElementById('viewPort').addEventListener('scroll', this.fadeInEffect)
                     }
                 }
                 return this.poster_image_element
@@ -128,10 +138,6 @@
             }
             
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
-
-            window.addEventListener('scroll', this.setAbsolutePosition)
-
-            window.addEventListener('scroll', this.getTrackListProperty)
 
             this.exhibition = await new Exhibition(this.id).init()
             let images = await this.exhibition.getImages()
@@ -158,13 +164,22 @@
             }
         },
         mounted() {
+            // // 모바일 웹에서 주소창을 줄이거나 없애는 코드
+            const _this = this
+
+            setTimeout(function() {
+                _this.scrollBottom()
+                document.getElementById('mainPage').addEventListener('scroll', _this.scrollBottom)
+            }, 0)
+            document.getElementById('viewPort').addEventListener('scroll', this.setAbsolutePosition)
+            document.getElementById('viewPort').addEventListener('scroll', this.getTrackListProperty)
+
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
         },
-        unmounted () {
-             window.removeEventListener('scroll', this.setAbsolutePosition)
-             window.removeEventListener('scroll', this.getTrackListProperty)
-        },
         methods: {
+            scrollBottom () {
+                window.scrollTo(0, document.getElementById('mainPage').clientHeight)
+            },
             // SideBar component의 openSideBar함수를 실행시켜 sideBar가 열리도록 하는 함수
             openSideBar (event) {
                 this.$refs.sideBar.openSideBar(event)
@@ -182,16 +197,16 @@
                     return
                 }
                 
-                let header_scale = (window.scrollY/this.vw > 10) ? (0.7) : (1 - (window.scrollY / (this.vw * 10)) * 0.3)
+                let header_scale = (document.getElementById('viewPort').scrollTop / this.vw > 10) ? (0.7) : (1 - (document.getElementById('viewPort').scrollTop / (this.vw * 10)) * 0.3)
                 this.main_header_element.style.setProperty('transform', `translate(-50%, 0) scaleY(${header_scale})`)
 
                 for (let i = 0; i < this.main_header_element.children.length; i++) {
                     this.main_header_element.children[i].style.setProperty('transform', `scaleX(${header_scale})`)
                 }
 
-                if (window.scrollY < (50 * this.vw)) {
-                    this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + window.scrollY}px`)
-                    this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + window.scrollY}px`)
+                if (document.getElementById('viewPort').scrollTop < (50 * this.vw)) {
+                    this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
+                    this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
                 }
             },
             /**
@@ -199,9 +214,9 @@
             : 정확한 거리를 구할 수 있을 때 한번만 실행되면 되므로 함수 실행으로 인한 부하를 줄이기 위해 첫 실행 후 eventListener를 제거한다.
             */
             getTrackListProperty () {
-                if (window.scrollY >= (50 * this.vw)) {
+                if (document.getElementById('viewPort').scrollTop >= (50 * this.vw)) {
                     this.proper_position_flag = true
-                    window.removeEventListener('scroll', this.getTrackListProperty)
+                    document.getElementById('viewPort').removeEventListener('scroll', this.getTrackListProperty)
                 }
             },
             fadeInEffect () {
