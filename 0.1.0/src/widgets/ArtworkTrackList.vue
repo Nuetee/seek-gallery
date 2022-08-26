@@ -6,7 +6,7 @@
             :document_element_id="this.document_element_id">
         </DotScrollBar>
         <div class="artworkTracksContainer">
-            <ArtworkTrack v-for="(track, i) in this.track_array" 
+            <ArtworkTrack class="before-enter" v-for="(track, i) in this.track_array" 
                 :key="i" :track="track" :track_number="i.toString()"
                 :track_page_id_array="this.track_page_id_array"
                 @track_loaded="this.getTrackListProperty()"></ArtworkTrack>
