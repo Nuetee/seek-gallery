@@ -1,11 +1,13 @@
 .artworkInfo {
     display: grid;
     grid-template-rows: auto calc(var(--vw, 1vw) * 10);
+    gap: calc(var(--vw, 1vw) * 0.5);
     align-items: center;
     width: calc(100% - calc(var(--vw, 1vw) * 10));
     margin-left: var(--padding, 5vw);
     margin-right: var(--padding, 5vw);
     text-align: left;
+
     > div {
         overflow: visible;
     }
