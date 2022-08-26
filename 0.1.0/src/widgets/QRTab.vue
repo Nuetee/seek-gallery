@@ -31,12 +31,6 @@
             }
             this.loadFlag = true
         },
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             async rebuild (offset, length) {
                 const newQRList = await this.user.getHistoryExhibitions(offset, length)

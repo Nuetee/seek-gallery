@@ -1,17 +1,18 @@
 .artworkCard {
-    width: calc(var(--vw, 1vw) * 43);
+    width: calc(var(--vw, 1vw) * 41);
     height: auto;
     border: none;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: calc(var(--vw, 1vw) * 1);
-    margin-bottom: calc(var(--vw, 1vw) * 2);
+    gap: calc(var(--vw, 1vw) * 2);
+    margin-bottom: calc(var(--vw, 1vw) * 4);
     z-index: 0;
+
     ::v-deep(.artworkImageContainer) {
         border: none;
         width: 100%;
-        height: calc(var(--vw, 1vw) * 43);
+        height: calc(var(--vw, 1vw) * 41);
         border-radius: calc(var(--vw, 1vw) * 2);
         img {
             width: 100%;

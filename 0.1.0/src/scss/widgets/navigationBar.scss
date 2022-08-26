@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     background-color: white;
+
     ::v-deep(#tabs) {
         height: 100%;
         width: 100%;
@@ -24,6 +25,7 @@
         .qrImage {
             height: 50%;
             width: auto;
+            overflow: visible;
         }
         .eyes {
             display: flex;

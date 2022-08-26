@@ -3,7 +3,7 @@
         <div class="label">설명</div>
         <div class="content">
             <div class="information">
-                {{ this.artwork.getInformation() }}
+                {{ this.artwork ? this.artwork.getInformation() : '' }}
             </div>
             <div class="overflowEffect"></div>
         </div>
