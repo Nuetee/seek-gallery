@@ -14,14 +14,6 @@
                 sampleData: ''
             };
         },
-        beforeCreate() {},
-        created() {},
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             copyURL () {
                 let dummy = document.createElement("input");

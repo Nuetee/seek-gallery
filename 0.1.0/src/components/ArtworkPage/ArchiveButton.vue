@@ -107,8 +107,31 @@
         name: 'ArchiveButton',
         components: {},
         props: {
-            artwork: Object,
-            color: String,
+            artwork: Object
+        },
+        data() {
+            return {
+            };
+        },
+        watch: {
+            artwork: {
+                deep: true,
+                async handler() {
+                    let color = this.artwork ? this.artwork.getColor() : 'black'
+                    // artwork.getColor()의 값에 따라 Archive button의 배경 및 색상 변경
+                    if (color === 'black') {
+                        document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'black')
+                        document.getElementsByClassName('archiveButton')[0].style.
+                        setProperty('--color', 'white')
+                    }
+                    else if (color === 'white') {
+                        document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'white')
+                        document.getElementsByClassName('archiveButton')[0].style.
+                        setProperty('--color', 'black')
+                    }
+                    await this.setButtonAnimation()
+                }
+            }
         },
         data() {
             return {
@@ -130,27 +153,15 @@
                 user: null
             };
         },
-        beforeCreate() {},
         created () {
             if (isAuth()) {
                 this.user = getAuth()
             }
         },
-        beforeMount() {},
         async mounted() {
-            // artwork.getColor()의 값에 따라 Archive button의 배경 및 색상 변경
-            if (this.color === 'black') {
-                document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'black')
-                document.getElementsByClassName('archiveButton')[0].style.
-                setProperty('--color', 'white')
-            }
-            else if (this.color === 'white') {
-                document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', 'white')
-                document.getElementsByClassName('archiveButton')[0].style.
-                setProperty('--color', 'black')
-            }
+            
 
-            await this.setButtonAnimation()
+            // await this.setButtonAnimation()
         },
         beforeUpdate() {},
         updated() {},

@@ -5,7 +5,6 @@
             @insertComment="this.insert"></InputContainer>
         <CommentList 
             v-if="this.commentList.length > 0" 
-            :artwork="this.artwork" 
             :commentList="this.commentList"
             @deleteComment="this.delete"></CommentList>
     </div>
@@ -36,8 +35,17 @@
             }
         },
         watch: {
-            async artwork () {
-                await this.rebuild(0, 20)
+            artwork: {
+                deep: true,
+                async handler() {
+                    console.log(this.artwork)
+                    this.commentIdList = []
+                    this.myCommentList = []
+                    this.otherCommentList = []
+                    this.commentList = []
+                    this.nothingToUpdate = false
+                    await this.rebuild(0, 20)
+                }
             }
         },
         async created() {
@@ -63,6 +71,7 @@
                     this.otherCommentList.push(comment)
                 }
                 this.commentList = this.myCommentList.concat(this.otherCommentList)
+                console.log(this.commentList)
             },
             async insert (comment_id) {
                 const comment = await new Comment(comment_id.toString()).init()

@@ -1,79 +1,68 @@
 #artworkPage {
-    height: calc(var(--vh, 1vh) * 150);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(var(--vh, 1vh) * 100);
+    width: calc(var(--vw, 1vw) * 100);
+    overflow-x: visible;
 
-    .body {
+    ::v-deep(.roundProfile) {
+        height: calc(var(--vw, 1vw) * 7.7);
+        width: calc(var(--vw, 1vw) * 7.7);
+    }
+    > .artworkInformation {
         position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, 0);
-        width: calc(var(--vw, 1vw) * 100);
-        padding-left: var(--padding, 5vw);
-        padding-right: var(--padding, 5vw);
-        height: calc(var(--vh, 1vh) * 100);
+        z-index: 2;
+        // mainHeader의 높이
+        top: calc(var(--vw, 1vw) * 17.5);
+        width: calc(100% - var(--padding, 5vw) * 2);
 
-        ::v-deep(.mainHeader) {
-            .left {
-                .backButton {
-                    width: calc(var(--vw, 1vw) * 8);
-                    height: calc(var(--vw, 1vw) * 8);
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                }
-            }
-        }
-
-        > .artworkInformation {
-            position: relative;
-            z-index: 1;
-            // mainHeader의 높이
-            top: calc(var(--vw, 1vw) * 17.5);
-
-            .top {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-        
-                .artworkTitle {
-                    font-weight: 600;
-                    font-size: 24px;
-                    line-height: 115%;
-                    letter-spacing: -0.04em;
-                    text-align: left;
-                }
-            }
-        
-            .bottom {
-                padding-top: calc(var(--vw, 1vw) * 3);
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                gap: calc(var(--vw, 1vw) * 2);
-        
-                .artist {
-                    font-weight: 700;
-                    font-size: 13px;
-                    line-height: 115%;
-                    letter-spacing: -0.06em;
-                }
-            }
-        }
-
-        ::v-deep(.artworkImageSlider) {
-            z-index: 0;
-        }
-
-        .buttonContainer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 1;
-            width: 100%;
-            height: calc(var(--vw, 1vw) * 30);
-
+        .top {
             display: flex;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: space-between;
+
+            .artworkTitle {
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 115%;
+                letter-spacing: -0.04em;
+                text-align: left;
+            }
         }
+
+        .bottom {
+            padding-top: calc(var(--vw, 1vw) * 3);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: calc(var(--vw, 1vw) * 2);
+
+            .artist {
+                font-weight: 700;
+                font-size: 13px;
+                line-height: 115%;
+                letter-spacing: -0.06em;
+            }
+        }
+    }
+    
+    .artworkSlider {
+        left: calc(-1 * var(--padding, 5vw));
+        width: calc(100% + 2 * var(--padding, 5vw));
+        height: 100%;
+    }
+
+    .buttonContainer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: calc(var(--vw, 1vw) * 30);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
     }
 }

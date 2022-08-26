@@ -18,7 +18,6 @@
             CommentContainer
         },
         props: {
-            artwork: Object,
             commentList: {
                 type: Array,
                 default: []
