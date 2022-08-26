@@ -90,6 +90,7 @@
                 poster_image_element: null,
                 information_element: null,
                 artworks_element: null,
+                artwork_tracks_container_element: null,
                 
                 header_scale: 1,
                 userThumbnail: ''
@@ -105,6 +106,7 @@
                         this.poster_element = document.getElementsByClassName('poster')[0]
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
+                        this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
                         
                         this.poster_element.style.setProperty('top', '0')
                         this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
@@ -220,7 +222,7 @@
                 }
             },
             fadeInEffect () {
-                let elementList = [this.information_element, this.artworks_element]
+                let elementList = [this.information_element, this.artworks_element, this.artwork_tracks_container_element]
 
                 const _this = this
                 elementList.forEach(function(element) {
@@ -234,6 +236,10 @@
                         if (in_viewport) {
                             child.classList.add('enter')
                             child.classList.remove('before-enter')     
+                        }
+                        else {
+                            child.classList.add('after-enter')
+                            child.classList.remove('enter')   
                         }
                     })
                 })
