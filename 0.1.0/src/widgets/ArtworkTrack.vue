@@ -52,7 +52,7 @@
                 //     }
                 // })
                 this.$router.push({
-                    path: '/new_artwork',
+                    path: '/artwork',
                     query: {
                         array: this.track_page_id_array,
                         index: this.track_number

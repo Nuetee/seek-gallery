@@ -13,7 +13,6 @@ import { authByToken } from '@/modules/kakao'
 import MainPage from '../views/MainPage.vue'
 import ArtworkPage from '../views/ArtworkPage.vue'
 import MyPage from '../views/MyPage.vue'
-import NewArtworkPage from '../views/NewArtworkPage'
 
 const routes = [
   {
@@ -25,11 +24,6 @@ const routes = [
     path: '/artwork',
     name: 'artwork',
     component: ArtworkPage
-  },
-  {
-    path: '/new_artwork',
-    name: 'new_artwork',
-    component: NewArtworkPage
   },
   {
     path: '/mypage',

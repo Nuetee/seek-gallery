@@ -6,7 +6,7 @@
                 v-model="this.body" 
                 @click="this.input"
                 rows="3" 
-                placeholder="아트워크에 대한 감상평을 남겨주세요.."></textarea>
+                placeholder="아트워크에 대한 감상평을 남겨주세요."></textarea>
             <div>
                 <input 
                     @click="this.submit" 

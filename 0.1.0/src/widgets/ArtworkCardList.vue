@@ -56,17 +56,6 @@
                 isArtwork: this.artworkIdList.length > 0
             };
         },
-        beforeCreate() {},
-        created() {
-
-        },
-        beforeMount() {},
-        mounted() {},
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
-        methods: {}
     }
 </script>
 <style lang="scss" scoped src="../scss/widgets/artworkCardList.scss"></style>

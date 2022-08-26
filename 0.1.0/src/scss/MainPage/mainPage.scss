@@ -4,6 +4,8 @@
     padding-right: 0 !important;
 
     ::v-deep(.mainHeader) {
+        overflow-x: visible;
+        
         .left {
             transform-origin: 0 50%;
             height: calc(var(--vw, 1vw) * 8);
@@ -15,6 +17,7 @@
         } 
 
         .right {
+            overflow: visible;
             transform-origin: 100% 50%;
         }
     }
@@ -23,8 +26,9 @@
     #viewPort {
         position: fixed;
         top: 0;
-        left: 0;
-        width: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(var(--vw, 1vw) * 100);
         height: calc(var(--vh, 1vh) * 100);
         overflow: scroll;
     }
