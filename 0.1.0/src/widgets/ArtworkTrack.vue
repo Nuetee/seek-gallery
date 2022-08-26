@@ -43,14 +43,6 @@
         },
         methods: {
             redirectArtworkPage () {
-                let artwork_page_id = this.track?.artwork.getPageID()
-                
-                // this.$router.push({
-                //     path: '/artwork',
-                //     query: {
-                //         id: artwork_page_id
-                //     }
-                // })
                 this.$router.push({
                     path: '/artwork',
                     query: {
