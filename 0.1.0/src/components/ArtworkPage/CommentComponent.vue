@@ -38,7 +38,6 @@
             artwork: {
                 deep: true,
                 async handler() {
-                    console.log(this.artwork)
                     this.commentIdList = []
                     this.myCommentList = []
                     this.otherCommentList = []
@@ -71,7 +70,6 @@
                     this.otherCommentList.push(comment)
                 }
                 this.commentList = this.myCommentList.concat(this.otherCommentList)
-                console.log(this.commentList)
             },
             async insert (comment_id) {
                 const comment = await new Comment(comment_id.toString()).init()

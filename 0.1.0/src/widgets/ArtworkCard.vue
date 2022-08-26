@@ -55,10 +55,13 @@
             redirectMain () {
                 const _this = this
                 if (this.artworkId) {
+                    let artwork_array = [this.artworkId]
+
                     this.$router.push({
                         path: '/artwork',
                         query: {
-                            id: _this.artworkId
+                            array: artwork_array,
+                            index: 0
                         }
                     })
                 }
