@@ -130,7 +130,6 @@
                 return this.poster_image_element
             }
         },
-        beforeCreate() {},
         async created() {
             // 유저 썸네일을 빠르게 로드하기 위해 Update history 코드와 분리
             if(isAuth()) {
@@ -171,12 +170,15 @@
 
             setTimeout(function() {
                 _this.scrollBottom()
-                document.getElementById('mainPage').addEventListener('scroll', _this.scrollBottom)
+                window.addEventListener('scroll', _this.scrollBottom)
             }, 0)
             document.getElementById('viewPort').addEventListener('scroll', this.setAbsolutePosition)
             document.getElementById('viewPort').addEventListener('scroll', this.getTrackListProperty)
 
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
+        },
+        unmounted() {
+            window.removeEventListener('scroll', this.scrollBottom)
         },
         methods: {
             scrollBottom () {
@@ -231,7 +233,7 @@
                     const __this = _this
                     children.forEach(function(child) {
                         var rect = child.getBoundingClientRect()
-                        var in_viewport =  !(rect.bottom < 0 || rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
+                        var in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
                         
                         if (in_viewport) {
                             child.classList.add('enter')

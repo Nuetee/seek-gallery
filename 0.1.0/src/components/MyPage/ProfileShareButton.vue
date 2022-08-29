@@ -7,7 +7,7 @@
     import { getAuth } from '@/modules/auth';
 
     export default {
-        name: '',
+        name: 'ProfileShareButton',
         components: {},
         data() {
             return {
@@ -24,11 +24,6 @@
                 dummy.select();
                 document.execCommand("copy");
                 document.body.removeChild(dummy);
-                this.$gtag.event('click', {
-                    event_category: 'user',
-                    event_label: 'copy',
-                    value: getAuth().getID()
-                })
 
                 alert("페이지 주소를 클립보드에 복사했습니다.");
             }

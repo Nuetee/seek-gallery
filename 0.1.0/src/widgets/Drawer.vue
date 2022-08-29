@@ -79,10 +79,12 @@
                 this.drawer_opened = false
             },
             setTouchStart(event) {
+                this.stopPropagation(event)
                 this.touch_start = event.changedTouches[0].clientY
                 this.drawer.style.setProperty('transition', 'none')
             },
             setTouchMove (event) {
+                this.stopPropagation(event)
                 let touch_move = event.changedTouches[0].clientY;
                 
                 let distance = touch_move - this.touch_start
@@ -94,6 +96,7 @@
                 }
             },
             setTouchEnd (event) {
+                this.stopPropagation(event)
                 this.drawer.style.setProperty('transition', 'bottom 0.5s')
                 let touch_end = event.changedTouches[0].clientY
 
