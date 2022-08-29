@@ -76,7 +76,7 @@
                 }, {
                     title: '피드백'
                 }],
-                reportURL: 'https://forms.gle/CoJ7AShAUA3joVBQ9'
+                reportURL: 'https://forms.gle/GY7jhsnJAcHLK3nw5'
             };
         },
         created () {
