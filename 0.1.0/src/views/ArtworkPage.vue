@@ -23,7 +23,7 @@
         </div>
         <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="this.setCurrentArtwork">
             <swiper-slide v-for="(artwork, i) in this.artwork_list" :key="i">
-                <ArtworkImageSlider :artwork_image_information_list="(artwork !== undefined ? artwork.image_information : null)"></ArtworkImageSlider>
+                <ArtworkImageSlider :artwork_image_information_list="(artwork ? artwork.image_information : null)"></ArtworkImageSlider>
             </swiper-slide>
         </swiper>
         <div class="buttonContainer">
@@ -90,9 +90,10 @@
             return {
                 artwork_id_list: this.$route.query.array,
                 artwork_list: null,
+                initialize_artwork_list: false,
                 current_artwork: null,
                 profile: '',
-                initial_index: parseInt(this.$route.query.index),
+                current_index: parseInt(this.$route.query.index),
                 swiper_options: {
                     direction: 'vertical',
                     slidesPerView: 1,
@@ -110,28 +111,19 @@
                 let user = getAuth()
                 this.profile = user.getProfile()
             }
-            
+
             this.artwork_list = new Array(this.artwork_id_list.length)
             
-            let initial_load = await this.setArtworkList(this.initial_index)
+            let initial_load = await this.pushArtworkInList(this.current_index)
             if (initial_load)
-                this.current_artwork = this.artwork_list[this.initial_index]
+                this.current_artwork = this.artwork_list[this.current_index]
             else
                 console.log('load failure')
 
-            let load_range = 1
-            
-            while (true) {
-                let next = await this.setArtworkList(this.initial_index + load_range)
-                let prev = await this.setArtworkList(this.initial_index - load_range)
-                load_range += 1
-
-                if (!next && !prev) {
-                    break
-                }
+            for (let index = this.current_index - 3; index <= this.current_index + 3; index++) {
+                await this.pushArtworkInList(index)
             }
         },
-        beforeMount() {},
         mounted() {
             const _this = this
             // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
@@ -148,7 +140,6 @@
                 }
             })
         },
-        beforeUpdate() {},
         updated () {
             const _this = this
             // Scroll Listener
@@ -167,8 +158,6 @@
                 }
             })
         },
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             back (event) {
                 // event 전파 방지
@@ -185,12 +174,12 @@
 
                 this.$refs.commentDrawer.showDrawer()
             },
-            async setArtworkList (index) {
+            async pushArtworkInList (index) {
                 if (index >= this.artwork_id_list.length || index < 0) {
                     return false
                 }
 
-                if (this.artwork_list[index] === undefined) {
+                if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
                     let artwork = await new Artwork(this.artwork_id_list[index]).init()
                     let artwork_images = await artwork.getAllImages()
                     let container_ratio = window.innerWidth / window.innerHeight
@@ -219,19 +208,39 @@
                 return true
             },
             async setCurrentArtwork (swiper) {
+                if (!this.current_artwork) {
+                    return
+                }
+
                 this.update_in_progress = false
-                let artwork = this.artwork_list[swiper.activeIndex]
+                let activeIndex = swiper.activeIndex
+                let artwork = this.artwork_list[activeIndex]
 
                 if (artwork === undefined) {
-                    if (await this.setArtworkList(swiper.activeIndex)) {
-                        artwork = this.artwork_list[swiper.activeIndex]
+                    if (await this.pushArtworkInList(activeIndex)) {
+                        artwork = this.artwork_list[activeIndex]
                     }
                     else {
                         console.log('artwork load error')
                     }
                 }
 
-                this.current_artwork = artwork
+                if (this.current_index === activeIndex - 1) {
+                    this.artwork_list[this.current_index - 3] = null
+                    
+                    this.current_index = activeIndex
+                    this.current_artwork = artwork
+
+                    await this.pushArtworkInList(this.current_index + 3)
+                }
+                else if (this.current_index === activeIndex + 1) {
+                    this.artwork_list[this.current_index + 3] = null
+
+                    this.current_index = activeIndex
+                    this.current_artwork = artwork
+
+                    await this.pushArtworkInList(this.current_index - 3)
+                }
             },
             updateDone () {
                 this.update_in_progress = false
