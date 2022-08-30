@@ -35,7 +35,7 @@
     #body {
         position: relative;
         width: 100%;
-        margin-top: calc(var(--vw, 1vw) * 17.5);
+        margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
         height: auto;
 
@@ -68,7 +68,63 @@
         }
 
         .exhibitionArtworks {
-            padding-bottom: calc(var(--vh, 1vh) * 100);
+            padding-bottom: calc(var(--vh, 1vh) * 10);
+        }
+
+        .exhibitionMoreInformation {
+            padding-bottom: calc(var(--vh, 1vh) * 30);
+
+            .video {
+                margin-top: calc(var(--vw, 1vw) * 5);
+
+                .videoTitle {
+                    font-weight: 700;
+                    font-size: 22px;
+                    line-height: 115%;
+                    letter-spacing: -0.04em;
+                    color: #000000;
+                    text-align: left;
+                    padding-bottom: calc(var(--vw, 1vw) * 3);
+                }
+
+                .videoArea {
+                    position: relative;
+                    width: 100%;
+                    padding-bottom: 56.25%;
+                    height: 0;
+                    overflow: hidden;
+
+                    iframe {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .merchandise {
+                margin-top: calc(var(--vw, 1vw) * 10);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                a {
+                    width: calc(var(--vw, 1vw) * 42);
+                    height: calc(var(--vw, 1vw) * 14);
+                    border-radius: calc(var(--vw, 1vw) * 7);
+                    background-color: black;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 115%;
+                    letter-spacing: -0.06em;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
         }
     }
     
