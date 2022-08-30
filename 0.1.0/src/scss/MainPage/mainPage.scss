@@ -78,14 +78,6 @@
                 height: 100%;
                 position: relative;
     
-                // animation-name: fade_in;
-                // animation-duration: 4s;
-                // animation-timing-function: linear;
-                // animation-delay: 0s;
-                // animation-iteration-count: infinite;
-                // animation-direction: normal;
-                // animation-fill-mode: none;
-    
                 svg {
                     position: absolute;
                 }
@@ -124,14 +116,6 @@
             font-weight: 500;
             line-height: 115%;
             letter-spacing: -0.04em;
-    
-            // animation-name: dot;
-            // animation-duration: 4s;
-            // animation-timing-function: linear;
-            // animation-delay: 0s;
-            // animation-iteration-count: infinite;
-            // animation-direction: normal;
-            // animation-fill-mode: none;
         }
     }
 
@@ -255,11 +239,6 @@
     -webkit-appearance: none;
 }
 
-@keyframes dot {
-    0% {
-        
-    }
-}
 @keyframes fade_out {
     0% {
         opacity: 0;
