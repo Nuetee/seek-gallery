@@ -1,7 +1,8 @@
 .sideBarContainer {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 50%;
+    transform: translate(calc(-50% + var(--vw, 1vw) * 50), 0);
     height: calc(var(--vh, 1vh) * 100);
     width: auto;
     z-index: 3;
