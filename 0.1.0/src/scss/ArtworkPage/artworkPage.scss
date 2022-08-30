@@ -1,7 +1,8 @@
 #artworkPage {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     height: calc(var(--vh, 1vh) * 100);
     width: calc(var(--vw, 1vw) * 100);
     overflow-x: visible;
