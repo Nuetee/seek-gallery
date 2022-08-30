@@ -59,8 +59,15 @@
                 if (this.commentIdList.length < 20) {
                     this.nothingToUpdate = true
                 }
-                for (let commentId of this.commentIdList) {
-                    let comment = await new Comment(commentId.toString()).init()
+
+                const promises = this.commentIdList.map(async(commentId) => {
+                    const comment = await new Comment(commentId.toString()).init()
+                    return comment
+                })
+
+                const comments = await Promise.all(promises)
+                
+                for (let comment of comments) {
                     if (this.user) {
                         if (this.user.getID() === comment.getWriter().getID()) {
                             this.myCommentList.push(comment)
@@ -69,6 +76,7 @@
                     }
                     this.otherCommentList.push(comment)
                 }
+
                 this.commentList = this.myCommentList.concat(this.otherCommentList)
             },
             async insert (comment_id) {
