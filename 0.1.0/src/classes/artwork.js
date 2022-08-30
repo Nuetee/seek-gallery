@@ -20,6 +20,7 @@ export class Artwork {
     id
     page_id
     name
+    nickname
     artist
     
     archive_count
@@ -40,19 +41,30 @@ export class Artwork {
             const artwork_data = data[0][0]
             this.id = artwork_data.id
             this.name = artwork_data.name
-            this.artist = await new User(artwork_data.artist_id).init()
-            this.archive_count = artwork_data.archive_count
-            this.year = artwork_data.year
-            this.dimension = artwork_data.dimension
-            this.material = artwork_data.material
-            this.information = artwork_data.information
-            this.color = artwork_data.color
+            this.nickname = artwork_data.nickname
 
             return this
         }
         else {
             return null
         }
+    }
+
+    initializePage = async function () {
+        const { status, data } = await sendRequest('get', '/artwork/page', {
+            target_id : this.page_id
+        })
+
+        if (status < 400) {
+            const page_data = data[0][0]
+            this.artist = await new User(page_data.artist_id).init()
+            this.archive_count = page_data.archive_count
+            this.year = page_data.year
+            this.dimension = page_data.dimension
+            this.material = page_data.material
+            this.information = page_data.information
+            this.color = page_data.color
+        }   
     }
 
     getAllImages = async function () {
@@ -84,7 +96,7 @@ export class Artwork {
     }
 
     getArtistName () {
-        return this.artist.getNickname()
+        return this.nickname
     }
 
     getSNS () {

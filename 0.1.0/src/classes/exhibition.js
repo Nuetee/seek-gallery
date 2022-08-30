@@ -21,6 +21,7 @@ export class Exhibition {
     id
     page_id
     name
+    nickname
     information
 
     owner
@@ -39,9 +40,24 @@ export class Exhibition {
             const exhibition_data = data[0][0]
             this.id = exhibition_data.id
             this.name = exhibition_data.name
-            this.information = exhibition_data.information
+            this.nickname = exhibition_data.nickname
+            
+            return this
+        }
+        else {
+            return null
+        }
+    }
 
-            this.owner = await new User(exhibition_data.owner_id).init()
+    initializePage = async function () {
+        const { status, data } = await sendRequest('get', '/exhibition/page', {
+            target_id : this.page_id
+        })
+        if (status < 400) {
+            const page_data = data[0][0]
+            this.information = page_data.information
+
+            this.owner = await new User(page_data.owner_id).init()
             const { status: list_status, data: list_data } = await sendRequest(
                 'post', 
                 '/exhibition/artwork_list', {
@@ -57,10 +73,8 @@ export class Exhibition {
                     this.artwork_list.push(artwork)
                     this.category_list.push(artwork_data.category)
                 }
-                return this
             }
         }
-        return null
     }
 
     getImages = async function () {
@@ -83,16 +97,16 @@ export class Exhibition {
         return this.name
     }
 
+    getOwnerName () {
+        return this.nickname
+    }
+
     getInformation () {
         return this.information
     }
 
     getOwner () {
         return this.owner
-    }
-
-    getOwnerName () {
-        return this.owner.getNickname()
     }
 
     getCategoryList () {

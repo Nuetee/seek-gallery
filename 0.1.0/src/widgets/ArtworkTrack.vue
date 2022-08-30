@@ -9,7 +9,7 @@
             </div>
             <div class="artworkInformation">
                 <div class="artworkName poppins" @click="this.redirectArtworkPage()">{{ this.track?.artwork.getName() }}</div>
-                <div class=" artist">{{ this.track?.artwork.getArtist().getNickname() }}</div>
+                <div class=" artist">{{ this.track?.artwork.getArtistName() }}</div>
             </div>
         </div>
     </div>

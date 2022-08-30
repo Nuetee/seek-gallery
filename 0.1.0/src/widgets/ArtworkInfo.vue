@@ -37,10 +37,10 @@
         },
         data() {
             return {
-                color: (this.artwork) 
+                color: (this.artwork.getColor()) 
                     ? this.artwork.getColor()
                     : 'black',
-                sns: (this.artwork) 
+                sns: (this.artwork.getSNS()) 
                     ? this.artwork.getSNS()
                     : null
             }
