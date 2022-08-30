@@ -35,16 +35,9 @@
     #body {
         position: relative;
         width: 100%;
-        margin-top: calc(var(--vw, 1vw) * 15);
+        margin-top: calc(var(--vw, 1vw) * 17.5);
         overflow-x: visible;
         height: auto;
-
-        > div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
 
         > div[class^="exhibition"] {
             padding-left: var(--padding, 5vw);

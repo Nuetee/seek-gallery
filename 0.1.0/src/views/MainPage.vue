@@ -99,7 +99,7 @@
         computed: {
             posterImageElement () {
                 /*
-                * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들의 초기 position('top')을 설정한다.
+                * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들을 얻어오고 fade-in 효과를 추가한다.
                 */
                 if (this.poster_image_element) {
                     this.poster_image_element.onload = () => {
@@ -108,14 +108,10 @@
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
                         this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
                         
-                        this.poster_element.style.setProperty('top', '0')
-                        this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
-                        this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight}px`)
-
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
 
-                        let elementList = [this.information_element, this.artworks_element]
+                        let elementList = [this.poster_element, this.information_element, this.artworks_element]
                         elementList.forEach(function(element) {
                             let children = Array.from(element.children)
                             children.forEach(function(child) {
@@ -125,6 +121,7 @@
                         this.fadeInEffect()
 
                         document.getElementById('viewPort').addEventListener('scroll', this.fadeInEffect)
+                        this.proper_position_flag = true
                     }
                 }
                 return this.poster_image_element
@@ -146,7 +143,6 @@
             this.poster_image = images[0]
             this.artwork_track_list = this.exhibition.getArtworkList()
             this.category_list = this.exhibition.getCategoryList()
-            
             
             this.poster_image_element = document.getElementById('posterImage')
             
@@ -172,8 +168,7 @@
                 _this.scrollBottom()
                 window.addEventListener('scroll', _this.scrollBottom)
             }, 0)
-            document.getElementById('viewPort').addEventListener('scroll', this.setAbsolutePosition)
-            document.getElementById('viewPort').addEventListener('scroll', this.getTrackListProperty)
+            document.getElementById('viewPort').addEventListener('scroll', this.setHeaderScale)
 
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
         },
@@ -189,13 +184,11 @@
                 this.$refs.sideBar.openSideBar(event)
             },
             /**
-            * - MainPage 스크롤 시 MainPage의 각 DOMElement들의 절대 위치를 재설정하는 함수.
-            * : 각 DOMElement들의 position 속성은 'absolute' 이므로 top 속성을 변경하여 절대 위치를 재설정한다.
-            * : 절대 위치를 재설정하는 이유는 Poster와 전시제목이 동시에 움직이지 않고 일정 거리를 벌리는 작업이 필요하기 때문.
-            * 1. 스크롤 거리 10vw를 기준으로 header의 Y scale 값을 구한다.
-            * 2. 스크롤한 거리가 50vw 이하일 때, 각 DOMElement들의 top 속성을 변경한다.
+            * - MainPage 스크롤 시 header의 scale값을 계산하는 함수.
+            * 1. 스크롤 거리 10vw를 기준으로 header의 Y scale 값을 변경한다.
+            * 2. 스크롤 거리 10vw를 기준으로 header의 child elements들의 X scale값을 변경한다.
             */
-            setAbsolutePosition () {
+            setHeaderScale () {
                 if (this.main_header_element === null || this.information_element === null || this.poster_element === null || this.artworks_element === null) {
                     console.log('Failed to get dom elements.')
                     return
@@ -207,24 +200,9 @@
                 for (let i = 0; i < this.main_header_element.children.length; i++) {
                     this.main_header_element.children[i].style.setProperty('transform', `scaleX(${header_scale})`)
                 }
-
-                if (document.getElementById('viewPort').scrollTop < (50 * this.vw)) {
-                    this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
-                    this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
-                }
-            },
-            /**
-            * - poster이미지와 전시정보 사이 거리가 최대로 벌어졌을 때, this.proper_position_flag = true로 설정하여 ArtworkTrackList가 현재 자신의 위치(최상단으로부터의 거리)를 정확히 구할 수 있도록 하는 함수
-            : 정확한 거리를 구할 수 있을 때 한번만 실행되면 되므로 함수 실행으로 인한 부하를 줄이기 위해 첫 실행 후 eventListener를 제거한다.
-            */
-            getTrackListProperty () {
-                if (document.getElementById('viewPort').scrollTop >= (50 * this.vw)) {
-                    this.proper_position_flag = true
-                    document.getElementById('viewPort').removeEventListener('scroll', this.getTrackListProperty)
-                }
             },
             fadeInEffect () {
-                let elementList = [this.information_element, this.artworks_element, this.artwork_tracks_container_element]
+                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element]
 
                 const _this = this
                 elementList.forEach(function(element) {
