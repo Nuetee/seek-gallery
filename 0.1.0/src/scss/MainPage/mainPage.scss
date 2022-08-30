@@ -25,6 +25,7 @@
     // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
     #viewPort {
         position: fixed;
+        z-index: 1;
         top: 0;
         left: 50%;
         transform: translate(-50%, 0);

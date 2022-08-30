@@ -43,6 +43,7 @@
         },
         methods: {
             redirectArtworkPage () {
+                alert('redirect to artwork')
                 this.$router.push({
                     path: '/artwork',
                     query: {
