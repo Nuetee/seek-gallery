@@ -7,10 +7,25 @@
     width: calc(var(--vw, 1vw) * 100);
     overflow-x: visible;
 
-    ::v-deep(.roundProfile) {
-        height: calc(var(--vw, 1vw) * 7.7);
-        width: calc(var(--vw, 1vw) * 7.7);
+    ::v-deep(.mainHeader) {
+        .left {
+            .backButton {
+                width: calc(var(--vw, 1vw) * 8);
+                height: calc(var(--vw, 1vw) * 8);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+        }
+
+        .right {
+            .roundProfile {
+                height: calc(var(--vw, 1vw) * 7.7);
+                width: calc(var(--vw, 1vw) * 7.7);
+            }
+        }
     }
+
     > .artworkInformation {
         position: fixed;
         z-index: 2;

@@ -2,10 +2,12 @@
     <div id="artworkPage">
         <MainHeader :background_color="'transparent'">
             <template v-slot:left>
-                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" @click="this.back($event)">
-                    <path d="M7 13L1 7L7 1" :stroke="(this.current_artwork ? this.current_artwork.getColor() : 'black')" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
+                <div class="backButton" @click="this.back($event)">
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 13L1 7L7 1" :stroke="(this.current_artwork ? this.current_artwork.getColor() : 'black')" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
             </template>
             <template v-slot:right>
                 <RoundProfile :profile="this.profile" @click="this.openSideBar($event)"></RoundProfile>
