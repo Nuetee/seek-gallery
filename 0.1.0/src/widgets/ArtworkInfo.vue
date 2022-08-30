@@ -1,29 +1,24 @@
 <template>
     <div v-if="this.artwork" class="artworkInfo poppins">
-        <div :style="(this.isBack) ? { color : 'black' } : { color: this.color }" class="artworkTitle">
+        <div :style="{ color: 'black' }" class="artworkTitle">
             {{ this.artwork.getName() }}
         </div>
-        <div :style="(this.isBack) ? { color: 'black' } : { color: this.color }" class="artist">
+        <div :style="{ color: 'black' }" class="artist">
             {{ this.artwork.getArtistName() }}
-            <SNSLink v-if="this.sns" :artwork="this.artwork"></SNSLink>
         </div>
     </div>
     <div v-else-if="this.exhibition" class="artworkInfo poppins">
-        <div :style="(this.isBack) ? { color : 'black' } : { color: this.color }" class="artworkTitle">
+        <div :style="{ color: 'black' }" class="artworkTitle">
             {{ this.exhibition.getName() }}
         </div>
-        <div :style="(this.isBack) ? { color: 'black' } : { color: this.color }" class="artist">
+        <div :style="{ color: 'black' }" class="artist">
             {{ this.exhibition.getOwnerName() }}
-            <SNSLink v-if="this.sns" :artwork="this.artwork"></SNSLink>
         </div>
     </div>
 </template>
 <script>
-    import SNSLink from '@/widgets/SNSLink.vue'
-
     export default {
         name: 'ArtworkInfo',
-        components: { SNSLink },
         props: {
             artwork: {
                 type: Object,
@@ -37,12 +32,7 @@
         },
         data() {
             return {
-                color: (this.artwork.getColor()) 
-                    ? this.artwork.getColor()
-                    : 'black',
-                sns: (this.artwork.getSNS()) 
-                    ? this.artwork.getSNS()
-                    : null
+                sampleData: ''
             }
         }
     }
