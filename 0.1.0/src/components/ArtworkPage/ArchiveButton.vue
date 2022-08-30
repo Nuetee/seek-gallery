@@ -159,8 +159,6 @@
             }
         },
         async mounted() {
-            
-
             // await this.setButtonAnimation()
         },
         beforeUpdate() {},

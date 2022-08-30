@@ -10,6 +10,31 @@
         </MainHeader>
         <div id="viewPort">
             <transition-group name="slide-fade" tag="div">
+                <div id="loading" v-if="!this.bodyShowFlag">
+                    <button class="loadingAnimation">
+                        <div class="notArchive">
+                            <div class="eye">
+                                <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
+                                </svg>
+                                <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="eye">
+                                <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
+                                </svg>
+                                <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="phrase poppins">
+                                입장 중...
+                            </div>
+                        </div>
+                    </button>
+                </div>
                 <div id="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
                     <div class="poster">
                         <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
@@ -38,6 +63,23 @@
                             :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
+                    </div>
+                    <div class="exhibitionMoreInformation">
+                        <TitleHeader ref="moreInformationTitle" 
+                            :title="'전시 더보기'" 
+                            :startHeight="(this.vw * 30)"
+                            :heightUnit="this.vw / 2"
+                            :document_element_id="'viewPort'">
+                        </TitleHeader>
+                        <div class="video">
+                            <div class="videoTitle">Talk that Talk</div>
+                            <div class="videoArea">
+                                <iframe src="https://www.youtube.com/embed/k6jqx9kZgPM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="merchandise">
+                            <a href="https://twice.lnk.to/Shop">굿즈 사러가기</a>
+                        </div>
                     </div>
                 </div>
             </transition-group>
@@ -91,6 +133,7 @@
                 information_element: null,
                 artworks_element: null,
                 artwork_tracks_container_element: null,
+                more_information_element: null,
                 
                 header_scale: 1,
                 userThumbnail: ''
@@ -99,7 +142,7 @@
         computed: {
             posterImageElement () {
                 /*
-                * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들의 초기 position('top')을 설정한다.
+                * - posterImage의 사진이 로드되고 나면, MainPage의 각 DOMElement들을 얻어오고 fade-in 효과를 추가한다.
                 */
                 if (this.poster_image_element) {
                     this.poster_image_element.onload = () => {
@@ -107,15 +150,13 @@
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
                         this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
+                        this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
                         
-                        this.poster_element.style.setProperty('top', '0')
-                        this.information_element.style.setProperty('top', `${this.poster_element.clientHeight}px`)
-                        this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight}px`)
-
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
+                        this.$refs.moreInformationTitle.setInitialPosition()
 
-                        let elementList = [this.information_element, this.artworks_element]
+                        let elementList = [this.poster_element, this.information_element, this.artworks_element, this.more_information_element]
                         elementList.forEach(function(element) {
                             let children = Array.from(element.children)
                             children.forEach(function(child) {
@@ -125,6 +166,7 @@
                         this.fadeInEffect()
 
                         document.getElementById('viewPort').addEventListener('scroll', this.fadeInEffect)
+                        this.proper_position_flag = true
                     }
                 }
                 return this.poster_image_element
@@ -146,7 +188,6 @@
             this.poster_image = images[0]
             this.artwork_track_list = this.exhibition.getArtworkList()
             this.category_list = this.exhibition.getCategoryList()
-            
             
             this.poster_image_element = document.getElementById('posterImage')
             
@@ -172,8 +213,7 @@
                 _this.scrollBottom()
                 window.addEventListener('scroll', _this.scrollBottom)
             }, 0)
-            document.getElementById('viewPort').addEventListener('scroll', this.setAbsolutePosition)
-            document.getElementById('viewPort').addEventListener('scroll', this.getTrackListProperty)
+            document.getElementById('viewPort').addEventListener('scroll', this.setHeaderScale)
 
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
         },
@@ -189,13 +229,11 @@
                 this.$refs.sideBar.openSideBar(event)
             },
             /**
-            * - MainPage 스크롤 시 MainPage의 각 DOMElement들의 절대 위치를 재설정하는 함수.
-            * : 각 DOMElement들의 position 속성은 'absolute' 이므로 top 속성을 변경하여 절대 위치를 재설정한다.
-            * : 절대 위치를 재설정하는 이유는 Poster와 전시제목이 동시에 움직이지 않고 일정 거리를 벌리는 작업이 필요하기 때문.
-            * 1. 스크롤 거리 10vw를 기준으로 header의 Y scale 값을 구한다.
-            * 2. 스크롤한 거리가 50vw 이하일 때, 각 DOMElement들의 top 속성을 변경한다.
+            * - MainPage 스크롤 시 header의 scale값을 계산하는 함수.
+            * 1. 스크롤 거리 10vw를 기준으로 header의 Y scale 값을 변경한다.
+            * 2. 스크롤 거리 10vw를 기준으로 header의 child elements들의 X scale값을 변경한다.
             */
-            setAbsolutePosition () {
+            setHeaderScale () {
                 if (this.main_header_element === null || this.information_element === null || this.poster_element === null || this.artworks_element === null) {
                     console.log('Failed to get dom elements.')
                     return
@@ -207,24 +245,9 @@
                 for (let i = 0; i < this.main_header_element.children.length; i++) {
                     this.main_header_element.children[i].style.setProperty('transform', `scaleX(${header_scale})`)
                 }
-
-                if (document.getElementById('viewPort').scrollTop < (50 * this.vw)) {
-                    this.information_element.style.setProperty('top', `${this.poster_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
-                    this.artworks_element.style.setProperty('top', `${this.poster_element.clientHeight + this.information_element.clientHeight + document.getElementById('viewPort').scrollTop}px`)
-                }
-            },
-            /**
-            * - poster이미지와 전시정보 사이 거리가 최대로 벌어졌을 때, this.proper_position_flag = true로 설정하여 ArtworkTrackList가 현재 자신의 위치(최상단으로부터의 거리)를 정확히 구할 수 있도록 하는 함수
-            : 정확한 거리를 구할 수 있을 때 한번만 실행되면 되므로 함수 실행으로 인한 부하를 줄이기 위해 첫 실행 후 eventListener를 제거한다.
-            */
-            getTrackListProperty () {
-                if (document.getElementById('viewPort').scrollTop >= (50 * this.vw)) {
-                    this.proper_position_flag = true
-                    document.getElementById('viewPort').removeEventListener('scroll', this.getTrackListProperty)
-                }
             },
             fadeInEffect () {
-                let elementList = [this.information_element, this.artworks_element, this.artwork_tracks_container_element]
+                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element, this.more_information_element]
 
                 const _this = this
                 elementList.forEach(function(element) {

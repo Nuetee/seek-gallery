@@ -73,7 +73,6 @@
 
                         this.track_page_id_array[i] = this.artwork_track_list[i].page_id
                     }
-                    console.log(track_array)
                     return track_array
                 }
             },
