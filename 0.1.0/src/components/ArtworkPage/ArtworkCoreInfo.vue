@@ -4,7 +4,7 @@
             {{ this.artwork ? this.artwork.getName() : '' }}
         </div>
         <div class="artist">
-            {{ this.artwork ? this.artwork.getArtist().getNickname() : '' }}
+            {{ this.artwork ? this.artwork.getArtistName() : '' }}
             <SNSLink :sns_link="this.artwork ? this.artwork.getArtist().getSNS() : ''"></SNSLink>
         </div>
     </div>

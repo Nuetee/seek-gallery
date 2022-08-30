@@ -17,7 +17,7 @@
                 <ArchiveInfo :archive_count="this.current_artwork ? this.current_artwork.getArchiveCount() : 0" :color="this.current_artwork ? this.current_artwork.getColor() : 'black'"></ArchiveInfo>
             </div>
             <div class="bottom">
-                <div class="artist">{{ this.current_artwork ? this.current_artwork.getArtist().nickname : '' }}</div>
+                <div class="artist">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
                 <SNSLink :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
             </div>
         </div>
@@ -182,6 +182,7 @@
 
                 if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
                     let artwork = await new Artwork(this.artwork_id_list[index]).init()
+                    await artwork.initializePage()
                     let artwork_images = await artwork.getAllImages()
                     let container_ratio = window.innerWidth / window.innerHeight
 

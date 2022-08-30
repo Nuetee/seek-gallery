@@ -185,6 +185,7 @@
             this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", ""))
 
             this.exhibition = await new Exhibition(this.id).init()
+            await this.exhibition.initializePage()
             let images = await this.exhibition.getImages()
             this.poster_image_style = await cropImage(images[0], 1)
             this.poster_image = images[0]
