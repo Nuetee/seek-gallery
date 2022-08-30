@@ -1,6 +1,6 @@
 <template>
     <div id="mainPage">
-        <MainHeader :background_color="'white'">
+        <MainHeader :background_color="'white'" v-show="this.bodyShowFlag">
             <template v-slot:left>
                 <img src="../assets/seek_logo.png">
             </template>
@@ -9,32 +9,30 @@
             </template>
         </MainHeader>
         <div id="viewPort">
-            <transition-group name="slide-fade" tag="div">
-                <div id="loading" v-if="!this.bodyShowFlag">
-                    <button class="loadingAnimation">
-                        <div class="notArchive">
-                            <div class="eye">
-                                <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
-                                </svg>
-                                <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
-                                </svg>
-                            </div>
-                            <div class="eye">
-                                <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
-                                </svg>
-                                <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
-                                </svg>
-                            </div>
-                            <div class="phrase poppins">
-                                입장 중...
-                            </div>
-                        </div>
-                    </button>
+            <div id="loading">
+                <div class="notArchive">
+                    <div class="eye">
+                        <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
+                        </svg>
+                        <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="eye">
+                        <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
+                        </svg>
+                        <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
+                        </svg>
+                    </div>
                 </div>
+                <div class="phrase poppins">
+                    입장 중<span>.</span><span>.</span><span>.</span>
+                </div>
+            </div>
+            <transition-group name="slide-fade" tag="div">
                 <div id="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
                     <div class="poster">
                         <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
@@ -136,7 +134,9 @@
                 more_information_element: null,
                 
                 header_scale: 1,
-                userThumbnail: ''
+                userThumbnail: '',
+
+                interval_return: null
             };
         },
         computed: {
@@ -146,6 +146,8 @@
                 */
                 if (this.poster_image_element) {
                     this.poster_image_element.onload = () => {
+                        clearInterval(this.interval_return)
+
                         this.poster_element = document.getElementsByClassName('poster')[0]
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
@@ -216,6 +218,40 @@
             document.getElementById('viewPort').addEventListener('scroll', this.setHeaderScale)
 
             this.main_header_element = document.getElementsByClassName('mainHeader')[0]
+
+            let dot_1 = document.getElementsByClassName('phrase')[0].children[0]
+            let dot_2 = document.getElementsByClassName('phrase')[0].children[1]
+            let dot_3 = document.getElementsByClassName('phrase')[0].children[2]
+
+            dot_1.style.setProperty('opacity', '0')
+            dot_2.style.setProperty('opacity', '0')
+            dot_3.style.setProperty('opacity', '0')
+
+            setTimeout(() => {
+                dot_1.style.setProperty('opacity', '1')
+            }, 1000)
+            setTimeout(() => {
+                dot_2.style.setProperty('opacity', '1')
+            }, 2000)
+            setTimeout(() => {
+                dot_3.style.setProperty('opacity', '1')
+            }, 3000)
+
+            this.interval_return = setInterval(() => {
+                dot_1.style.setProperty('opacity', '0')
+                dot_2.style.setProperty('opacity', '0')
+                dot_3.style.setProperty('opacity', '0')
+
+                setTimeout(() => {
+                    dot_1.style.setProperty('opacity', '1')
+                }, 1000)
+                setTimeout(() => {
+                    dot_2.style.setProperty('opacity', '1')
+                }, 2000)
+                setTimeout(() => {
+                    dot_3.style.setProperty('opacity', '1')
+                }, 3000)
+            }, 4000)
         },
         unmounted() {
             window.removeEventListener('scroll', this.scrollBottom)
