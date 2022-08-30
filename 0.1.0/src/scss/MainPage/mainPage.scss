@@ -32,19 +32,129 @@
         height: calc(var(--vh, 1vh) * 100);
         overflow: scroll;
     }
+
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(var(--vw, 1vw) * 100);
+        height: calc(var(--vh, 1vh) * 100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .loadingAnimation {
+            border: none;
+            box-shadow: none;
+            outline: 0;
+            overflow: hidden;
+            position: relative;
+            width: calc(var(--vw, 1vw) * 55);
+            height: calc(var(--vw, 1vw) * 45);
+            background-color: transparent;
+
+            > div {
+                background-color: transparent;
+        
+                svg {
+                    fill: black;
+        
+                    path,
+                    g {
+                        fill: black;
+                    }
+                }
+            }
+
+            .notArchive {
+                transition-property: opacity, padding;
+                transition-duration: 0.2s;
+                opacity: 1;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: calc(var(--vw, 1vw) * 10);
+                padding-right: calc(var(--vw, 1vw) * 10);
+
+                .phrase {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: black;
+                    opacity: 0;
+                    font-style: normal;
+                    font-size: 20px;
+                    font-weight: 500;
+                    line-height: 115%;
+                    letter-spacing: -0.04em;
+
+                    animation-name: fade_out;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: normal;
+                    animation-fill-mode: none;
+                }
+
+                .eye {
+                    width: 50%;
+                    height: 100%;
+                    position: relative;
+
+                    animation-name: fade_in;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: normal;
+                    animation-fill-mode: none;
+
+                    svg {
+                        position: absolute;
+                    }
+
+                    .eyelid {
+                        top: 49%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 85%;
+                        height: auto;
+                    }
+
+                    .pupil {
+                        top: 53%;
+                        left: 65%;
+                        transform: translate(-50%, -50%);
+                        width: 44%;
+                        height: auto;
+
+                        animation-name: eyeroll;
+                        animation-duration: 4s;
+                        animation-timing-function: linear;
+                        animation-delay: 0s;
+                        animation-iteration-count: infinite;
+                        animation-direction: normal;
+                        animation-fill-mode: none;
+                    }
+                }
+            }
+        }
+    }
+
     #body {
         position: relative;
         width: 100%;
         margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
         height: auto;
-
-        > div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
 
         > div[class^="exhibition"] {
             padding-left: var(--padding, 5vw);
@@ -75,7 +185,63 @@
         }
 
         .exhibitionArtworks {
-            padding-bottom: calc(var(--vh, 1vh) * 100);
+            padding-bottom: calc(var(--vh, 1vh) * 10);
+        }
+
+        .exhibitionMoreInformation {
+            padding-bottom: calc(var(--vh, 1vh) * 30);
+
+            .video {
+                margin-top: calc(var(--vw, 1vw) * 5);
+
+                .videoTitle {
+                    font-weight: 700;
+                    font-size: 22px;
+                    line-height: 115%;
+                    letter-spacing: -0.04em;
+                    color: #000000;
+                    text-align: left;
+                    padding-bottom: calc(var(--vw, 1vw) * 3);
+                }
+
+                .videoArea {
+                    position: relative;
+                    width: 100%;
+                    padding-bottom: 56.25%;
+                    height: 0;
+                    overflow: hidden;
+
+                    iframe {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .merchandise {
+                margin-top: calc(var(--vw, 1vw) * 10);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                a {
+                    width: calc(var(--vw, 1vw) * 42);
+                    height: calc(var(--vw, 1vw) * 14);
+                    border-radius: calc(var(--vw, 1vw) * 7);
+                    background-color: black;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 115%;
+                    letter-spacing: -0.06em;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
         }
     }
     
@@ -101,4 +267,74 @@
     height: 0;
     background: transparent;
     -webkit-appearance: none;
+}
+
+@keyframes fade_out {
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade_in {
+    0% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    90% {
+        opacity: 0;
+    }
+}
+
+@keyframes eyeroll {
+    0% {
+        left: 65%;
+    }
+
+    5% {
+        left: 53%;
+    }
+
+    10% {
+        left: 41%;
+    }
+
+    12.5% {
+        left: 35%;
+    }
+
+    15% {
+        left: 41%;
+    }
+
+    20% {
+        left: 53%;
+    }
+
+    25% {
+        left: 65%;
+    }
+
+    100% {
+        left: 65%;
+    }
 }

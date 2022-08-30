@@ -120,8 +120,9 @@
             else
                 console.log('load failure')
 
-            for (let index = this.current_index - 3; index <= this.current_index + 3; index++) {
-                await this.pushArtworkInList(index)
+            for (let range = 1; range <= 3; range++) {
+                await this.pushArtworkInList(this.current_index - range)
+                await this.pushArtworkInList(this.current_index + range)
             }
         },
         mounted() {
@@ -190,12 +191,16 @@
 
                     let image_information_list = new Array(0)
 
-                    for (let i = 0; i < artwork_images.length; i++) {
-                        let style = await cropImage(artwork_images[i], container_ratio)
+                    const promises = artwork_images.map(async (image) => {
+                        return await cropImage(image, container_ratio)
+                    })
 
+                    const styles = await Promise.all(promises)
+
+                    for (let i = 0; i < artwork_images.length; i++) {
                         let image_information = new Object()
                         image_information.src = artwork_images[i]
-                        image_information.style = style
+                        image_information.style = styles[i]
 
                         image_information_list.push(image_information)
                     }
