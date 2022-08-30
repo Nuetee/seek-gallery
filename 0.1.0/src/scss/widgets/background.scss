@@ -1,9 +1,10 @@
 #background {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     height: 100%;
-    width: 100%;
+    width: calc(var(--vw, 1vw) * 100);
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 2;
 }
