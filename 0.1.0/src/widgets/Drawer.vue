@@ -32,6 +32,12 @@
             let drawer_class = 'drawer' + ' ' + this.class
 
             this.drawer = document.getElementsByClassName(drawer_class)[0]
+
+            this.drawer.addEventListener('touchmove', (evt) => {
+                if (evt.stopPropagation) evt.stopPropagation();
+                else evt.cancelBubble = true; // IE 대응
+            })
+            
             this.drawer_height = this.drawer.clientHeight
             
             this.drawing_bar = this.drawer.firstChild.firstChild

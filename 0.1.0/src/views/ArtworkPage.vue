@@ -105,7 +105,9 @@
                     centeredSlides: true,
                     resistanceRatio: 0,
                 },
-                update_in_progress: false
+                update_in_progress: false,
+                abortController: null,
+                first_load: true
             };
         },
         async created() {
@@ -113,19 +115,40 @@
                 let user = getAuth()
                 this.profile = user.getProfile()
             }
-
+            this.abortController = new AbortController()
             this.artwork_list = new Array(this.artwork_id_list.length)
             
-            let initial_load = await this.pushArtworkInList(this.current_index)
-            if (initial_load)
-                this.current_artwork = this.artwork_list[this.current_index]
-            else
-                console.log('load failure')
+            this.pushArtworkInList(this.current_index, this.abortController.signal).then((value) => {
+                console.log(value)
+                let initial_load = value
+                if (initial_load)
+                    this.current_artwork = this.artwork_list[this.current_index]
+                else
+                    console.log('load failure')
 
-            for (let range = 1; range <= 3; range++) {
-                await this.pushArtworkInList(this.current_index - range)
-                await this.pushArtworkInList(this.current_index + range)
-            }
+                this.first_load = false
+
+                for (let range = 1; range <= 3; range++) {
+                    this.pushArtworkInList(this.current_index - range, this.abortController.signal)
+                    .then((value) => {
+                        console.log(value)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                    this.pushArtworkInList(this.current_index + range, this.abortController.signal)
+                    .then((value) => {
+                        console.log(value)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            
         },
         mounted() {
             const _this = this
@@ -177,77 +200,104 @@
 
                 this.$refs.commentDrawer.showDrawer()
             },
-            async pushArtworkInList (index) {
-                if (index >= this.artwork_id_list.length || index < 0) {
-                    return false
-                }
-
-                if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
-                    let artwork = await new Artwork(this.artwork_id_list[index]).init()
-                    await artwork.initializePage()
-                    let artwork_images = await artwork.getAllImages()
-                    let container_ratio = window.innerWidth / window.innerHeight
-
-                    if (window.innerWidth >= 480) {
-                        container_ratio = 480 / window.innerHeight
-                    }
-
-                    let image_information_list = new Array(0)
-
-                    const promises = artwork_images.map(async (image) => {
-                        return await cropImage(image, container_ratio)
+            pushArtworkInList (index, abortSignal) {
+                return new Promise(async (resolve, reject) => {
+                    abortSignal.addEventListener('abort', () => {
+                        const error = new DOMException( 'Calculation aborted by the user', 'AbortError' );
+                        
+                        return reject( error );
                     })
-
-                    const styles = await Promise.all(promises)
-
-                    for (let i = 0; i < artwork_images.length; i++) {
-                        let image_information = new Object()
-                        image_information.src = artwork_images[i]
-                        image_information.style = styles[i]
-
-                        image_information_list.push(image_information)
+                    if (index >= this.artwork_id_list.length || index < 0) {
+                        return resolve(false)
                     }
-                    
-                    artwork.image_information = image_information_list
 
-                    this.artwork_list[index] = artwork
-                }
+                    if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
+                        let artwork = await new Artwork(this.artwork_id_list[index]).init()
+                        await artwork.initializePage()
+                        let artwork_images = await artwork.getAllImages()
+                        let container_ratio = window.innerWidth / window.innerHeight
+
+                        if (window.innerWidth >= 480) {
+                            container_ratio = 480 / window.innerHeight
+                        }
+
+                        let image_information_list = new Array(0)
+
+                        const promises = artwork_images.map(async (image) => {
+                            return await cropImage(image, container_ratio)
+                        })
+
+                        const styles = await Promise.all(promises)
+
+                        for (let i = 0; i < artwork_images.length; i++) {
+                            let image_information = new Object()
+                            image_information.src = artwork_images[i]
+                            image_information.style = styles[i]
+
+                            image_information_list.push(image_information)
+                        }
+                        
+                        artwork.image_information = image_information_list
+
+                        this.artwork_list[index] = artwork
+                    }
+                    resolve(true)
+                })
                 
-                return true
             },
             async setCurrentArtwork (swiper) {
-                if (!this.current_artwork) {
+                console.log('current: ' + this.current_index + ' active: ' + swiper.activeIndex)
+                if (this.first_load) {
+                    this.first_load = false
                     return
                 }
-
-                this.update_in_progress = false
-                let activeIndex = swiper.activeIndex
-                let artwork = this.artwork_list[activeIndex]
-
-                if (artwork === undefined) {
-                    if (await this.pushArtworkInList(activeIndex)) {
-                        artwork = this.artwork_list[activeIndex]
-                    }
-                    else {
-                        console.log('artwork load error')
-                    }
+                this.abortController.abort()
+                this.abortController = null
+                this.abortController = new AbortController()
+                this.current_index = swiper.activeIndex
+                if (this.artwork_list[swiper.activeIndex]) {
+                    this.current_artwork = this.artwork_list[swiper.activeIndex]
                 }
-
-                if (this.current_index === activeIndex - 1) {
-                    this.artwork_list[this.current_index - 3] = null
+                else {
+                    this.pushArtworkInList(swiper.activeIndex, this.abortController.signal).then((value) => {
+                        this.current_artwork = this.artwork_list[swiper.activeIndex]
+                        // console.log(value)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                }
+                let range = 1;
+                while (range <= 3) {
+                    let next = this.current_index + range <= this.artwork_list.length
+                    let prev = this.current_index + range <= this.artwork_list.length
+                    if (next) {
+                        this.pushArtworkInList(this.current_index + range, this.abortController.signal)
+                        .then((value) => {
+                            // console.log(value)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                    }
+                    if (prev) {
+                        this.pushArtworkInList(this.current_index - range, this.abortController.signal)
+                        .then((value) => {
+                            // console.log(value)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
+                    }
                     
-                    this.current_index = activeIndex
-                    this.current_artwork = artwork
-
-                    await this.pushArtworkInList(this.current_index + 3)
+                    range++
                 }
-                else if (this.current_index === activeIndex + 1) {
-                    this.artwork_list[this.current_index + 3] = null
-
-                    this.current_index = activeIndex
-                    this.current_artwork = artwork
-
-                    await this.pushArtworkInList(this.current_index - 3)
+                
+                for (let i = 0; i < this.current_index - 3; i++) {
+                    this.artwork_list[i] = null
+                }
+                for (let i = this.current_index + 4; i < this.artwork_list.length; i++) {
+                    this.artwork_list[i] = null
                 }
             },
             updateDone () {
