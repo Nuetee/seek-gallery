@@ -127,6 +127,7 @@
         margin-top: calc(var(--vw, 1vw) * 15);
         overflow-x: visible;
         height: auto;
+        background-color: white;
 
         > div[class^="exhibition"] {
             padding-left: var(--padding, 5vw);
