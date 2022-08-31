@@ -119,7 +119,6 @@
             this.artwork_list = new Array(this.artwork_id_list.length)
             
             this.pushArtworkInList(this.current_index, this.abortController.signal).then((value) => {
-                console.log(value)
                 let initial_load = value
                 if (initial_load)
                     this.current_artwork = this.artwork_list[this.current_index]
@@ -130,23 +129,17 @@
 
                 for (let range = 1; range <= 3; range++) {
                     this.pushArtworkInList(this.current_index - range, this.abortController.signal)
-                    .then((value) => {
-                        console.log(value)
-                    })
                     .catch((error) => {
-                        console.log(error)
+                        //console.log(error)
                     })
                     this.pushArtworkInList(this.current_index + range, this.abortController.signal)
-                    .then((value) => {
-                        console.log(value)
-                    })
                     .catch((error) => {
-                        console.log(error)
+                        //console.log(error)
                     })
                 }
             })
             .catch((error) => {
-                console.log(error)
+                //console.log(error)
             })
             
         },
@@ -261,10 +254,9 @@
                 else {
                     this.pushArtworkInList(swiper.activeIndex, this.abortController.signal).then((value) => {
                         this.current_artwork = this.artwork_list[swiper.activeIndex]
-                        // console.log(value)
                     })
                     .catch((error) => {
-                        console.log(error)
+                        //console.log(error)
                     })
                 }
                 let range = 1;
@@ -273,20 +265,14 @@
                     let prev = this.current_index + range <= this.artwork_list.length
                     if (next) {
                         this.pushArtworkInList(this.current_index + range, this.abortController.signal)
-                        .then((value) => {
-                            // console.log(value)
-                        })
                         .catch((error) => {
-                            console.log(error)
+                            //console.log(error)
                         })
                     }
                     if (prev) {
                         this.pushArtworkInList(this.current_index - range, this.abortController.signal)
-                        .then((value) => {
-                            // console.log(value)
-                        })
                         .catch((error) => {
-                            console.log(error)
+                            //console.log(error)
                         })
                     }
                     
