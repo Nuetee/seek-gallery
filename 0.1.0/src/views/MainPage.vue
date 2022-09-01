@@ -45,9 +45,9 @@
                             :startHeight="(this.vw * 30)"
                             :heightUnit="this.vw / 2">
                         </TitleHeader>
-                        <div class="exhibitionIntroduction">
+                        <pre class="exhibitionIntroduction">
                             {{ this.exhibition.getInformation() }}
-                        </div>
+                        </pre>
                     </div>
                     <div class="exhibitionArtworks">
                         <TitleHeader ref="artworksTitle" 
