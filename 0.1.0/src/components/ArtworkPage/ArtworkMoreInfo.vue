@@ -2,9 +2,9 @@
     <div class="artworkMoreInfo normal">
         <div class="label">설명</div>
         <div class="content">
-            <div class="information">
+            <pre class="information">
                 {{ this.artwork ? this.artwork.getInformation() : '' }}
-            </div>
+            </pre>
             <div class="overflowEffect"></div>
         </div>
     </div>
