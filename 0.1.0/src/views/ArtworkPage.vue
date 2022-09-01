@@ -10,7 +10,7 @@
                 </div>
             </template>
             <template v-slot:right>
-                <RoundProfile :profile="this.profile" @click="this.openSideBar($event)"></RoundProfile>
+                <RoundProfile :profile="this.profile" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" @click="this.openSideBar($event)"></RoundProfile>
             </template>
         </MainHeader>
         <div class="artworkInformation" :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
@@ -47,6 +47,10 @@
             </template>
         </Drawer>
         <SideBar ref="sideBar"></SideBar>
+        <div class="tap poppins"
+        v-if="this.is_first_access"
+        @click="this.tapClick()"
+        :style="'color: ' + this.current_artwork.getColor()">Tap!</div>
     </div>
 </template>
 <script>
@@ -69,6 +73,7 @@
     import { Artwork } from '@/classes/artwork';
     import { isAuth, getAuth } from '@/modules/auth'
     import { cropImage } from '@/modules/image';
+    import { useCookies } from 'vue3-cookies'
 
     export default {
         name: 'ArtworkPage',
@@ -107,7 +112,8 @@
                 },
                 update_in_progress: false,
                 abortController: null,
-                first_load: true
+                first_load: true,
+                is_first_access: true
             };
         },
         async created() {
@@ -115,6 +121,20 @@
                 let user = getAuth()
                 this.profile = user.getProfile()
             }
+
+            const cookies = useCookies().cookies
+            if(cookies.isKey("isFirstAccess")) {
+                this.is_first_access = false
+            }
+            else {
+                this.is_first_access = true
+                console.log("first access")
+            }
+            let expireDate = new Date()
+            // 현재부터 7일 후까지 cookies 유지
+            expireDate.setDate(expireDate.getDate() + 7)
+            cookies.set("isFirstAccess", false, expireDate)
+
             this.abortController = new AbortController()
             this.artwork_list = new Array(this.artwork_id_list.length)
             
@@ -178,6 +198,10 @@
             })
         },
         methods: {
+            tapClick () {
+                this.is_first_access = false
+                document.getElementById('artworkPage').click()
+            },
             back (event) {
                 // event 전파 방지
                 if (event.stopPropagation) event.stopPropagation();

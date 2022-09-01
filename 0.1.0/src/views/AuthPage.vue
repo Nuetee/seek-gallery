@@ -70,6 +70,7 @@
                                 await save(
                                     register_result, this.provider, access_token,
                                     user_data.profile_image, user_data.thumbnail_image)
+                                
                                 result = true
                             }
                         }
