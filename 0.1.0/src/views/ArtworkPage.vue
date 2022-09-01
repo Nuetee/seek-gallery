@@ -50,7 +50,7 @@
         <div class="tap poppins"
         v-if="this.is_first_access"
         @click="this.tapClick()"
-        :style="'color: ' + this.current_artwork.getColor()">Tap!</div>
+        :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">Tap!</div>
     </div>
 </template>
 <script>
@@ -274,6 +274,7 @@
                 this.current_index = swiper.activeIndex
                 if (this.artwork_list[swiper.activeIndex]) {
                     this.current_artwork = this.artwork_list[swiper.activeIndex]
+                    console.log(this.current_artwork.getColor())
                 }
                 else {
                     this.pushArtworkInList(swiper.activeIndex, this.abortController.signal).then((value) => {
