@@ -164,7 +164,8 @@
         }
 
         .exhibitionMoreInformation {
-            padding-bottom: calc(var(--vh, 1vh) * 30);
+            padding-bottom: calc(var(--vh, 1vh) * 40);
+            visibility: hidden;
 
             .video {
                 margin-top: calc(var(--vw, 1vw) * 5);

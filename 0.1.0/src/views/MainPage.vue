@@ -5,7 +5,7 @@
                 <img src="../assets/seek_logo.png">
             </template>
             <template v-slot:right>
-                <RoundProfile :profile="this.userThumbnail" @click="this.openSideBar($event)"></RoundProfile>
+                <RoundProfile :profile="this.userThumbnail" @click="this.openSideBar($event)" :color="'black'"></RoundProfile>
             </template>
         </MainHeader>
         <div id="viewPort">
@@ -62,7 +62,7 @@
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
                     </div>
-                    <div class="exhibitionMoreInformation" style="display:none">
+                    <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" 
                             :title="'전시 더보기'" 
                             :startHeight="(this.vw * 30)"
