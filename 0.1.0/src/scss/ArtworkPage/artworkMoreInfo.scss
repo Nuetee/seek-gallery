@@ -29,6 +29,7 @@
             line-height: 150%;
             letter-spacing: -0.06em;
             padding-bottom: calc(var(--vw, 1vw) * 20);
+            white-space: pre-line;
         }
         .overflowEffect {
             position: sticky;
