@@ -1,0 +1,13 @@
+.snsLink {
+
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-wrap: nowrap;
+
+    a {
+        svg {
+            flex: 0 0 auto;
+        }
+    }
+}
