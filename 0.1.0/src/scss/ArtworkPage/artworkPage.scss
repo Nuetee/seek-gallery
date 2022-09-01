@@ -81,4 +81,62 @@
         align-items: center;
         justify-content: space-evenly;
     }
+
+    .tap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        animation-name: tap;
+        font-size: 30px;
+        letter-spacing: -0.04em;
+        animation-duration: 3s;
+        /* The "animation-timing-function : linear" property causes the animation to proceed at a constant speed. */
+        animation-timing-function: linear;
+        /* Set the interval at which the animation runs to 0s. */
+        animation-delay: 0s;
+        /* Makes the animation loop infinitely. */
+        animation-iteration-count: infinite;
+        /* Causes the animation to proceed in the forward direction. */
+        animation-direction: normal;
+        animation-fill-mode: none;
+    }
+}
+@keyframes tap {
+    0% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
+
+    10% {
+        font-size: calc(var(--vw, 1vw) * 10);
+        opacity: 0.8;
+    }
+
+    15% {
+        font-size: calc(var(--vw, 1vw) * 12);
+        opacity: 1;
+    }
+
+    20% {
+        font-size: calc(var(--vw, 1vw) * 10);
+        opacity: 0.8;
+    }
+
+    25% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
+
+    100% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
 }
