@@ -1,0 +1,316 @@
+#mainPage {
+    height: calc(var(--vh, 1vh) * 150);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    ::v-deep(.mainHeader) {
+        overflow-x: visible;
+        
+        .left {
+            transform-origin: 0 50%;
+            height: calc(var(--vw, 1vw) * 8);
+            width: auto;
+            > img {
+                height: 100%;
+                width: auto;
+            }
+        } 
+
+        .right {
+            overflow: visible;
+            transform-origin: 100% 50%;
+        }
+    }
+
+    // 내부 요소의 height값이 명시적으로 지정되어야 scroll시 safari address bar shrink
+    #viewPort {
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(var(--vw, 1vw) * 100);
+        height: calc(var(--vh, 1vh) * 100);
+        overflow: scroll;
+    }
+
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: calc(var(--vw, 1vw) * 100);
+        height: calc(var(--vh, 1vh) * 100);
+        padding-bottom: calc(var(--vw, 1vw) * 30);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+            background-color: transparent;
+    
+            svg {
+                fill: black;
+    
+                path,
+                g {
+                    fill: black;
+                }
+            }
+        }
+    
+        .notArchive {
+            transition-property: opacity, padding;
+            transition-duration: 0.2s;
+            opacity: 1;
+    
+            overflow: hidden;
+            position: relative;
+            width: calc(var(--vw, 1vw) * 55);
+            height: calc(var(--vw, 1vw) * 30);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: calc(var(--vw, 1vw) * 10);
+            padding-right: calc(var(--vw, 1vw) * 10);
+    
+            .eye {
+                width: 50%;
+                height: 100%;
+                position: relative;
+    
+                svg {
+                    position: absolute;
+                }
+    
+                .eyelid {
+                    top: 49%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 85%;
+                    height: auto;
+                }
+    
+                .pupil {
+                    top: 54%;
+                    left: 65%;
+                    transform: translate(-50%, -50%);
+                    width: 44%;
+                    height: auto;
+    
+                    animation-name: eyeroll;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: normal;
+                    animation-fill-mode: none;
+                }
+            }
+        }
+    
+        .phrase {
+            color: black;
+            opacity: 1;
+            font-style: normal;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 115%;
+            letter-spacing: -0.04em;
+        }
+    }
+
+    #body {
+        position: relative;
+        width: 100%;
+        margin-top: calc(var(--vw, 1vw) * 15);
+        overflow-x: visible;
+        height: auto;
+        background-color: white;
+
+        > div[class^="exhibition"] {
+            padding-left: var(--padding, 5vw);
+            padding-right: var(--padding, 5vw);
+        }
+
+        .poster {
+            left: 0;
+            width: 100%;
+        }
+        
+        .exhibitionInformation {
+            padding-bottom: calc(var(--vw, 1vw) * 10);
+
+            ::v-deep(.underLine) {
+                margin-bottom: calc(var(--vw, 1vw) * 3);
+            }
+            
+            .exhibitionIntroduction {
+                text-align: left;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 150%;
+                letter-spacing: -0.06em;
+                white-space: pre-line;
+                font-family: "Noto Sans KR", sans-serif;
+        
+                color: #000000;
+            }
+        }
+
+        .exhibitionArtworks {
+            padding-bottom: calc(var(--vh, 1vh) * 10);
+        }
+
+        .exhibitionMoreInformation {
+            padding-bottom: calc(var(--vh, 1vh) * 40);
+            visibility: hidden;
+
+            .video {
+                margin-top: calc(var(--vw, 1vw) * 5);
+
+                .videoTitle {
+                    font-weight: 700;
+                    font-size: 22px;
+                    line-height: 115%;
+                    letter-spacing: -0.04em;
+                    color: #000000;
+                    text-align: left;
+                    padding-bottom: calc(var(--vw, 1vw) * 3);
+                }
+
+                .videoArea {
+                    position: relative;
+                    width: 100%;
+                    padding-bottom: 56.25%;
+                    height: 0;
+                    overflow: hidden;
+
+                    iframe {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .merchandise {
+                margin-top: calc(var(--vw, 1vw) * 10);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                a {
+                    width: calc(var(--vw, 1vw) * 42);
+                    height: calc(var(--vw, 1vw) * 14);
+                    border-radius: calc(var(--vw, 1vw) * 7);
+                    background-color: black;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 115%;
+                    letter-spacing: -0.06em;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+    
+    ::v-deep(.before-enter) {
+        opacity: 0;
+        transform: translate(0, 20px);
+    }
+
+    ::v-deep(.after-enter) {
+        opacity: 0;
+        transform: translate(0, 20px);
+        transition: opacity 0.5s ease, transform 1s ease;
+    }
+
+    ::v-deep(.enter) {
+        opacity: 1;
+        transition: opacity 1.5s ease, transform 1s ease;
+    }
+}
+
+#viewPort::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    background: transparent;
+    -webkit-appearance: none;
+}
+
+@keyframes fade_out {
+    0% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade_in {
+    0% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    90% {
+        opacity: 0;
+    }
+}
+
+@keyframes eyeroll {
+    0% {
+        left: 65%;
+    }
+
+    5% {
+        left: 53%;
+    }
+
+    10% {
+        left: 41%;
+    }
+
+    12.5% {
+        left: 35%;
+    }
+
+    15% {
+        left: 41%;
+    }
+
+    20% {
+        left: 53%;
+    }
+
+    25% {
+        left: 65%;
+    }
+
+    100% {
+        left: 65%;
+    }
+}

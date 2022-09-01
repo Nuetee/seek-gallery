@@ -1,0 +1,57 @@
+<template>
+    <div class="artworkImageSlider">
+        <swiper v-bind="this.swiperOptions" v-if="this.artwork_image_information_list">
+            <swiper-slide v-for="(image_information, i) in this.artwork_image_information_list" :key="i">
+                <img :src="image_information.src" :style="image_information.style">
+            </swiper-slide>
+            <div class="swiper-pagination"></div>
+        </swiper>
+        <div class="blankSpace" v-else></div>
+    </div>
+</template>
+<script>
+    import SwiperCore, { Pagination } from 'swiper';
+    import { Swiper, SwiperSlide } from 'swiper/vue';
+    import 'swiper/css';
+    import  'swiper/css/pagination'
+
+    SwiperCore.use([Pagination]);
+
+    export default {
+        name: 'ArtworkImageSlider',
+        components: {
+            Swiper,
+            SwiperSlide
+        },
+        props: {
+            artwork_image_information_list: {
+                type: Array,
+                default: []
+            }
+        },
+        data() {
+            return {
+                swiperOptions: {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    loop: false,
+                    centeredSlides: true,
+                    resistanceRatio: 0,
+                    pagination: {
+                        el: '.swiper-pagination'
+                    }
+                }
+            };
+        },
+        beforeCreate() {},
+        created() {},
+        beforeMount() {},
+        mounted() {},
+        beforeUpdate() {},
+        updated() {},
+        beforeUnmount() {},
+        unmounted() {},
+        methods: {}
+    }
+</script>
+<style lang="scss" scoped src="../../scss/ArtworkPage/artworkImageSlider.scss"></style>

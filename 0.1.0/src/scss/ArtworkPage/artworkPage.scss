@@ -1,0 +1,142 @@
+#artworkPage {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: calc(var(--vh, 1vh) * 100);
+    width: calc(var(--vw, 1vw) * 100);
+    overflow-x: visible;
+
+    ::v-deep(.mainHeader) {
+        .left {
+            .backButton {
+                width: calc(var(--vw, 1vw) * 8);
+                height: calc(var(--vw, 1vw) * 8);
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+        }
+
+        .right {
+            .roundProfile {
+                height: calc(var(--vw, 1vw) * 7.7);
+                width: calc(var(--vw, 1vw) * 7.7);
+            }
+        }
+    }
+
+    > .artworkInformation {
+        position: fixed;
+        z-index: 2;
+        // mainHeader의 높이
+        top: calc(var(--vw, 1vw) * 17.5);
+        width: calc(100% - var(--padding, 5vw) * 2);
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .artworkTitle {
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 115%;
+                letter-spacing: -0.04em;
+                text-align: left;
+            }
+        }
+
+        .bottom {
+            padding-top: calc(var(--vw, 1vw) * 3);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: calc(var(--vw, 1vw) * 2);
+
+            .artist {
+                font-weight: 700;
+                font-size: 13px;
+                line-height: 115%;
+                letter-spacing: -0.06em;
+            }
+        }
+    }
+    
+    .artworkSlider {
+        left: calc(-1 * var(--padding, 5vw));
+        width: calc(100% + 2 * var(--padding, 5vw));
+        height: 100%;
+    }
+
+    .buttonContainer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: calc(var(--vw, 1vw) * 30);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .tap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        animation-name: tap;
+        font-size: 30px;
+        letter-spacing: -0.04em;
+        animation-duration: 3s;
+        /* The "animation-timing-function : linear" property causes the animation to proceed at a constant speed. */
+        animation-timing-function: linear;
+        /* Set the interval at which the animation runs to 0s. */
+        animation-delay: 0s;
+        /* Makes the animation loop infinitely. */
+        animation-iteration-count: infinite;
+        /* Causes the animation to proceed in the forward direction. */
+        animation-direction: normal;
+        animation-fill-mode: none;
+    }
+}
+@keyframes tap {
+    0% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
+
+    10% {
+        font-size: calc(var(--vw, 1vw) * 10);
+        opacity: 0.8;
+    }
+
+    15% {
+        font-size: calc(var(--vw, 1vw) * 12);
+        opacity: 1;
+    }
+
+    20% {
+        font-size: calc(var(--vw, 1vw) * 10);
+        opacity: 0.8;
+    }
+
+    25% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
+
+    100% {
+        font-size: calc(var(--vw, 1vw) * 8);
+        opacity: 0.5;
+    }
+}

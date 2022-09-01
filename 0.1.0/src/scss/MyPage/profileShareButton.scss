@@ -1,0 +1,15 @@
+.profileShareButton {
+    border: none;
+    border-radius: calc(var(--vw, 1vw) * 4);
+    box-shadow: none;
+    background-color: #E9E9E9;
+    outline: none;
+    width: 100%;
+    height: calc(var(--vw, 1vw) * 8);
+    font-size: 13px;
+    font-weight: 350;
+    text-decoration: none;
+    line-height: 19px;
+    letter-spacing: -0.06em;
+    color: #626262;
+}

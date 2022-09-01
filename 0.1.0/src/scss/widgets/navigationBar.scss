@@ -1,0 +1,48 @@
+.navigationBar {
+    width: 100%;
+    display: flex;
+    height: calc(var(--vw, 1vw) * 15);
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+
+    ::v-deep(#tabs) {
+        height: 100%;
+        width: 100%;
+        > div.va-tabs__wrapper, > div.va-tabs__wrapper > div {
+            height: 100%;
+        }
+        .va-tabs__slider {
+            height: 1px !important;
+        }
+        .nonActivate {
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 19px;
+            letter-spacing: -0.06em;
+            color: #777777;
+        }
+        .qrImage {
+            height: 50%;
+            width: auto;
+            overflow: visible;
+        }
+        .eyes {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            overflow: visible;
+            width: 32%;
+            svg {
+                width: 40%;
+                height: auto;
+            }
+        }
+    }
+    ::v-deep(#tabs > div.va-tabs__content) {
+        z-index: 1;
+    }
+    ::v-deep(#tabs > div.va-tabs__wrapper > div > div > div.va-tabs__tabs-items > div) {
+        flex: 0 0 50%;
+    }
+}
