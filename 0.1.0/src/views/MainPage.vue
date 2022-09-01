@@ -62,7 +62,7 @@
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
                     </div>
-                    <div class="exhibitionMoreInformation">
+                    <div class="exhibitionMoreInformation" style="display:none">
                         <TitleHeader ref="moreInformationTitle" 
                             :title="'전시 더보기'" 
                             :startHeight="(this.vw * 30)"
