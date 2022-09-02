@@ -62,7 +62,7 @@
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
                     </div>
-                    <div class="exhibitionMoreInformation">
+                    <!-- <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" 
                             :title="'전시 더보기'" 
                             :startHeight="(this.vw * 30)"
@@ -78,7 +78,7 @@
                         <div class="merchandise">
                             <a href="https://twice.lnk.to/Shop">굿즈 사러가기</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </transition-group>
         </div>
@@ -131,7 +131,7 @@
                 information_element: null,
                 artworks_element: null,
                 artwork_tracks_container_element: null,
-                more_information_element: null,
+                // more_information_element: null,
                 
                 header_scale: 1,
                 userThumbnail: '',
@@ -152,13 +152,13 @@
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
                         this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
-                        this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
+                        // this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
                         
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
-                        this.$refs.moreInformationTitle.setInitialPosition()
+                        // this.$refs.moreInformationTitle.setInitialPosition()
 
-                        let elementList = [this.poster_element, this.information_element, this.artworks_element, this.more_information_element]
+                        let elementList = [this.poster_element, this.information_element, this.artworks_element]
                         elementList.forEach(function(element) {
                             let children = Array.from(element.children)
                             children.forEach(function(child) {
@@ -284,7 +284,7 @@
                 }
             },
             fadeInEffect () {
-                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element, this.more_information_element]
+                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element]
 
                 const _this = this
                 elementList.forEach(function(element) {
