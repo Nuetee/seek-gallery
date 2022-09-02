@@ -108,6 +108,93 @@
         animation-direction: normal;
         animation-fill-mode: none;
     }
+
+    .loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.4);
+
+        > div {
+            background-color: transparent;
+    
+            svg {
+                fill: white;
+    
+                path,
+                g {
+                    fill: white;
+                }
+            }
+        }
+    
+        .notArchive {
+            transition-property: opacity, padding;
+            transition-duration: 0.2s;
+            opacity: 1;
+    
+            overflow: hidden;
+            position: relative;
+            width: calc(var(--vw, 1vw) * 55);
+            height: calc(var(--vw, 1vw) * 30);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: calc(var(--vw, 1vw) * 10);
+            padding-right: calc(var(--vw, 1vw) * 10);
+    
+            .eye {
+                width: 50%;
+                height: 100%;
+                position: relative;
+    
+                svg {
+                    position: absolute;
+                }
+    
+                .eyelid {
+                    top: 49%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 85%;
+                    height: auto;
+                }
+    
+                .pupil {
+                    top: 54%;
+                    left: 65%;
+                    transform: translate(-50%, -50%);
+                    width: 44%;
+                    height: auto;
+    
+                    animation-name: eyeroll;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: normal;
+                    animation-fill-mode: none;
+                }
+            }
+        }
+        .phrase {
+            color: white;
+            opacity: 1;
+            font-style: normal;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 115%;
+            letter-spacing: -0.04em;
+        }
+    }
 }
 @keyframes tap {
     0% {
@@ -138,5 +225,39 @@
     100% {
         font-size: calc(var(--vw, 1vw) * 8);
         opacity: 0.5;
+    }
+}
+
+@keyframes eyeroll {
+    0% {
+        left: 65%;
+    }
+
+    5% {
+        left: 53%;
+    }
+
+    10% {
+        left: 41%;
+    }
+
+    12.5% {
+        left: 35%;
+    }
+
+    15% {
+        left: 41%;
+    }
+
+    20% {
+        left: 53%;
+    }
+
+    25% {
+        left: 65%;
+    }
+
+    100% {
+        left: 65%;
     }
 }
