@@ -294,6 +294,9 @@
                     children.forEach(function(child) {
                         var rect = child.getBoundingClientRect()
                         var in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
+                        if (__this.checkMobile() === 'ios') {
+                            in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || (window.innerHeight - (rect.height - rect.bottom)) >  (window.innerHeight - 30 * __this.vw))
+                        }
                         
                         if (in_viewport) {
                             child.classList.add('enter')
@@ -303,10 +306,30 @@
                             child.classList.add('after-enter')
                             child.classList.remove('enter')   
                         }
+                        if(child.id == 'posterImage') 
+                        {
+                            child.classList.add('enter')
+                            child.classList.remove('before-enter')     
+                        }
                     })
                 })
 
+            },
+            checkMobile () {
+                var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+                
+                if ( varUA.indexOf('android') > -1) {
+                    //안드로이드
+                    return "android";
+                } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
+                    //IOS
+                    return "ios";
+                } else {
+                    //아이폰, 안드로이드 외
+                    return "other";
+                }
             }
+
         }
     }
 </script>
