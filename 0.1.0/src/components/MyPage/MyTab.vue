@@ -99,11 +99,9 @@
 
                 if (activeIndex === 0) {
                     await this.$refs.qrTab.load()
-                    await this.$refs.archiveTab.load()
                 }
                 else {
                     await this.$refs.archiveTab.load()
-                    await this.$refs.qrTab.load()
                 }
                 this.updateInProgress = false
             }

@@ -25,6 +25,14 @@
                 document.execCommand("copy");
                 document.body.removeChild(dummy);
 
+                if (process.env.NODE_ENV === 'production') {
+                    this.$gtag.event('click', {
+                        event_category: 'user',
+                        event_label: 'copy',
+                        value: getAuth().getID()
+                    })
+                }
+
                 alert("페이지 주소를 클립보드에 복사했습니다.");
             }
         }

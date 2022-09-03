@@ -102,6 +102,7 @@
         isAuth,
         getAuth
     } from '@/modules/auth'
+import { process } from 'ipaddr.js';
 
     export default {
         name: 'ArchiveButton',
@@ -199,6 +200,13 @@
 
                 // No authorization information
                 if (!isAuth()) {
+                    if (process.env.NODE_ENV === 'production') {
+                        this.$gtag.event('click', {
+                            event_category: 'artwork',
+                            event_label: 'archive',
+                            value: this.artwork.getID()
+                        })
+                    }
                     this.$router.replace({
                         path: '/login',
                         query: {
@@ -243,6 +251,13 @@
                         }, 1000)
                         
                         await this.user.putArtworkArchive(this.artwork)
+                        if (process.env.NODE_ENV === 'production') {
+                            this.$gtag.event('click', {
+                                event_category: 'artwork',
+                                event_label: 'archive',
+                                value: this.artwork.getID()
+                            })
+                        }
                     }
                 }
             }
