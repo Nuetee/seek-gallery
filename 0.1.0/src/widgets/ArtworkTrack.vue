@@ -46,7 +46,7 @@
             redirectArtworkPage () {
                 if (process.env.NODE_ENV === 'production') {
                     this.$gtag.event('click', {
-                        event_category: 'artwork',
+                        event_category: 'exhibition',
                         event_label: 'enter',
                         value: this.track.artwork.getID()
                     })
