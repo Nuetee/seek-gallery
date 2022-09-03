@@ -26,11 +26,17 @@
         .artworkTitle {
             color: black !important;
             font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .artist {
             font-size: 12px;
             font-weight: 400;
             color: #868686 !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             .snsLink {
                 flex: 0 1 calc(var(--vw, 1vw) * 0);
                 overflow: hidden;

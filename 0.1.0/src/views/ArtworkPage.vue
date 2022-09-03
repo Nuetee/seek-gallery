@@ -20,7 +20,9 @@
             </div>
             <div class="bottom">
                 <div class="artist">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
-                <SNSLink :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
+                <SNSLink 
+                    :artwork_id="this.current_artwork ? this.current_artwork.getArtist().getID().toString() : ''"
+                    :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
             </div>
         </div>
         <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="this.setCurrentArtwork">
