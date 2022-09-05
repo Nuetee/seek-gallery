@@ -19,6 +19,7 @@
         name: 'SNSLink',
         components: {},
         props: {
+            artwork_id: String,
             sns_link: String,
             color: {
                 type: String,
@@ -35,6 +36,13 @@
                 // 이벤트 전파 방지
                 if (event.stopPropagation) event.stopPropagation();
                 else event.cancelBubble = true; // IE 대응
+                if (process.env.NODE_ENV === 'production' && this.artwork_id !== '') {
+                    this.$gtag.event('click', {
+                        event_category: 'artwork',
+                        event_label: 'sns',
+                        value: this.artwork.getID()
+                    })
+                }
             }
         }
     }
