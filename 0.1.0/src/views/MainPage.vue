@@ -57,6 +57,7 @@
                             :document_element_id="'viewPort'">
                         </TitleHeader>
                         <ArtworkTrackList ref="artworkTrackList" 
+                            :source="this.source"
                             :artwork_track_list="this.artwork_track_list"
                             :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
                             :document_element_id="'viewPort'">
@@ -197,7 +198,7 @@
 
             if (isAuth()) {
                 // Update history
-                if (this.source === 'qrcode' || true) {
+                if (this.source === 'qrcode') {
                     const is_history = await this.user.isExhibitionHistory(this.exhibition)
                     if (!is_history) {
                         await this.user.putExhibitionHistory(this.exhibition)
