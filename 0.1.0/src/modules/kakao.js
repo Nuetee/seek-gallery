@@ -1,7 +1,7 @@
 // Deploying modules
 import axios from 'axios'
 import {
-    refresh,
+    logout,
     auth
 } from '@/modules/auth'
 
