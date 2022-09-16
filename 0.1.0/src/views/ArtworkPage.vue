@@ -259,6 +259,11 @@
                     if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
                         let artwork = await new Artwork(this.artwork_id_list[index]).init()
                         await artwork.initializePage()
+
+                        // For rtmpUrl
+                        let test = await artwork.getVideo()
+                        console.log(test)
+
                         let artwork_images = await artwork.getAllImages()
                         let container_ratio = window.innerWidth / window.innerHeight
 
