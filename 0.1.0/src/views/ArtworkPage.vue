@@ -32,7 +32,9 @@
         </swiper>
         <div class="buttonContainer">
             <CommentButton ref="commentButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" @click="this.showComment($event)"></CommentButton>
-            <ArchiveButton ref="archiveButton" :artwork="this.current_artwork">
+            <ArchiveButton ref="archiveButton" 
+                :artwork="this.current_artwork"
+                @set-archive-popup="this.setArchivePopUp">
             </ArchiveButton>
             <ShareButton ref="shareButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" :artwork="this.current_artwork">
             </ShareButton>
@@ -49,10 +51,46 @@
             </template>
         </Drawer>
         <SideBar ref="sideBar"></SideBar>
+        <div class="popUp archive" ref="archivePopUp">
+            <svg width="48" height="37" viewBox="0 0 48 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_404_573)">
+                    <path
+                        d="M2.44952 15.396C2.05636 14.9172 1.34866 14.847 0.86882 15.2394C0.388984 15.6317 0.31872 16.3379 0.711881 16.8167L16.4695 36.0067C16.8627 36.4855 17.5704 36.5556 18.0502 36.1633C18.53 35.771 18.6003 35.0648 18.2071 34.586L2.44952 15.396Z"
+                        fill="black" />
+                    <path
+                        d="M47.1869 2.30891C47.5902 1.83857 47.535 1.13106 47.0637 0.728643C46.5923 0.326225 45.8833 0.381286 45.48 0.851625L16.5336 34.6107C16.1303 35.0811 16.1855 35.7886 16.6568 36.191C17.1282 36.5934 17.8372 36.5384 18.2405 36.068L47.1869 2.30891Z"
+                        fill="black" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_404_573">
+                        <rect width="47.9171" height="36.9196" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <p>아카이빙 완료!</p>
+        </div>
+        <div class="scrollPopUpContainer"
+            v-if="this.is_first_access && this.current_artwork"
+            @click="this.scrollPopUpClick($event)"
+            >
+            <div class="popUp">
+                <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.5 30.875V8.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.125 19.5L19.5 8.125L30.875 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.5 8.125V30.875" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M30.875 19.5L19.5 30.875L8.125 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>스크롤해서<br>다음 작품으로!</p>
+            </div>
+        </div>
         <div class="tap poppins"
-        v-if="this.is_first_access"
-        @click="this.tapClick()"
-        :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">Tap!</div>
+            v-if="this.is_first_access && this.current_artwork"
+            @click="this.tapClick()"
+            :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
+            Tap!
+        </div>
         <div class="loading" v-if="!this.current_artwork" @click="this.stopPropagation($event)">
             <div class="notArchive">
                 <div class="eye">
@@ -186,10 +224,12 @@
             .catch((error) => {
                 //console.log(error)
             })
-            
         },
         mounted() {
-            const _this = this
+            const _this = this  
+            // 스크롤로 새로고침 막기
+            document.body.style.overscrollBehaviorY = 'none';
+
             // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
             document.getElementById('artworkPage').addEventListener('click', function () {
                 if (_this.$refs.informationDrawer.drawer_opened) {
@@ -222,7 +262,22 @@
                 }
             })
         },
+        beforeMount () {
+            document.body.style.overscrollBehaviorY = 'auto';
+        },
         methods: {
+            setArchivePopUp (is_archive) {
+                if (is_archive) {
+                    this.$refs.archivePopUp.classList.add('show')
+                }
+                else {
+                    this.$refs.archivePopUp.classList.remove('show')
+                }
+            },
+            scrollPopUpClick (event) {
+                document.getElementsByClassName('scrollPopUpContainer')[0].style.setProperty('display', 'none')
+                this.stopPropagation(event)
+            },
             tapClick () {
                 this.is_first_access = false
                 document.getElementById('artworkPage').click()
@@ -295,6 +350,21 @@
                 })
                 
             },
+            /**
+             * 
+             * @param {Object} swiper - swiper DOM 객체
+             * 작품페이지에서 swiperChange가 발생하면 호출된다.
+             * 1. 만약 first_load가 true이면 first_load를 false로 바꾸고 return
+             * 2. abortController.abort()를 통해 현재 진행 중인 모든 작품 load 작업을 중단한다.
+             * 3. 만약 중단하지 않으면 중복된 작품 로드가 무수히 많이 발생할 수 있으며 이는 성능 하락과 버그를 발생시킬 수 있다.
+             * 4. 새로운 abortController 객체를 생성한다.
+             * 5. 현재 바뀐 swiper slide에 맞는 artwork를 로드하기 전까지 current_artwork = null로 설정한다.
+             * 6. current_index를 바뀐 swiper index오 동기화 한다.
+             * 7. 작품 archive시 등장하는 archivePopUp DOM 객체의 class를 초기화한다.
+             * 8. 만약 현재 swiper slide에 맞는 작품객체가 이미 로드돼어 artwork_list 배열에 저장돼있으면 해당 배열에서 current_artwork를 가져온다.
+             * 9. artwork_list 배열에 현재 swiper slide에 맞는 작품 객체가 없으면 pushArtworkInList 함수를 호출하여 현재 artwork_list 요소 중 slide index에 해당하는 부분을 로드하고, 로드가 완료되면 해당 요소를 current_artwork로 설정한다.
+             * 10. 현재 작품 index를 기준으로 +-3에 해당하는 artwork_list 요소들을 pushArtworkInList함수를 통해 로드한다.
+             */
             async setCurrentArtwork (swiper) {
                 if (this.first_load) {
                     this.first_load = false
@@ -306,9 +376,10 @@
 
                 this.current_artwork = null
                 this.current_index = swiper.activeIndex
+                this.$refs.archivePopUp.classList.remove('show')
+
                 if (this.artwork_list[swiper.activeIndex]) {
                     this.current_artwork = this.artwork_list[swiper.activeIndex]
-                    console.log(this.current_artwork.getColor())
                 }
                 else {
                     this.pushArtworkInList(swiper.activeIndex, this.abortController.signal).then((value) => {

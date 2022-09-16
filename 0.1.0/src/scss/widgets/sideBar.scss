@@ -5,10 +5,10 @@
     transform: translate(calc(-50% + var(--vw, 1vw) * 50), 0);
     height: calc(var(--vh, 1vh) * 100);
     width: auto;
-    z-index: 3;
+    z-index: 4;
 
     aside.sideBar {
-        z-index: 3;
+        z-index: 4;
         top: 0;
         right: 0;
         border-top-left-radius: calc(var(--vw, 1vw) * 4);
