@@ -102,7 +102,7 @@
         isAuth,
         getAuth
     } from '@/modules/auth'
-import { process } from 'ipaddr.js';
+    import { process } from 'ipaddr.js';
 
     export default {
         name: 'ArchiveButton',
@@ -164,10 +164,6 @@ import { process } from 'ipaddr.js';
             this.archiving_element = document.getElementsByClassName('archiving')[0]
             this.archived_element = document.getElementsByClassName('archived')[0]
         },
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             async setButtonAnimation () {
                 let is_archive
@@ -236,6 +232,8 @@ import { process } from 'ipaddr.js';
                         this.not_archive_element.classList.add('activate')
 
                         await this.user.putArtworkUnarchive(this.artwork)
+
+                        this.$emit('set-archive-popup', false)
                     } 
                     else {
                         this.not_archive_element.classList.remove('show')
@@ -258,6 +256,7 @@ import { process } from 'ipaddr.js';
                                 value: this.artwork.getID()
                             })
                         }
+                        this.$emit('set-archive-popup', true)
                     }
                 }
             }
