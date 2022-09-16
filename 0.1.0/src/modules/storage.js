@@ -272,6 +272,13 @@ export async function getArtworkRepresentImage (target_id) {
     return await sendStorageRequest('image', 'artwork', 'represent', target_id)
 }
 
+// Get signed url for artwork's represenative video
+// - target_id : artwork's page_id
+// return rtmp url of the video, or empty string if the respond is not given successfully
+export async function getArtworkRepresentVideo (target_id) {
+    return await sendStorageRequest('video', 'artwork', 'represent', target_id)
+}
+
 // Get signed urls for exhibition's images
 // - target_id : exhibition's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
