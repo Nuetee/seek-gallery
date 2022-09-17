@@ -7,12 +7,12 @@ if (process.env.NODE_ENV === 'production') {
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
 // Constants for AWS S3 upload
-const BUCKET_NAME = 'seek-customer-storage'
+const BUCKET_NAME = 'seek-gallery-storage'
 
 // Amazon Cognito 인증 공급자를 초기화합니다
 AWS.config.region = 'ap-northeast-2' 
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'ap-northeast-2:340b6f96-55ca-4cb5-a355-75cf434f0655',
+    IdentityPoolId: 'ap-northeast-2:608e1984-aed3-4fae-8c80-81e030cd5856',
 })
 
 // Amazon S3 설정을 초기화합니다
@@ -255,28 +255,46 @@ async function sendStorageDeleteOriginal (target, target_id) {
 // - target_id : artwork's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getArtworkImages (target_id) {
-    return await sendStorageRequest('image', 'artwork', 'all', target_id)
+    const url = 'artwork/' + target_id + '/'
+    return new Promise(function (resolve) {
+        s3.listObjects({
+            Prefix: url
+        }, function (err, data) {
+            if (err) {
+                console.log(err)
+                resolve(null)
+            }
+            else {
+                const objects = data.Contents.reduce(function (res, obj) {
+                    if (obj.Key !== url) {
+                        res.push(process.env.VUE_APP_STORAGE_URL + '/' + obj.Key)
+                    } 
+                    return res
+                }, [])
+                resolve(objects)
+            }
+        })
+    })
 }
 
 // Get signed urls for artwork's images
 // - target_id : artwork's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getArtworkThumbnailImage (target_id) {
-    return await sendStorageRequest('image', 'artwork', 'thumbnail', target_id)
+    return process.env.VUE_APP_STORAGE_URL + '/artwork/' + target_id + '/thumbnail/thumbnail.jpg'
 }
 
 // Get signed url for artwork's represenative image
 // - target_id : artwork's page_id
 // return signed url of the image, or empty string if the respond is not given successfully
 export async function getArtworkRepresentImage (target_id) {
-    return await sendStorageRequest('image', 'artwork', 'represent', target_id)
+    return process.env.VUE_APP_STORAGE_URL + '/artwork/' + target_id + '/0.jpg'
 }
 
 // Get signed url for artwork's represenative video
 // - target_id : artwork's page_id
 // return rtmp url of the video, or empty string if the respond is not given successfully
 export async function getArtworkRepresentVideo (target_id) {
-    // return await sendStorageRequest('video', 'artwork', 'represent', target_id)
     return process.env.VUE_APP_STORAGE_URL + '/artwork/' + target_id + '/video/0.m3u8'
 }
 
@@ -284,14 +302,33 @@ export async function getArtworkRepresentVideo (target_id) {
 // - target_id : exhibition's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getExhibitionImages (target_id) {
-    return await sendStorageRequest('image', 'exhibition', 'all', target_id)
+    const url = 'exhibition/' + target_id + '/'
+    return new Promise(function (resolve) {
+        s3.listObjects({
+            Prefix: url
+        }, function (err, data) {
+            if (err) {
+                console.log(err)
+                resolve(null)
+            }
+            else {
+                const objects = data.Contents.reduce(function (res, obj) {
+                    if (obj.Key !== url) {
+                        res.push(process.env.VUE_APP_STORAGE_URL + '/' + obj.Key)
+                    } 
+                    return res
+                }, [])
+                resolve(objects)
+            }
+        })
+    })
 }
 
 // Get signed urls for exhibition's images
 // - target_id : exhibition's page_id
 // return an array of signed urls, or [] if the respond is not given successfully
 export async function getExhibitionThumbnailImage (target_id) {
-    return await sendStorageRequest('image', 'exhibition', 'thumbnail', target_id)
+    return process.env.VUE_APP_STORAGE_URL + '/exhibition/' + target_id + '/thumbnail/thumbnail.jpg'
 }
 
 // Upload artwork's thumbnail (representative) image
