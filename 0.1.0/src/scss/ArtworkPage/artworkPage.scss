@@ -128,9 +128,11 @@
         transform: translate(-50%, -50%);
         z-index: 1;
         opacity: 0;
+        display: none;
     }
 
     .popUp.archive.show {
+        display: flex;
         animation-name: archivePopUp;
         animation-duration: 1s;
         animation-iteration-count: 1;

@@ -176,7 +176,8 @@
                 update_in_progress: false,
                 abortController: null,
                 first_load: true,
-                is_first_access: true
+                is_first_access: true,
+                timeout_flag: false
             };
         },
         async created() {
@@ -229,7 +230,10 @@
             const _this = this  
             // 스크롤로 새로고침 막기
             document.body.style.overscrollBehaviorY = 'none';
-
+            window.addEventListener('scroll', function() {
+                console.log('window scorll')
+                scrollTo(0, 0, 0)
+            })
             // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
             document.getElementById('artworkPage').addEventListener('click', function () {
                 if (_this.$refs.informationDrawer.drawer_opened) {
@@ -269,8 +273,14 @@
             setArchivePopUp (is_archive) {
                 if (is_archive) {
                     this.$refs.archivePopUp.classList.add('show')
+
+                    const _this = this
+                    this.timeout_flag = setTimeout(function() {
+                        _this.$refs.archivePopUp.classList.remove('show')
+                    }, 1000)
                 }
                 else {
+                    clearTimeout(this.timeout_flag)
                     this.$refs.archivePopUp.classList.remove('show')
                 }
             },
@@ -373,6 +383,7 @@
                 this.current_artwork = null
                 this.current_index = swiper.activeIndex
                 this.$refs.archivePopUp.classList.remove('show')
+                clearTimeout(this.timeout_flag)
 
                 if (this.artwork_list[swiper.activeIndex]) {
                     this.current_artwork = this.artwork_list[swiper.activeIndex]
