@@ -228,7 +228,7 @@
         mounted() {
             const _this = this  
             // 스크롤로 새로고침 막기
-            // document.body.style.overscrollBehaviorY = 'none';
+            document.body.style.overscrollBehaviorY = 'none';
 
             // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
             document.getElementById('artworkPage').addEventListener('click', function () {
