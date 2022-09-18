@@ -60,10 +60,9 @@ export class Exhibition {
         if (status < 400) {
             const page_data = data[0][0]
             this.information = page_data.information
-            this.category = page_data.category
             this.owner = await new User(page_data.owner_id).init()
 
-            if (isArray(page_data.category)) {
+            if (page_data.category && isArray(page_data.category)) {
                 for (let i = 0 ; i < page_data.category.length; i++) {
                     const artwork = await new Artwork(page_data.category[i]).init()
                     this.artwork_list.push(artwork)
