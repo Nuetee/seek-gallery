@@ -67,7 +67,7 @@ export async function getArtworkRepresentImage (target_id) {
 // - target_id : artwork's page_id
 // return rtmp url of the video, or empty string if the respond is not given successfully
 export async function getArtworkRepresentVideo (target_id) {
-    return process.env.VUE_APP_STORAGE_URL + '/artwork/' + target_id + '/video/0.m3u8'
+    return process.env.VUE_APP_STORAGE_URL + '/artwork/' + target_id + '/video/0.mp4'
 }
 
 // Get signed urls for exhibition's images
