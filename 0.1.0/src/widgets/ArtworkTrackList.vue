@@ -9,7 +9,6 @@
             <ArtworkTrack class="before-enter" v-for="(track, i) in this.track_array" 
                 :key="i" :track="track" :track_number="i.toString()"
                 :track_page_id_array="this.track_page_id_array"
-                :source="this.source"
                 @track_loaded="this.getTrackListProperty()"></ArtworkTrack>
         </div>
     </div>
@@ -24,10 +23,6 @@
             DotScrollBar,
         },
         props: {
-            source: {
-                type: String,
-                default: ''
-            },
             document_element_id: {
                 type: String,
                 default: 'app'

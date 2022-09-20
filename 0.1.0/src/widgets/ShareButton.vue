@@ -52,13 +52,11 @@
                         url: shareUrl
                     })
                     .then(function () {
-                        if (process.env.NODE_ENV === 'production') {
-                            this.$gtag.event('click', {
-                                event_category: 'artwork',
-                                event_label: 'share',
-                                value: this.artwork.getID()
-                            })
-                        }
+                        // this.$gtag.event('click', {
+                        //     event_category: 'artwork',
+                        //     event_label: 'share',
+                        //     value: this.artwork.getID()
+                        // })
                     })
                     .catch(error => console.log('Error sharing', error))
                 }
@@ -69,13 +67,11 @@
                     textarea.select()
                     document.execCommand("copy");
                     document.body.removeChild(textarea);
-                    if (process.env.NODE_ENV === 'production') {
-                        this.$gtag.event('click', {
-                            event_category: 'artwork',
-                            event_label: 'share',
-                            value: this.artwork.getID()
-                        })
-                    }
+                    // this.$gtag.event('click', {
+                    //     event_category: 'artwork',
+                    //     event_label: 'share',
+                    //     value: this.artwork.getID()
+                    // })
                     alert("페이지 주소를 클립보드에 복사했습니다.")
                 }
             }
