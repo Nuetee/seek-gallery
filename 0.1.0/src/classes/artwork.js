@@ -5,7 +5,8 @@ import { User } from './user'
 import { 
     getArtworkImages,
     getArtworkThumbnailImage,
-    getArtworkRepresentImage
+    getArtworkRepresentImage,
+    getArtworkRepresentVideo
 } from '../modules/storage'
 
 if (process.env.NODE_ENV === 'production') {
@@ -28,6 +29,7 @@ export class Artwork {
     dimension
     material
     information
+    is_video
 
     constructor (page_id) {
         this.page_id = page_id
@@ -64,6 +66,7 @@ export class Artwork {
             this.material = page_data.material
             this.information = page_data.information
             this.color = page_data.color
+            this.is_video = page_data.is_video
         }   
     }
 
@@ -77,6 +80,15 @@ export class Artwork {
 
     getRepresentImage = async function () {
         return await getArtworkRepresentImage(this.page_id)
+    }
+
+    getVideo = async function () {
+        if (this.is_video !== null) {
+            return await getArtworkRepresentVideo(this.page_id)
+        }
+        else {
+            return null
+        }
     }
 
     getID () {
@@ -126,6 +138,10 @@ export class Artwork {
 
     getColor () {
         return this.color
+    }
+
+    isVideo () {
+        return this.is_video
     }
 
     getCommentList = async function (offset, limit) {
