@@ -3,7 +3,8 @@ import axios from 'axios'
 import { sendRequest } from '../modules/api'
 import { 
     getExhibitionImages, 
-    getExhibitionThumbnailImage
+    getExhibitionThumbnailImage,
+    getExhibitionRepresentVideo
 } from '@/modules/storage'
 
 import { User } from './user'
