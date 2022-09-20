@@ -43,8 +43,7 @@
                     this.otherCommentList = []
                     this.commentList = []
                     this.nothingToUpdate = false
-                    if (this.artwork)
-                        await this.rebuild(0, 20)
+                    await this.rebuild(0, 20)
                 }
             }
         },

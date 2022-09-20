@@ -6,8 +6,8 @@
     border-radius: 2px;
     background-color: #AEAEAE;
     height: 0px;
-    overflow: visible;
-    margin-top: calc(var(--vw, 1vw) * 10);
+    margin-top: calc(var(--vw, 1vw) * 3);
+    overflow: hidden;
 
     .categoryButton {
         position: absolute;
@@ -47,25 +47,15 @@
             letter-spacing: -0.06em;
         }
     }
-    .progressBarContainer {
+
+    .progressBar {
         position: relative;
         z-index: 0;
         width: 100%;
         height: 100%;
         border-radius: 2px;
-        background-color: #AEAEAE;
-        overflow: hidden;
-        
-        .progressBar {
-            position: relative;
-            z-index: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 2px;
-            transform-origin: 50% 0;
-            transform: scaleY(0);
-            background-color: black;
-        }
+        transform-origin: 50% 0;
+        transform: scaleY(0);
+        background-color: black;
     }
-    
 }

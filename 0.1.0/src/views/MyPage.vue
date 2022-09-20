@@ -16,11 +16,9 @@
             <ProfileContainer></ProfileContainer>
             <ProfileShareButton></ProfileShareButton>
         </div>
-        <va-infinite-scroll :load="this.load">
-            <div class="bottom">
-                <MyTab ref="myTab"></MyTab>
-            </div>
-        </va-infinite-scroll>
+        <div class="bottom">
+            <MyTab ref="myTab"></MyTab>
+        </div>
         <SideBar ref="sideBar"></SideBar>
     </div>
 </template>
@@ -65,7 +63,12 @@
 
             // Scroll Listener
             document.getElementById('myPage').addEventListener('scroll', async function (event) {
+                const scroll_height = event.target.scrollHeight
                 const scroll_top = event.target.scrollTop
+                const offset_height = event.target.offsetHeight
+                if (scroll_height === scroll_top + offset_height) {
+                    await _this.$refs.myTab.load()
+                }
                 
                 if (_this.main_header_element === null) {
                     console.log('Failed to get dom elements.')
@@ -94,9 +97,6 @@
             openSideBar (event) {
                 this.$refs.sideBar.openSideBar(event)
             },
-            async load () {
-                await this.$refs.myTab.load()
-            }
         }
     }
 </script>
