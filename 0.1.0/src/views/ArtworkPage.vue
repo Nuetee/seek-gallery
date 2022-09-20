@@ -20,9 +20,7 @@
             </div>
             <div class="bottom">
                 <div class="artist">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
-                <SNSLink 
-                    :artwork_id="this.current_artwork ? this.current_artwork.getArtist().getID().toString() : ''"
-                    :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
+                <SNSLink :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
             </div>
         </div>
         <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="this.setCurrentArtwork">
@@ -32,9 +30,7 @@
         </swiper>
         <div class="buttonContainer">
             <CommentButton ref="commentButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" @click="this.showComment($event)"></CommentButton>
-            <ArchiveButton ref="archiveButton" 
-                :artwork="this.current_artwork"
-                @set-archive-popup="this.setArchivePopUp">
+            <ArchiveButton ref="archiveButton" :artwork="this.current_artwork">
             </ArchiveButton>
             <ShareButton ref="shareButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" :artwork="this.current_artwork">
             </ShareButton>
@@ -51,69 +47,10 @@
             </template>
         </Drawer>
         <SideBar ref="sideBar"></SideBar>
-        <div class="popUp archive" ref="archivePopUp">
-            <svg width="48" height="37" viewBox="0 0 48 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_404_573)">
-                    <path
-                        d="M2.44952 15.396C2.05636 14.9172 1.34866 14.847 0.86882 15.2394C0.388984 15.6317 0.31872 16.3379 0.711881 16.8167L16.4695 36.0067C16.8627 36.4855 17.5704 36.5556 18.0502 36.1633C18.53 35.771 18.6003 35.0648 18.2071 34.586L2.44952 15.396Z"
-                        fill="black" />
-                    <path
-                        d="M47.1869 2.30891C47.5902 1.83857 47.535 1.13106 47.0637 0.728643C46.5923 0.326225 45.8833 0.381286 45.48 0.851625L16.5336 34.6107C16.1303 35.0811 16.1855 35.7886 16.6568 36.191C17.1282 36.5934 17.8372 36.5384 18.2405 36.068L47.1869 2.30891Z"
-                        fill="black" />
-                </g>
-                <defs>
-                    <clipPath id="clip0_404_573">
-                        <rect width="47.9171" height="36.9196" fill="white" />
-                    </clipPath>
-                </defs>
-            </svg>
-            <p>아카이빙 완료!</p>
-        </div>
-        <div class="scrollPopUpContainer"
-            v-if="this.is_first_access && this.current_artwork"
-            @click="this.scrollPopUpClick($event)"
-            >
-            <div class="popUp">
-                <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.5 30.875V8.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8.125 19.5L19.5 8.125L30.875 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.5 8.125V30.875" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M30.875 19.5L19.5 30.875L8.125 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <p>스크롤해서<br>다음 작품으로!</p>
-            </div>
-        </div>
         <div class="tap poppins"
-            v-if="this.is_first_access && this.current_artwork"
-            @click="this.tapClick()"
-            :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
-            Tap!
-        </div>
-        <div class="loading" v-if="!this.current_artwork" @click="this.stopPropagation($event)">
-            <div class="notArchive">
-                <div class="eye">
-                    <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
-                    </svg>
-                    <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
-                    </svg>
-                </div>
-                <div class="eye">
-                    <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
-                    </svg>
-                    <svg class="pupil" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.5 8C13.1944 8 17 4.41829 17 0H0C0 4.41829 3.80556 8 8.5 8Z" fill="white"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="phrase poppins">
-                로딩 중<span>.</span><span>.</span><span>.</span>
-            </div>
-        </div>
+        v-if="this.is_first_access"
+        @click="this.tapClick()"
+        :style="'color: ' + this.current_artwork.getColor()">Tap!</div>
     </div>
 </template>
 <script>
@@ -176,8 +113,7 @@
                 update_in_progress: false,
                 abortController: null,
                 first_load: true,
-                is_first_access: true,
-                timeout_flag: false
+                is_first_access: true
             };
         },
         async created() {
@@ -225,13 +161,10 @@
             .catch((error) => {
                 //console.log(error)
             })
+            
         },
         mounted() {
-            const _this = this  
-            // 스크롤로 새로고침 막기
-            document.body.style.position = 'fixed';
-            document.body.style.overflow = 'hidden'
-            
+            const _this = this
             // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
             document.getElementById('artworkPage').addEventListener('click', function () {
                 if (_this.$refs.informationDrawer.drawer_opened) {
@@ -264,40 +197,16 @@
                 }
             })
         },
-        beforeMount () {
-            document.body.style.overscrollBehaviorY = 'auto';
-        },
         methods: {
-            setArchivePopUp (is_archive) {
-                if (is_archive) {
-                    this.$refs.archivePopUp.classList.add('show')
-
-                    const _this = this
-                    this.timeout_flag = setTimeout(function() {
-                        _this.$refs.archivePopUp.classList.remove('show')
-                    }, 1000)
-                }
-                else {
-                    clearTimeout(this.timeout_flag)
-                    this.$refs.archivePopUp.classList.remove('show')
-                }
-            },
-            scrollPopUpClick (event) {
-                document.getElementsByClassName('scrollPopUpContainer')[0].style.setProperty('display', 'none')
-                this.stopPropagation(event)
-            },
             tapClick () {
                 this.is_first_access = false
                 document.getElementById('artworkPage').click()
             },
             back (event) {
-                this.stopPropagation(event)
-                window.history.back()
-            },
-            stopPropagation (event) {
                 // event 전파 방지
                 if (event.stopPropagation) event.stopPropagation();
                 else event.cancelBubble = true; // IE 대응
+                window.history.back()
             },
             openSideBar (event) {
                 this.$refs.sideBar.openSideBar(event)
@@ -322,7 +231,6 @@
                     if (this.artwork_list[index] === undefined || this.artwork_list[index] === null) {
                         let artwork = await new Artwork(this.artwork_id_list[index]).init()
                         await artwork.initializePage()
-
                         let artwork_images = await artwork.getAllImages()
                         let container_ratio = window.innerWidth / window.innerHeight
 
@@ -354,22 +262,8 @@
                 })
                 
             },
-            /**
-             * 
-             * @param {Object} swiper - swiper DOM 객체
-             * 작품페이지에서 swiperChange가 발생하면 호출된다.
-             * 1. 만약 first_load가 true이면 first_load를 false로 바꾸고 return
-             * 2. abortController.abort()를 통해 현재 진행 중인 모든 작품 load 작업을 중단한다.
-             * 3. 만약 중단하지 않으면 중복된 작품 로드가 무수히 많이 발생할 수 있으며 이는 성능 하락과 버그를 발생시킬 수 있다.
-             * 4. 새로운 abortController 객체를 생성한다.
-             * 5. 현재 바뀐 swiper slide에 맞는 artwork를 로드하기 전까지 current_artwork = null로 설정한다.
-             * 6. current_index를 바뀐 swiper index오 동기화 한다.
-             * 7. 작품 archive시 등장하는 archivePopUp DOM 객체의 class를 초기화한다.
-             * 8. 만약 현재 swiper slide에 맞는 작품객체가 이미 로드돼어 artwork_list 배열에 저장돼있으면 해당 배열에서 current_artwork를 가져온다.
-             * 9. artwork_list 배열에 현재 swiper slide에 맞는 작품 객체가 없으면 pushArtworkInList 함수를 호출하여 현재 artwork_list 요소 중 slide index에 해당하는 부분을 로드하고, 로드가 완료되면 해당 요소를 current_artwork로 설정한다.
-             * 10. 현재 작품 index를 기준으로 +-3에 해당하는 artwork_list 요소들을 pushArtworkInList함수를 통해 로드한다.
-             */
             async setCurrentArtwork (swiper) {
+                console.log('current: ' + this.current_index + ' active: ' + swiper.activeIndex)
                 if (this.first_load) {
                     this.first_load = false
                     return
@@ -377,12 +271,7 @@
                 this.abortController.abort()
                 this.abortController = null
                 this.abortController = new AbortController()
-
-                this.current_artwork = null
                 this.current_index = swiper.activeIndex
-                this.$refs.archivePopUp.classList.remove('show')
-                clearTimeout(this.timeout_flag)
-
                 if (this.artwork_list[swiper.activeIndex]) {
                     this.current_artwork = this.artwork_list[swiper.activeIndex]
                 }

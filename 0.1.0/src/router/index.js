@@ -13,6 +13,7 @@ import { authByToken } from '@/modules/kakao'
 import MainPage from '../views/MainPage.vue'
 import ArtworkPage from '../views/ArtworkPage.vue'
 import MyPage from '../views/MyPage.vue'
+import Test from '../views/Test.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path: '/auth',
     name: 'AuthPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/AuthPage.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   }
 ]
 

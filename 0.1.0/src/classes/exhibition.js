@@ -14,10 +14,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
-function isArray(json) {
-    return Object.prototype.toString.call(json) === '[object Array]';
-}
-
 // Exhibition : class for exhibition
 // Specification is available on official documentation
 // Usage - const artwork = await new Exhibition(<id>).init()
@@ -60,23 +56,22 @@ export class Exhibition {
         if (status < 400) {
             const page_data = data[0][0]
             this.information = page_data.information
-            this.owner = await new User(page_data.owner_id).init()
 
-            if (page_data.category && isArray(page_data.category)) {
-                for (let i = 0 ; i < page_data.category.length; i++) {
-                    const artwork = await new Artwork(page_data.category[i]).init()
+            this.owner = await new User(page_data.owner_id).init()
+            const { status: list_status, data: list_data } = await sendRequest(
+                'post', 
+                '/exhibition/artwork_list', {
+                target_id : this.id
+            })
+
+            if (list_status < 400) {
+                const artworks = list_data[0]
+
+                for (let i = 0 ; i < artworks.length ; i++) {
+                    const artwork_data = artworks[i]
+                    const artwork = await new Artwork(artwork_data.page_id).init()
                     this.artwork_list.push(artwork)
-                    this.category_list.push(null)
-                }
-            }
-            else {
-                for (let obj in page_data.category) {
-                    const page_array = page_data.category[obj]
-                    for (let i = 0; i < page_array.length; i++) {
-                        const artwork = await new Artwork(page_array[i]).init()
-                        this.artwork_list.push(artwork)
-                        this.category_list.push((i > 0) ? null : obj)
-                    }
+                    this.category_list.push(artwork_data.category)
                 }
             }
         }

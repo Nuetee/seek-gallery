@@ -14,9 +14,7 @@
                 {{ setting.category }}
             </div>
         </div>
-        <div class="progressBarContainer">
-            <div class="progressBar"></div>
-        </div>
+        <div class="progressBar"></div>
     </div>
 </template>
 <script>
@@ -69,10 +67,6 @@
             },
         },
         mounted () {
-            // 이식 시 변경해야 되는 부분 --
-            this.header_height = this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
-            // -- 이식 시 변경해야 되는 부분
-            
             if (this.document_element_id)
                 document.getElementById(this.document_element_id).addEventListener('scroll', this.setProgressBar)
             else
@@ -80,9 +74,14 @@
 
             this.dotScrollBar = document.getElementsByClassName('dotScrollBar')[0]
 
-            let scroll_bar_height = (window.innerHeight - this.header_height) * 0.8
+            // 이식 시 변경해야 되는 부분 --
+            this.header = document.getElementsByClassName('mainHeader')[0]
+            // -- 이식 시 변경해야 되는 부분
 
-            this.scroll_bar_style = 'height: ' + scroll_bar_height + 'px; top:' + this.header_height + 'px;'
+            let scroll_bar_height = (window.innerHeight - this.header.getBoundingClientRect().height) * 0.8
+            let scroll_bar_top = this.header.getBoundingClientRect().height + 10
+
+            this.scroll_bar_style = 'height: ' + scroll_bar_height + 'px; top:' + scroll_bar_top + 'px;'
         },
         unmounted () {
             if (this.document_element_id === null)
@@ -94,9 +93,8 @@
                     return
                 }
                 
-                let view_content_height = window.innerHeight - this.header_height
-
-                let scroll_distance = this.header_height - this.contents_top_position
+                
+                let scroll_distance = this.header.getBoundingClientRect().height - this.contents_top_position
                 
                 if (this.document_element_id) {
                     scroll_distance += document.getElementById(this.document_element_id).scrollTop
@@ -108,9 +106,8 @@
                     this.progression = 0
                 }
                 else {
-                    let progression = scroll_distance / (this.contents_height - view_content_height)
-
-                    progression > 1 || progression < 0 ? this.progression = 1 : this.progression = progression
+                    let progression = scroll_distance / this.contents_height
+                    progression > 1 ? this.progression = 1 : this.progression = progression
                 }
 
                 let progress_bar_element = document.getElementsByClassName('progressBar')[0]
@@ -141,7 +138,7 @@
             },
             scrollToCategory (category_position, button_index) {
                 let percentile = category_position / 100
-                let scroll_position = this.contents_height * percentile + this.contents_top_position - this.header_height
+                let scroll_position = this.contents_height * percentile + this.contents_top_position - this.header.getBoundingClientRect().height
 
                 if (this.document_element_id)
                     document.getElementById(this.document_element_id).scrollTo({ top: scroll_position, behavior: "smooth" })

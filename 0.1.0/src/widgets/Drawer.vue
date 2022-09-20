@@ -1,5 +1,5 @@
 <template>
-    <div class="drawer" :class="this.class" @scroll="this.stopPropagation($event)" @click="this.stopPropagation($event)">
+    <div class="drawer" :class="this.class" @click="this.stopPropagation($event)">
         <div class="header">
             <div class="drawingBar">
                 <div></div>
