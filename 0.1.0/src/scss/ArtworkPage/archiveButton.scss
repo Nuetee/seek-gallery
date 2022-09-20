@@ -138,6 +138,16 @@
             animation-iteration-count: 1;
             animation-direction: normal;
             animation-fill-mode: none;
+            
+            path {
+                animation-name: eyeColor;
+                animation-duration: 0.65s;
+                animation-timing-function: linear;
+                animation-delay: 0s;
+                animation-iteration-count: 1;
+                animation-direction: normal;
+                animation-fill-mode: none;
+            }
         }
     }
 
@@ -145,6 +155,7 @@
         animation-iteration-count: infinite;
     }
 }
+
 @keyframes fade_out {
     0% {
         opacity: 0;
@@ -215,6 +226,11 @@
     }
 }
 
+@keyframes eyeColor {
+    50% {
+        fill: #CCFF00;
+    }
+}
 @keyframes twinkling {
     0% {
         transform: translate(-50%, -50%) scale(1, 1) rotate(0deg)
@@ -237,6 +253,7 @@
     }
 
     50% {
+        fill: #FFD600;
         transform: translate(-50%, -50%) scale(2.2, 2.2) rotate(-30deg)
     }
 
