@@ -57,13 +57,12 @@
                             :document_element_id="'viewPort'">
                         </TitleHeader>
                         <ArtworkTrackList ref="artworkTrackList" 
-                            :source="this.source"
                             :artwork_track_list="this.artwork_track_list"
                             :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
                     </div>
-                    <!-- <div class="exhibitionMoreInformation">
+                    <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" 
                             :title="'전시 더보기'" 
                             :startHeight="(this.vw * 30)"
@@ -79,7 +78,7 @@
                         <div class="merchandise">
                             <a href="https://twice.lnk.to/Shop">굿즈 사러가기</a>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </transition-group>
         </div>
@@ -132,7 +131,7 @@
                 information_element: null,
                 artworks_element: null,
                 artwork_tracks_container_element: null,
-                // more_information_element: null,
+                more_information_element: null,
                 
                 header_scale: 1,
                 userThumbnail: '',
@@ -153,13 +152,13 @@
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
                         this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
-                        // this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
+                        this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
                         
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
-                        // this.$refs.moreInformationTitle.setInitialPosition()
+                        this.$refs.moreInformationTitle.setInitialPosition()
 
-                        let elementList = [this.poster_element, this.information_element, this.artworks_element]
+                        let elementList = [this.poster_element, this.information_element, this.artworks_element, this.more_information_element]
                         elementList.forEach(function(element) {
                             let children = Array.from(element.children)
                             children.forEach(function(child) {
@@ -198,7 +197,7 @@
 
             if (isAuth()) {
                 // Update history
-                if (this.source === 'qrcode') {
+                if (this.source === 'qrcode' || true) {
                     const is_history = await this.user.isExhibitionHistory(this.exhibition)
                     if (!is_history) {
                         await this.user.putExhibitionHistory(this.exhibition)
@@ -285,7 +284,7 @@
                 }
             },
             fadeInEffect () {
-                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element]
+                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element, this.more_information_element]
 
                 const _this = this
                 elementList.forEach(function(element) {
@@ -295,9 +294,6 @@
                     children.forEach(function(child) {
                         var rect = child.getBoundingClientRect()
                         var in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
-                        if (__this.checkMobile() === 'ios') {
-                            in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || (window.innerHeight - (rect.height - rect.bottom)) >  (window.innerHeight - 30 * __this.vw))
-                        }
                         
                         if (in_viewport) {
                             child.classList.add('enter')
@@ -307,30 +303,10 @@
                             child.classList.add('after-enter')
                             child.classList.remove('enter')   
                         }
-                        if(child.id == 'posterImage') 
-                        {
-                            child.classList.add('enter')
-                            child.classList.remove('before-enter')     
-                        }
                     })
                 })
 
-            },
-            checkMobile () {
-                var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
-                
-                if ( varUA.indexOf('android') > -1) {
-                    //안드로이드
-                    return "android";
-                } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
-                    //IOS
-                    return "ios";
-                } else {
-                    //아이폰, 안드로이드 외
-                    return "other";
-                }
             }
-
         }
     }
 </script>

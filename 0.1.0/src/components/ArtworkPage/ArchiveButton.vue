@@ -102,7 +102,6 @@
         isAuth,
         getAuth
     } from '@/modules/auth'
-    import { process } from 'ipaddr.js';
 
     export default {
         name: 'ArchiveButton',
@@ -116,7 +115,7 @@
         },
         watch: {
             artwork: {
-                deep: false,
+                deep: true,
                 async handler() {
                     let color = this.artwork ? this.artwork.getColor() : 'black'
                     // artwork.getColor()의 값에 따라 Archive button의 배경 및 색상 변경
@@ -159,21 +158,22 @@
                 this.user = getAuth()
             }
         },
-        mounted() {
-            this.not_archive_element = document.getElementsByClassName('notArchive')[0]
-            this.archiving_element = document.getElementsByClassName('archiving')[0]
-            this.archived_element = document.getElementsByClassName('archived')[0]
+        async mounted() {
+            // await this.setButtonAnimation()
         },
+        beforeUpdate() {},
+        updated() {},
+        beforeUnmount() {},
+        unmounted() {},
         methods: {
             async setButtonAnimation () {
                 let is_archive
-                if (isAuth() && this.artwork) {
-                    is_archive = await this.user.isArtworkArchived(this.artwork)
-                }
-                else {
-                    is_archive = false
-                }
-                clearInterval(this.timeOutInterval)
+                isAuth() ? is_archive = await this.user.isArtworkArchived(this.artwork) : is_archive = false
+
+                this.not_archive_element = document.getElementsByClassName('notArchive')[0]
+                this.archiving_element = document.getElementsByClassName('archiving')[0]
+                this.archived_element = document.getElementsByClassName('archived')[0]
+
                 if (is_archive) {
                     this.not_archive_element.classList.remove('show')
                     this.not_archive_element.classList.remove('activate')
@@ -183,8 +183,6 @@
                 else {
                     this.archived_element.classList.remove('show')
                     this.archived_element.classList.remove('activate')
-                    this.archiving_element.classList.remove('show')
-                    this.archiving_element.classList.remove('activate')
                     this.not_archive_element.classList.add('show')
                     this.not_archive_element.classList.add('activate')
                 }
@@ -196,14 +194,7 @@
 
                 // No authorization information
                 if (!isAuth()) {
-                    if (process.env.NODE_ENV === 'production') {
-                        this.$gtag.event('click', {
-                            event_category: 'artwork',
-                            event_label: 'archive',
-                            value: this.artwork.getID()
-                        })
-                    }
-                    this.$router.replace({
+                    this.$router.push({
                         path: '/login',
                         query: {
                             redirect: this.$route.fullPath
@@ -232,8 +223,6 @@
                         this.not_archive_element.classList.add('activate')
 
                         await this.user.putArtworkUnarchive(this.artwork)
-
-                        this.$emit('set-archive-popup', false)
                     } 
                     else {
                         this.not_archive_element.classList.remove('show')
@@ -249,14 +238,6 @@
                         }, 1000)
                         
                         await this.user.putArtworkArchive(this.artwork)
-                        if (process.env.NODE_ENV === 'production') {
-                            this.$gtag.event('click', {
-                                event_category: 'artwork',
-                                event_label: 'archive',
-                                value: this.artwork.getID()
-                            })
-                        }
-                        this.$emit('set-archive-popup', true)
                     }
                 }
             }

@@ -5,7 +5,7 @@
             <va-sidebar-item active-color="black" hover-color="white">
                 <va-sidebar-item-content>
                     <va-icon>
-                        <RoundProfile v-if="this.userThumbnailLoadFlag" :profile="this.userThumbnail" :color="'black'" />
+                        <RoundProfile v-if="this.userThumbnailLoadFlag" :profile="this.userThumbnail" />
                     </va-icon>
                     <va-sidebar-item-title>
                         {{ this.nickname }}
