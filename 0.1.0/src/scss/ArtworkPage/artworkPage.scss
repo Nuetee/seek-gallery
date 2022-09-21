@@ -82,6 +82,62 @@
         justify-content: space-evenly;
     }
 
+    .scrollPopUpContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        animation-name: scrollPopUp;
+        animation-duration: 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .popUp {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: calc(var(--vw, 1vw) * 3);
+        width: calc(var(--vw, 1vw) * 43);
+        height: calc(var(--vw, 1vw) * 46);
+
+        p {
+            padding-top: calc(var(--vw, 1vw) * 2);
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 150%;
+            text-align: center;
+            letter-spacing: -0.06em;
+
+            color: #000000;
+        }
+    }
+
+    .popUp.archive {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        opacity: 0;
+        display: none;
+    }
+
+    .popUp.archive.show {
+        display: flex;
+        animation-name: archivePopUp;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+    }
+
     .tap {
         position: absolute;
         top: 0;
@@ -108,7 +164,119 @@
         animation-direction: normal;
         animation-fill-mode: none;
     }
+
+    .loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.4);
+
+        > div {
+            background-color: transparent;
+    
+            svg {
+                fill: white;
+    
+                path,
+                g {
+                    fill: white;
+                }
+            }
+        }
+    
+        .notArchive {
+            transition-property: opacity, padding;
+            transition-duration: 0.2s;
+            opacity: 1;
+    
+            overflow: hidden;
+            position: relative;
+            width: calc(var(--vw, 1vw) * 55);
+            height: calc(var(--vw, 1vw) * 30);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: calc(var(--vw, 1vw) * 10);
+            padding-right: calc(var(--vw, 1vw) * 10);
+    
+            .eye {
+                width: 50%;
+                height: 100%;
+                position: relative;
+    
+                svg {
+                    position: absolute;
+                }
+    
+                .eyelid {
+                    top: 49%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 85%;
+                    height: auto;
+                }
+    
+                .pupil {
+                    top: 54%;
+                    left: 65%;
+                    transform: translate(-50%, -50%);
+                    width: 44%;
+                    height: auto;
+    
+                    animation-name: eyeroll;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: normal;
+                    animation-fill-mode: none;
+                }
+            }
+        }
+        .phrase {
+            color: white;
+            opacity: 1;
+            font-style: normal;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 115%;
+            letter-spacing: -0.04em;
+        }
+    }
 }
+
+@keyframes archivePopUp {
+    30% {
+        opacity: 1;
+    }
+    
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scrollPopUp {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 @keyframes tap {
     0% {
         font-size: calc(var(--vw, 1vw) * 8);
@@ -138,5 +306,39 @@
     100% {
         font-size: calc(var(--vw, 1vw) * 8);
         opacity: 0.5;
+    }
+}
+
+@keyframes eyeroll {
+    0% {
+        left: 65%;
+    }
+
+    5% {
+        left: 53%;
+    }
+
+    10% {
+        left: 41%;
+    }
+
+    12.5% {
+        left: 35%;
+    }
+
+    15% {
+        left: 41%;
+    }
+
+    20% {
+        left: 53%;
+    }
+
+    25% {
+        left: 65%;
+    }
+
+    100% {
+        left: 65%;
     }
 }
