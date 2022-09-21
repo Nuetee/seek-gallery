@@ -19,6 +19,7 @@
         name: 'ArtworkTrack',
         components: {},
         props: {
+            source: String,
             track_page_id_array: Array,
             track: Object,
             track_number: String,
@@ -43,6 +44,13 @@
         },
         methods: {
             redirectArtworkPage () {
+                if (process.env.NODE_ENV === 'production') {
+                    this.$gtag.event('click', {
+                        event_category: 'exhibition',
+                        event_label: 'enter',
+                        value: this.track.artwork.getID()
+                    })
+                }
                 this.$router.push({
                     path: '/artwork',
                     query: {
