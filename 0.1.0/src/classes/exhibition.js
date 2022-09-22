@@ -3,7 +3,8 @@ import axios from 'axios'
 import { sendRequest } from '../modules/api'
 import { 
     getExhibitionImages, 
-    getExhibitionThumbnailImage
+    getExhibitionThumbnailImage,
+    getExhibitionRepresentVideo
 } from '@/modules/storage'
 
 import { User } from './user'
@@ -27,6 +28,7 @@ export class Exhibition {
     name
     nickname
     information
+    is_video
 
     owner
     artwork_list = []
@@ -60,6 +62,7 @@ export class Exhibition {
         if (status < 400) {
             const page_data = data[0][0]
             this.information = page_data.information
+            this.is_video = page_data.is_video
             this.owner = await new User(page_data.owner_id).init()
 
             if (page_data.category && isArray(page_data.category)) {
@@ -90,6 +93,33 @@ export class Exhibition {
         return await getExhibitionThumbnailImage(this.page_id)
     }
 
+    getVideo = async function () {
+        if (this.is_video !== null) {
+            return await getExhibitionRepresentVideo(this.page_id)
+        }
+        else {
+            return null
+        }
+    }
+
+    getLinkList = async function () {
+        const { status, data } = await sendRequest('get', '/exhibition/link', {
+            target_id : this.page_id
+        })
+        if (status < 500) {
+            return data[0].map(function (x) { 
+                return {
+                    id: x.id,
+                    title: x.title, 
+                    link: x.link
+                }
+            })
+        }
+        else {
+            return []
+        }
+    }
+
     getID () {
         return this.id
     }
@@ -112,6 +142,10 @@ export class Exhibition {
 
     getOwner () {
         return this.owner
+    }
+
+    isVideo () {
+        return this.is_video
     }
 
     getCategoryList () {
