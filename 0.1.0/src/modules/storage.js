@@ -102,3 +102,10 @@ export async function getExhibitionImages (target_id) {
 export async function getExhibitionThumbnailImage (target_id) {
     return process.env.VUE_APP_STORAGE_URL + '/exhibition/' + target_id + '/thumbnail/thumbnail.jpg'
 }
+
+// Get signed url for exhibition's represenative video
+// - target_id : exhibition's page_id
+// return rtmp url of the video, or empty string if the respond is not given successfully
+export async function getExhibitionRepresentVideo (target_id) {
+    return process.env.VUE_APP_STORAGE_URL + '/exhibition/' + target_id + '/video/0.mp4'
+}
