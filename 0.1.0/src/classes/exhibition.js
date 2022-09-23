@@ -27,6 +27,7 @@ export class Exhibition {
     page_id
     name
     nickname
+    link
     information
     is_video
 
@@ -62,6 +63,8 @@ export class Exhibition {
         if (status < 400) {
             const page_data = data[0][0]
             this.information = page_data.information
+            this.link = page_data.link
+
             this.is_video = page_data.is_video
             this.owner = await new User(page_data.owner_id).init()
 
@@ -102,24 +105,10 @@ export class Exhibition {
         }
     }
 
-    getLinkList = async function () {
-        const { status, data } = await sendRequest('get', '/exhibition/link', {
-            target_id : this.page_id
-        })
-        if (status < 500) {
-            return data[0].map(function (x) { 
-                return {
-                    id: x.id,
-                    title: x.title, 
-                    link: x.link
-                }
-            })
-        }
-        else {
-            return []
-        }
+    getLinkList () {
+        return this.link
     }
-
+    
     getID () {
         return this.id
     }
