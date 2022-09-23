@@ -140,7 +140,8 @@
         }
         
         .exhibitionInformation {
-            padding-bottom: calc(var(--vw, 1vw) * 10);
+            padding-bottom: calc(var(--vw, 1vw) * 8);
+            padding-top: calc(var(--vw, 1vw) * 8);
 
             ::v-deep(.underLine) {
                 margin-bottom: calc(var(--vw, 1vw) * 3);
