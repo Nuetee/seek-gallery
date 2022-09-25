@@ -63,23 +63,20 @@
                             :document_element_id="'viewPort'">
                         </ArtworkTrackList>
                     </div>
-                    <!-- <div class="exhibitionMoreInformation">
-                        <TitleHeader ref="moreInformationTitle" 
-                            :title="'전시 더보기'" 
-                            :startHeight="(this.vw * 30)"
-                            :heightUnit="this.vw / 2"
+                    <div class="exhibitionMoreInformation">
+                        <TitleHeader ref="moreInformationTitle" :title="'전시 더보기'" :startHeight="(this.vw * 30)" :heightUnit="this.vw / 2"
                             :document_element_id="'viewPort'">
                         </TitleHeader>
-                        <div class="video">
-                            <div class="videoTitle">Talk that Talk</div>
-                            <div class="videoArea">
-                                <iframe src="https://www.youtube.com/embed/k6jqx9kZgPM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                        <div class="video" v-if="this.video_info.title !== null">
+                            <div class="videoTitle">{{ this.video_info.title }}</div>
+                            <video id="video" :src="this.video_info.src" controls></video>
                         </div>
-                        <div class="merchandise">
-                            <a href="https://twice.lnk.to/Shop">굿즈 사러가기</a>
+                        <div class="linkList" v-if="this.link_list.length > 0">
+                            <a v-for="(link, i) in this.link_list" :href="link.src">
+                                {{link.key}}
+                            </a>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </transition-group>
         </div>
@@ -125,6 +122,12 @@
                 poster_image_style: null,
                 bodyShowFlag: false,
                 vw: null,
+                
+                video_info: {
+                    src: null,
+                    title: null
+                },
+                link_list: [],
 
                 main_header_element: null,
                 poster_element: null,
@@ -132,7 +135,7 @@
                 information_element: null,
                 artworks_element: null,
                 artwork_tracks_container_element: null,
-                // more_information_element: null,
+                more_information_element: null,
                 
                 header_scale: 1,
                 userThumbnail: '',
@@ -153,13 +156,18 @@
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
                         this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
-                        // this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
+                        this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
                         
                         this.$refs.informationTitle.setInitialPosition()
                         this.$refs.artworksTitle.setInitialPosition()
-                        // this.$refs.moreInformationTitle.setInitialPosition()
+                        this.$refs.moreInformationTitle.setInitialPosition()
 
-                        let elementList = [this.poster_element, this.information_element, this.artworks_element]
+                        let elementList = [
+                            this.poster_element,
+                            this.information_element,
+                            this.artworks_element,
+                            this.more_information_element
+                        ]
                         elementList.forEach(function(element) {
                             let children = Array.from(element.children)
                             children.forEach(function(child) {
@@ -192,9 +200,21 @@
             this.poster_image = images[0]
             this.artwork_track_list = this.exhibition.getArtworkList()
             this.category_list = this.exhibition.getCategoryList()
+            if (this.exhibition.isVideo() !== null) {
+                this.video_info.title = this.exhibition.isVideo()
+                this.video_info.src = await this.exhibition.getVideo()
+            }
+            let link_list = this.exhibition.getLinkList()
+            if (link_list) {
+                Object.keys(link_list).forEach(key => {
+                    let link = new Object()
+                    link.key = key
+                    link.src = link_list[key]
+                    this.link_list.push(link)
+                })
+            }
             
             this.poster_image_element = document.getElementById('posterImage')
-            
 
             if (isAuth()) {
                 // Update history
@@ -285,7 +305,13 @@
                 }
             },
             fadeInEffect () {
-                let elementList = [this.poster_element, this.information_element, this.artworks_element, this.artwork_tracks_container_element]
+                let elementList = [
+                    this.poster_element,
+                    this.information_element,
+                    this.artworks_element,
+                    this.artwork_tracks_container_element,
+                    this.more_information_element
+                ]
 
                 const _this = this
                 elementList.forEach(function(element) {
