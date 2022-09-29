@@ -145,7 +145,7 @@ export class Artwork {
     }
 
     getCommentList = async function (offset, limit) {
-        const { status, data } = await sendRequest('post', '/artwork/comment', {
+        const { status, data } = await sendRequest('get', '/artwork/comment', {
             target_id : this.page_id,
             offset : offset,
             limit : limit
