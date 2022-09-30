@@ -55,13 +55,7 @@
                             :heightUnit="this.vw / 2"
                             :document_element_id="'viewPort'">
                         </TitleHeader>
-                        <!-- <ArtworkTrackList ref="artworkTrackList" 
-                            :source="this.source"
-                            :artwork_track_list="this.artwork_track_list"
-                            :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
-                            :document_element_id="'viewPort'">
-                        </ArtworkTrackList> -->
-                        <NewArtworkTrackList ref="artworkTrackList"  :prop_category_list="this.category_list" :prop_artwork_track_list="this.artwork_track_list"></NewArtworkTrackList>
+                        <ArtworkTrackList ref="artworkTrackList"  :prop_category_list="this.category_list" :prop_artwork_track_list="this.artwork_track_list"></ArtworkTrackList>
                     </div>
                     <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" :title="'전시 더보기'" :startHeight="(this.vw * 30)" :heightUnit="this.vw / 2"
@@ -87,13 +81,11 @@
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
-    //import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
-    import NewArtworkTrackList from '@/widgets/NewArtworkTrackList.vue';
+    import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
     import SideBar from '@/widgets/SideBar.vue';
     import RoundProfile from '@/widgets/RoundProfile.vue';
 
     import { Exhibition } from '@/classes/exhibition';
-    import { cropImage } from '@/modules/image';
     import { 
         isAuth, 
         getAuth 
@@ -104,10 +96,9 @@
         components: {
             MainHeader,
             TitleHeader,
-            //ArtworkTrackList,
             SideBar,
             RoundProfile,
-            NewArtworkTrackList
+            ArtworkTrackList
         },
         data() {
             return {
