@@ -83,7 +83,7 @@ export class Artwork {
     }
 
     getVideo = async function () {
-        if (this.is_video) {
+        if (this.is_video !== null) {
             return await getArtworkRepresentVideo(this.page_id)
         }
         else {
