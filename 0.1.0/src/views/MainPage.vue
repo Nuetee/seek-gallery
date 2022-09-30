@@ -35,8 +35,7 @@
             <transition-group name="slide-fade" tag="div">
                 <div id="body" v-if="this.exhibition" v-show="this.bodyShowFlag">
                     <div class="poster">
-                        <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image"
-                            :style="this.poster_image_style">
+                        <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image">
                     </div>
                     <div class="exhibitionInformation">
                         <TitleHeader ref="informationTitle" 
@@ -72,8 +71,8 @@
                             <video id="video" :src="this.video_info.src" controls></video>
                         </div>
                         <div class="linkList" v-if="this.link_list.length > 0">
-                            <a v-for="(link, i) in this.link_list" :href="link.src">
-                                {{link.key}}
+                            <a v-for="(link, i) in this.link_list" :href="link.link">
+                                {{link.title}}
                             </a>
                         </div>
                     </div>
@@ -119,7 +118,6 @@
                 proper_position_flag: false,
 
                 poster_image: null,
-                poster_image_style: null,
                 bodyShowFlag: false,
                 vw: null,
                 
@@ -174,9 +172,10 @@
                                 child.classList.add('before-enter')
                             })
                         })
-                        this.fadeInEffect()
+                        this.fadeInEffect(true)
 
-                        document.getElementById('viewPort').addEventListener('scroll', this.fadeInEffect)
+                        const _this = this
+                        document.getElementById('viewPort').addEventListener('scroll', function () { _this.fadeInEffect(false) })
                         this.proper_position_flag = true
                     }
                 }
@@ -196,10 +195,11 @@
             this.exhibition = await new Exhibition(this.id).init()
             await this.exhibition.initializePage()
             let images = await this.exhibition.getImages()
-            this.poster_image_style = await cropImage(images[0], 1)
             this.poster_image = images[0]
             this.artwork_track_list = this.exhibition.getArtworkList()
+            console.log(this.artwork_track_list)
             this.category_list = this.exhibition.getCategoryList()
+            console.log(this.category_list)
             if (this.exhibition.isVideo() !== null) {
                 this.video_info.title = this.exhibition.isVideo()
                 this.video_info.src = await this.exhibition.getVideo()
@@ -208,8 +208,8 @@
             if (link_list) {
                 Object.keys(link_list).forEach(key => {
                     let link = new Object()
-                    link.key = key
-                    link.src = link_list[key]
+                    link.title = key
+                    link.link = link_list[key]
                     this.link_list.push(link)
                 })
             }
@@ -304,7 +304,7 @@
                     this.main_header_element.children[i].style.setProperty('transform', `scaleX(${header_scale})`)
                 }
             },
-            fadeInEffect () {
+            fadeInEffect (first_call) {
                 let elementList = [
                     this.poster_element,
                     this.information_element,
@@ -325,18 +325,25 @@
                             in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || (window.innerHeight - (rect.height - rect.bottom)) >  (window.innerHeight - 30 * __this.vw))
                         }
                         
-                        if (in_viewport) {
-                            child.classList.add('enter')
-                            child.classList.remove('before-enter')     
+                        if (first_call) {
+                            if (in_viewport) {
+                                child.classList.add('enter')
+                                child.classList.remove('before-enter')
+                            }
+                            if (child.id == 'posterImage') {
+                                child.classList.add('enter')
+                                child.classList.remove('before-enter')
+                            }
                         }
                         else {
-                            child.classList.add('after-enter')
-                            child.classList.remove('enter')   
-                        }
-                        if(child.id == 'posterImage') 
-                        {
-                            child.classList.add('enter')
-                            child.classList.remove('before-enter')     
+                            if (in_viewport) {
+                                child.classList.add('enter')
+                                child.classList.remove('before-enter')
+                            }
+                            else {
+                                child.classList.add('after-enter')
+                                child.classList.remove('enter')
+                            }
                         }
                     })
                 })

@@ -201,7 +201,6 @@
 
             this.abortController = new AbortController()
             this.artwork_list = new Array(this.artwork_id_list.length)
-            
             this.pushArtworkInList(this.current_index, this.abortController.signal).then((value) => {
                 let initial_load = value
                 if (initial_load)
@@ -346,6 +345,19 @@
                             image_information_list.push(image_information)
                         }
                         
+                        console.log(artwork.isVideo())
+                        // artwork에 video가 존재하는 경우
+                        if (artwork.isVideo() !== null) {
+                            let video_index = artwork.isVideo()
+                            let video = await artwork.getVideo()
+                            // video를 받아오는데 성공하면 image_information_list에 video 삽입
+                            console.log(video)
+                            if (video !== null) {
+                                image_information_list.splice(video_index, 0, video)
+                            }
+                        }
+
+                        console.log(image_information_list)
                         artwork.image_information = image_information_list
 
                         this.artwork_list[index] = artwork
