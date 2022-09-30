@@ -55,12 +55,13 @@
                             :heightUnit="this.vw / 2"
                             :document_element_id="'viewPort'">
                         </TitleHeader>
-                        <ArtworkTrackList ref="artworkTrackList" 
+                        <!-- <ArtworkTrackList ref="artworkTrackList" 
                             :source="this.source"
                             :artwork_track_list="this.artwork_track_list"
                             :category_list="this.category_list" :proper_position_flag="this.proper_position_flag"
                             :document_element_id="'viewPort'">
-                        </ArtworkTrackList>
+                        </ArtworkTrackList> -->
+                        <NewArtworkTrackList ref="artworkTrackList"  :prop_category_list="this.category_list" :prop_artwork_track_list="this.artwork_track_list"></NewArtworkTrackList>
                     </div>
                     <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" :title="'전시 더보기'" :startHeight="(this.vw * 30)" :heightUnit="this.vw / 2"
@@ -86,7 +87,8 @@
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
-    import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
+    //import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
+    import NewArtworkTrackList from '@/widgets/NewArtworkTrackList.vue';
     import SideBar from '@/widgets/SideBar.vue';
     import RoundProfile from '@/widgets/RoundProfile.vue';
 
@@ -102,9 +104,10 @@
         components: {
             MainHeader,
             TitleHeader,
-            ArtworkTrackList,
+            //ArtworkTrackList,
             SideBar,
-            RoundProfile
+            RoundProfile,
+            NewArtworkTrackList
         },
         data() {
             return {
@@ -153,7 +156,7 @@
                         this.poster_element = document.getElementsByClassName('poster')[0]
                         this.information_element = document.getElementsByClassName('exhibitionInformation')[0]
                         this.artworks_element = document.getElementsByClassName('exhibitionArtworks')[0]
-                        this.artwork_tracks_container_element = document.getElementsByClassName('artworkTracksContainer')[0]
+                        this.artwork_tracks_container_element = this.$refs.artworkTrackList.$el
                         this.more_information_element = document.getElementsByClassName('exhibitionMoreInformation')[0]
                         
                         this.$refs.informationTitle.setInitialPosition()
@@ -196,10 +199,10 @@
             await this.exhibition.initializePage()
             let images = await this.exhibition.getImages()
             this.poster_image = images[0]
-            this.artwork_track_list = this.exhibition.getArtworkList()
-            console.log(this.artwork_track_list)
-            this.category_list = this.exhibition.getCategoryList()
-            console.log(this.category_list)
+            // this.artwork_track_list = this.exhibition.getArtworkList()
+            // this.category_list = this.exhibition.getCategoryList()
+            this.setCategoryAndTrackList()
+            
             if (this.exhibition.isVideo() !== null) {
                 this.video_info.title = this.exhibition.isVideo()
                 this.video_info.src = await this.exhibition.getVideo()
@@ -279,6 +282,44 @@
             window.removeEventListener('scroll', this.scrollBottom)
         },
         methods: {
+            setCategoryAndTrackList() {
+                let artwork_list = this.exhibition.getArtworkList()
+                let category_list = this.exhibition.getCategoryList()
+                // 아무 카테고리에도 속하지 않은 아트워크들이 있는 경우
+                if (category_list[0] === null) {
+                    category_list[0] = ''
+                }
+
+                this.artwork_track_list = new Array(0)
+                this.category_list = new Array(0)
+                let category_index = 0
+
+                category_list.forEach((value, index) => {
+                    if (value !== null) {
+                        this.artwork_track_list.push(new Array())
+                        category_index = this.artwork_track_list.length - 1
+                    }
+
+                    if (category_index >= 0) {
+                        this.artwork_track_list[category_index].push(artwork_list[index])
+                    }
+                })
+
+                this.category_list = category_list.filter((data) => {
+                    return data !== null
+                })
+                this.category_list.forEach((value, index, array) => {
+                    array[index] = value.replace('\t', '')
+                })
+                if (this.category_list.length === 0) {
+                    this.category_list = ['']
+                    this.artwork_track_list = [[]]
+                }
+                else if (this.category_list[0] !== '') {
+                    this.category_list.splice(0, 0, '')
+                    this.artwork_track_list.splice(0, 0, [])
+                }
+            },
             scrollBottom () {
                 window.scrollTo(0, document.getElementById('mainPage').clientHeight)
             },
@@ -321,9 +362,9 @@
                     children.forEach(function(child) {
                         var rect = child.getBoundingClientRect()
                         var in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || rect.top > (window.innerHeight - 30 * __this.vw))
-                        if (__this.checkMobile() === 'ios') {
-                            in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || (window.innerHeight - (rect.height - rect.bottom)) >  (window.innerHeight - 30 * __this.vw))
-                        }
+                        // if (__this.checkMobile() === 'ios') {
+                        //     in_viewport =  !(rect.right < 0 || rect.left > window.innerWidth || (window.innerHeight - (rect.height - rect.bottom)) >  (window.innerHeight - 30 * __this.vw))
+                        // }
                         
                         if (first_call) {
                             if (in_viewport) {
@@ -338,11 +379,12 @@
                         else {
                             if (in_viewport) {
                                 child.classList.add('enter')
+                                child.classList.remove('after-enter')
                                 child.classList.remove('before-enter')
                             }
                             else {
-                                child.classList.add('after-enter')
                                 child.classList.remove('enter')
+                                child.classList.add('after-enter')
                             }
                         }
                     })
