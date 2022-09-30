@@ -70,7 +70,7 @@
         },
         mounted () {
             // 이식 시 변경해야 되는 부분 --
-            this.header_height = this.vw = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
+            this.header_height = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
             // -- 이식 시 변경해야 되는 부분
             
             if (this.document_element_id)

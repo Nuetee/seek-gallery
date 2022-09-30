@@ -39,6 +39,7 @@
             const thumbnail_image_element = document.getElementsByClassName(thumbnail_image_element_class)[0]
             
             thumbnail_image_element.onload = () => {
+                console.log(this.track_number)
                 this.$emit('track_loaded')
             }
         },

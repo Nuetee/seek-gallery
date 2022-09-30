@@ -108,6 +108,7 @@
             
                     if (this.track_total_number === this.artwork_track_list.length) {
                         this.track_list_height = parseInt(document.getElementsByClassName('artworkTracksContainer')[0].clientHeight)
+                        console.log(this.track_list_height)
 
                         document.getElementsByClassName('artworkTrackList')[0].style.setProperty('height', `${document.getElementsByClassName('artworkTrackList')[0].clientHeight + this.track_list_height}px`)
                     }
