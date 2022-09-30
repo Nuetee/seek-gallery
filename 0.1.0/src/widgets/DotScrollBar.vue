@@ -1,128 +1,124 @@
 <template>
-    <div class="dotScrollBar" v-show="this.position_array && this.contents_height && this.contents_top_position"
-        :style="this.scroll_bar_style">
-        <div class="categoryButton" v-for="(setting, i) in this.buttonSettings" :key="i"
-            :style="'top: ' + setting.position + '%;'">
-            <div class="categoryCircle" 
-                :style="'background-color:' + setting.background_color"
-                @click="this.showCategoryName(i)"
-            ></div>
+    <div
+        ref="dotScrollBar"
+        class="dotScrollBar" 
+        :style="'height: ' + this.scrollBarHeight + 'px;'"
+    >
+        <div
+            class="categoryButton"
+            v-for="(category, i) in this.category_list"
+            :style="'top:' + this.getCategoryButtonPosition(i) + '%'"
+            v-show="category !== ''"
+        >
+            <div class="categoryCircle"
+                :style="this.categoryBackgroundColor(i)"
+                @click="this.showCategoryName(i)"></div>
             <div class="categoryName"
-                :style="'background-color:' + setting.background_color + '; color: ' + setting.color"
-                @click="this.scrollToCategory(setting.position, i)"
+                :style="this.categoryBackgroundColor(i)"
+                @click="this.scrollToCategory(i)"
             >
-                {{ setting.category }}
+                {{ category }}
             </div>
         </div>
         <div class="progressBarContainer">
-            <div class="progressBar"></div>
+            <div class="progressBar" :style="'transform:scaleY(' + this.progression + ');'"></div>
         </div>
     </div>
 </template>
 <script>
-
     export default {
         name: 'DotScrollBar',
         components: {},
         props: {
-            document_element_id: {
+            // scroll의 basis가 되는 element id (스크롤 되지 않음)
+            basis_element_id: {
                 type: String,
-                default: null
+                default: 'app'
             },
-            position_array: {
-                type: Array,
-                default: []
+            scroll_basis_element_id: {
+                type: String,
+                default: ''
             },
-            contents_height: Number,
-            contents_top_position: Number,
+            // 스크롤바가 표시하는 element
+            scroll_element_class :String,
+            category_list: Array,
+            artwork_track_list: Array,
+            contents_height: Number
         },
         data() {
             return {
-                dotScrollBar: null,
-                scroll_bar_style: '',
-                header: null,
-                progression: 0,
+                standard_height: null,
+                progression: -1,
             };
         },
         computed: {
-            buttonSettings () {
-                let button_setting_array = new Array(0)
-
-                for (let i = 0; i < this.position_array.length; i++) {
-                    if (this.position_array[i] !== null) {
-                        let button_setting = new Object()
-                        button_setting.position = (i / this.position_array.length) * 100
-                        button_setting.category = this.position_array[i]
-                        button_setting.background_color = '#AEAEAE'
-                        button_setting.color = 'black'
-
-                        if ((i / this.position_array.length) < this.progression + 0.01 && this.progression !== 0) {
-                            button_setting.background_color = 'black'
-                            button_setting.color = 'white'
-                        }
-
-                        button_setting_array.push(button_setting)
-                    }
+            scrollBarHeight () {
+                if (this.contents_height < this.standard_height) {
+                    return this.contents_height
                 }
-
-                return button_setting_array
+                else {
+                    return this.standard_height
+                }
             },
         },
-        mounted () {
-            // 이식 시 변경해야 되는 부분 --
-            this.header_height = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
-            // -- 이식 시 변경해야 되는 부분
-            
-            if (this.document_element_id)
-                document.getElementById(this.document_element_id).addEventListener('scroll', this.setProgressBar)
+        beforeCreate() {},
+        created() {
+            let header_height = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
+            this.standard_height = (window.innerHeight - header_height) * 0.8
+        },
+        beforeMount() {},
+        mounted() {
+            if (this.basis_element_id)
+                document.getElementById(this.basis_element_id).addEventListener('scroll', this.setProgressBar)
             else
                 window.addEventListener('scroll', this.setProgressBar)
-
-            this.dotScrollBar = document.getElementsByClassName('dotScrollBar')[0]
-
-            let scroll_bar_height = (window.innerHeight - this.header_height) * 0.8
-
-            this.scroll_bar_style = 'height: ' + scroll_bar_height + 'px; top:' + this.header_height + 'px;'
         },
-        unmounted () {
-            if (this.document_element_id === null)
-                window.removeEventListener('scroll', this.setProgressBar)
-        },
+        beforeUpdate() {},
+        updated() {},
+        beforeUnmount() {},
+        unmounted() {},
         methods: {
+            getCategoryButtonPosition (index) {
+                let button_position_array = new Array (this.category_list.length)
+
+                let total_artwork = 0
+                this.artwork_track_list.forEach((value, index_2) => {
+                    button_position_array[index_2] = total_artwork
+                    total_artwork += value.length
+                })
+
+                return (button_position_array[index]/total_artwork) * 100
+            },
             setProgressBar () {
-                if (!this.position_array || !this.contents_height || !this.contents_top_position) {
-                    return
-                }
+                let header_height = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
+                let contents_top = document.getElementsByClassName(this.scroll_element_class)[0].getBoundingClientRect().top
                 
-                let view_content_height = window.innerHeight - this.header_height
-
-                let scroll_distance = this.header_height - this.contents_top_position
-                
-                if (this.document_element_id) {
-                    scroll_distance += document.getElementById(this.document_element_id).scrollTop
+                let progression = 0
+                if (contents_top - header_height > 0) {
+                    progression = -1
                 }
-                else
-                    scroll_distance += window.scrollY
-
-                if (scroll_distance <= 0) {
-                    this.progression = 0
+                else if (this.contents_height + (contents_top - header_height) < 0) {
+                    progression = 1
                 }
                 else {
-                    let progression = scroll_distance / (this.contents_height - view_content_height)
-
-                    progression > 1 || progression < 0 ? this.progression = 1 : this.progression = progression
+                    progression = (header_height - contents_top) / this.contents_height
                 }
 
-                let progress_bar_element = document.getElementsByClassName('progressBar')[0]
-                if (progress_bar_element) {
-                    progress_bar_element.style.setProperty('transform', `scaleY(${this.progression})`)
+                this.progression = progression
+            },
+            categoryBackgroundColor (index) {
+                if (this.progression === -1) {
+                    return 'background-color:#AEAEAE;color:black;'
+                }
+                if (this.getCategoryButtonPosition(index)/100 > this.progression) {
+                    return 'background-color:#AEAEAE;color:black;'
                 }
                 else {
-                    console.log("Can't get progress bar DOM element.")
+                    return 'background-color:black;color:white'
                 }
             },
-            showCategoryName (button_index) {
-                for (let i = 0; i < this.buttonSettings.length; i++) {
+            showCategoryName(button_index) {
+                for (let i = 0; i < this.category_list.length; i++) {
                     if (i === button_index) {
                         document.getElementsByClassName('categoryCircle')[i].style.setProperty('opacity', '0')
                         document.getElementsByClassName('categoryCircle')[i].style.setProperty('z-index', '0')
@@ -139,20 +135,14 @@
                     }
                 }
             },
-            scrollToCategory (category_position, button_index) {
-                let percentile = category_position / 100
-                let scroll_position = this.contents_height * percentile + this.contents_top_position - this.header_height
+            scrollToCategory(index) {
+                //let header_height = parseFloat(document.documentElement.style.getPropertyValue('--vw').replace("px", "")) * 17.5 * 0.7
+                let scroll_position = document.getElementsByClassName('category')[index].getBoundingClientRect().top - document.getElementById(this.scroll_basis_element_id).getBoundingClientRect().top
 
-                if (this.document_element_id)
-                    document.getElementById(this.document_element_id).scrollTo({ top: scroll_position, behavior: "smooth" })
+                if (this.basis_element_id)
+                    document.getElementById(this.basis_element_id).scrollTo({ top: scroll_position, behavior: "smooth" })
                 else
                     window.scrollTo({ top: scroll_position, behavior: "smooth" })
-                
-                document.getElementsByClassName('categoryCircle')[button_index].style.setProperty('opacity', '1')
-                document.getElementsByClassName('categoryCircle')[button_index].style.setProperty('z-index', '1')
-
-                document.getElementsByClassName('categoryName')[button_index].style.setProperty('opacity', '0')
-                document.getElementsByClassName('categoryName')[button_index].style.setProperty('z-index', '0')
             }
         }
     }
