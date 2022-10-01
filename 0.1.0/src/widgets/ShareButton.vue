@@ -43,7 +43,7 @@
 
                 let shareTitle = this.artwork.getName()
                 let shareText = this.artwork.getName() + ' ' + this.artwork.getArtistName()
-                let shareUrl = 'https://se-ek.com' + this.$route.path + '?id=' + this.$route.query.id
+                let shareUrl = 'https://se-ek.com/artwork?array=1&array=' + this.artwork.getPageID() + '&index=1'
 
                 if (navigator.share) {
                     navigator.share({
