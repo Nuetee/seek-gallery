@@ -10,6 +10,18 @@
   </head>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script type='text/javascript'>
+	window.onload = function(){
+		if(navigator.userAgent.match(/inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS\/[^1]/i)){
+			document.body.innerHTML = '';
+			if(navigator.userAgent.match(/iPhone|iPad/i)){
+				location.href='ftp://se-ek.com/bridge.html?_targeturl='+location.href;
+			}else{
+				location.href='intent://'+location.href.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
+			}
+		}
+	}
+</script>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
