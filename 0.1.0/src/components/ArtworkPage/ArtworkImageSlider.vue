@@ -5,7 +5,7 @@
                 <img v-if="image_information.style !== 'video'" :src="image_information.src" :style="image_information.style">
                 <div v-else class="video">
                     <img :src="image_information.background_src" :style="image_information.background_style">
-                    <video :src="image_information.src" controls></video>
+                    <video @click="this.stopPropagation($event)" :src="image_information.src" controls></video>
                 </div>
             </swiper-slide>
             <div class="swiper-pagination"></div>
@@ -55,7 +55,13 @@
         updated() {},
         beforeUnmount() {},
         unmounted() {},
-        methods: {}
+        methods: {
+            stopPropagation(event) {
+                // event 전파 방지
+                if (event.stopPropagation) event.stopPropagation();
+                else event.cancelBubble = true; // IE 대응
+            },
+        }
     }
 </script>
 <style lang="scss" scoped src="../../scss/ArtworkPage/artworkImageSlider.scss"></style>
