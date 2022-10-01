@@ -4,9 +4,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
+    overflow: visible;
 
     .artworkTrackListContainer {
-        flex: 1 0 auto;
+        flex: 0 0 calc(100% - 4px);
+        overflow: hidden;
 
         .artworkTrackContainer {
             display: flex;
@@ -43,6 +46,8 @@
                         display: flex;
                         align-items: center;
                         justify-content: flex-start;
+                        gap: calc(var(--vw, 1vw) * 1);
+                        width: 100%;
     
                         .artworkThumbnail {
                             width: calc(var(--vw, 1vw) * 20);
@@ -68,18 +73,34 @@
                         }
     
                         .artworkInformation {
+                            position: relative;
+                            flex: 0 0 calc(100% - (var(--vw, 1vw) * 21));
                             display: flex;
                             flex-direction: column;
                             justify-content: center;
                             gap: calc(var(--vw, 1vw) * 2);
                             text-align: left;
                             color: #000000;
-    
+                            overflow: hidden;
+
                             .artworkName {
                                 font-weight: 600;
                                 font-size: 18px;
                                 line-height: 115%;
                                 letter-spacing: -0.04em;
+                                width: 100%;
+                                white-space: nowrap;
+                                overflow: scroll;
+
+                                &::-webkit-scrollbar {
+                                    display: none;
+                                    /* Chrome, Safari, Opera*/
+                                    // 스크롤바 잔상 없애기
+                                    height: 0;
+                                    background: transparent;
+                                    /* Optional: just make scrollbar invisible */
+                                    -webkit-appearance: none;
+                                }
                             }
     
                             .artist {
@@ -97,5 +118,6 @@
     
     ::v-deep(.dotScrollBar) {
         align-self: flex-start;
+        flex: 0 0 4px;
     }
 }
