@@ -181,6 +181,10 @@
             };
         },
         async created() {
+            if (this.artwork_id_list === undefined) {
+                // 랜덤받아오는 api
+                this.current_index = 0
+            }
             if (isAuth()) {
                 let user = getAuth()
                 this.profile = user.getProfile()

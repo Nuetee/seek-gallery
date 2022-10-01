@@ -1,0 +1,29 @@
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densityDpi=medium-dpi, viewport-fit=cover'>
+		<style>
+			html{font-family: sans-serif;}
+			body{padding:0;	margin:0; display: flex; align-items: center; position:fixed; width:100%; height:100%; overflow:auto; -webkit-overflow-scrolling: touch;
+			}
+			div{width: 100%;text-align: center;}
+			b{font-size:2.2em;}
+		</style>
+		<script type='text/javascript'>
+			let target_url = location.href.split('?_targeturl=')[1];
+			window.onload = function(){
+				document.getElementsByClassName('target')[0].setAttribute('href',target_url);
+				setTimeout(function() {
+					window.open(target_url, "_self");
+				}, 1000);
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div>
+			<b>Safari로 이동합니다.</b><br /><br />
+			자동으로 이동되지 않을 경우 <a class='target'>여기</a>를 눌러주세요.
+        </div>
+	</body>
+</html>
