@@ -42,8 +42,8 @@
                 else event.cancelBubble = true; // IE 대응
 
                 let shareTitle = this.artwork.getName()
-                let shareText = this.artwork.getName() + ' ' + this.artwork.getArtistName()
-                let shareUrl = 'https://se-ek.com/artwork?array=1&array=' + this.artwork.getPageID() + '&index=1'
+                let shareText = this.artwork.getArtistName() + ' ' + this.artwork.getName()
+                let shareUrl = 'https://se-ek.com/artwork?array=' + this.artwork.getPageID() + '&index=0'
 
                 if (navigator.share) {
                     navigator.share({

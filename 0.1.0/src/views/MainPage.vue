@@ -177,6 +177,11 @@
             }
         },
         async created() {
+            if (this.id === undefined) {
+                this.$router.replace({
+                    path: '/artwork'
+                })
+            }
             // 유저 썸네일을 빠르게 로드하기 위해 Update history 코드와 분리
             if(isAuth()) {
                 // Fetch profile thumbnail and set
