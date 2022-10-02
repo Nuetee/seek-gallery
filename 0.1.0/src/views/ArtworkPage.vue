@@ -183,7 +183,7 @@
                 // 간이 홈 data
                 seed: null,
                 offset: 0,
-                limit: 5,
+                limit: 10,
                 update_in_progress: false
             };
         },
