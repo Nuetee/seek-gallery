@@ -137,6 +137,7 @@
     import { isAuth, getAuth } from '@/modules/auth'
     import { cropImage } from '@/modules/image';
     import { useCookies } from 'vue3-cookies'
+    import { getRandomArtworks } from '@/modules/public';
 
     export default {
         name: 'ArtworkPage',
@@ -168,7 +169,7 @@
                     direction: 'vertical',
                     slidesPerView: 1,
                     spaceBetween: 0,
-                    initialSlide: parseInt(this.$route.query.index),
+                    initialSlide: parseInt(this.$route.query.index ? this.$route.query.index : 0),
                     loop: false,
                     centeredSlides: true,
                     resistanceRatio: 0,
@@ -177,14 +178,32 @@
                 abortController: null,
                 first_load: true,
                 is_first_access: true,
-                timeout_flag: false
+                timeout_flag: false,
+
+                // 간이 홈 data
+                seed: null,
+                offset: 0,
+                limit: 5,
+                update_in_progress: false
             };
         },
         async created() {
             if (this.artwork_id_list === undefined) {
-                // 랜덤받아오는 api
+                console.log('0')
+                // 0 ~ 999 까지의 난수 생성
+                this.seed = Math.floor(Math.random() * 1000)
+                this.artwork_id_list = await getRandomArtworks(this.seed, this.offset, this.limit)
+                this.offset += this.limit
                 this.current_index = 0
+                this.swiper_options.initialSlide = 0
             }
+            else if (typeof(this.artwork_id_list) === 'string') {
+                this.artwork_id_list = new Array(0)
+                this.artwork_id_list.push(this.$route.query.array)
+                this.current_index = 0
+                this.swiper_options.initialSlide = 0
+            }
+
             if (isAuth()) {
                 let user = getAuth()
                 this.profile = user.getProfile()
@@ -217,16 +236,16 @@
                 for (let range = 1; range <= 3; range++) {
                     this.pushArtworkInList(this.current_index - range, this.abortController.signal)
                     .catch((error) => {
-                        //console.log(error)
+                        // console.log(error)
                     })
                     this.pushArtworkInList(this.current_index + range, this.abortController.signal)
                     .catch((error) => {
-                        //console.log(error)
+                        // console.log(error)
                     })
                 }
             })
             .catch((error) => {
-                //console.log(error)
+                // console.log(error)
             })
         },
         mounted() {
@@ -318,6 +337,7 @@
                         
                         return reject( error );
                     })
+
                     if (index >= this.artwork_id_list.length || index < 0) {
                         return resolve(false)
                     }
@@ -388,7 +408,7 @@
              * 3. 만약 중단하지 않으면 중복된 작품 로드가 무수히 많이 발생할 수 있으며 이는 성능 하락과 버그를 발생시킬 수 있다.
              * 4. 새로운 abortController 객체를 생성한다.
              * 5. 현재 바뀐 swiper slide에 맞는 artwork를 로드하기 전까지 current_artwork = null로 설정한다.
-             * 6. current_index를 바뀐 swiper index오 동기화 한다.
+             * 6. current_index를 바뀐 swiper index와 동기화 한다.
              * 7. 작품 archive시 등장하는 archivePopUp DOM 객체의 class를 초기화한다.
              * 8. 만약 현재 swiper slide에 맞는 작품객체가 이미 로드돼어 artwork_list 배열에 저장돼있으면 해당 배열에서 current_artwork를 가져온다.
              * 9. artwork_list 배열에 현재 swiper slide에 맞는 작품 객체가 없으면 pushArtworkInList 함수를 호출하여 현재 artwork_list 요소 중 slide index에 해당하는 부분을 로드하고, 로드가 완료되면 해당 요소를 current_artwork로 설정한다.
@@ -407,6 +427,25 @@
                 this.current_index = swiper.activeIndex
                 this.$refs.archivePopUp.classList.remove('show')
                 clearTimeout(this.timeout_flag)
+
+                // 간이 홈화면
+                if (this.seed !== null) {
+                    // 끝에서 3번째에 해당하는 slide에 왔을 경우 이후 artwork page id 배열을 로드하여 기존 artwork_id_list와 합친다.
+                    if (this.offset - 3 === swiper.activeIndex && this.update_in_progress === false) {
+                        // this.update_in_progress를 통해 중복 업데이트가 발생하지 않도록 한다.
+                        this.update_in_progress = true
+                        
+                        let next_artwork_id_list = await getRandomArtworks(this.seed, this.offset, this.limit)
+                        let new_artwork_id_list = [
+                            ...this.artwork_id_list,
+                            ...next_artwork_id_list
+                        ]
+                        this.offset += this.limit
+                        this.artwork_id_list = new_artwork_id_list
+                        
+                        this.update_in_progress = false
+                    }
+                }
 
                 if (this.artwork_list[swiper.activeIndex]) {
                     this.current_artwork = this.artwork_list[swiper.activeIndex]
@@ -439,6 +478,7 @@
                     range++
                 }
                 
+                // 범위 밖의 artwork 들은 null로 처리해준다. => RAM 과부하 줄이기 위함
                 for (let i = 0; i < this.current_index - 3; i++) {
                     this.artwork_list[i] = null
                 }
