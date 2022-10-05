@@ -5,8 +5,8 @@ import {
     doSession,
     doHistory,
     doLike,
-    doArchive,
-    isArchived,
+    doArtworkArchive,
+    isArtworkArchived,
     isLiked,
     isHistory,
     updateHistory
@@ -77,7 +77,11 @@ export class User {
     }
 
     isArtworkArchived = async function (artwork) {
-        return await isArchived(artwork.getID(), this.id)
+        return await isArtworkArchived(artwork.getID(), this.id)
+    } 
+
+    isExhibitionArchived = async function (exhibition) {
+        return await isExhibitionArchived(exhibition.getID(), this.id)
     } 
 
     isExhibitionHistory = async function (exhibition) {
@@ -89,7 +93,21 @@ export class User {
     } 
 
     getArchiveArtworks = async function (offset, limit) {
-        const { status, data } = await sendRequest('post', '/user/archive', {
+        const { status, data } = await sendRequest('post', '/user/archive/artwork', {
+            target_id : this.id,
+            offset : offset,
+            limit : limit
+        })
+        if (status < 500) {
+            return data[0].map(x => x.page_id)
+        }
+        else {
+            return []
+        }
+    }
+
+    getArchiveExhibitions = async function (offset, limit) {
+        const { status, data } = await sendRequest('post', '/user/archive/exhibition', {
             target_id : this.id,
             offset : offset,
             limit : limit
@@ -148,9 +166,9 @@ export class User {
     }
 
     putArtworkArchive = async function (artwork) {
-        const archived_check = await isArchived(artwork.getID(), this.id)
+        const archived_check = await isArtworkArchived(artwork.getID(), this.id)
         if (!archived_check) {
-            const archive_result = await doArchive(artwork.getID(), this.id)
+            const archive_result = await doArtworkArchive(artwork.getID(), this.id)
             if (archive_result) {
                 artwork.setArchiveCount('inc')
                 return true
@@ -160,11 +178,35 @@ export class User {
     }
 
     putArtworkUnarchive = async function (artwork) {
-        const archived_check = await isArchived(artwork.getID(), this.id)
+        const archived_check = await isArtworkArchived(artwork.getID(), this.id)
         if (archived_check) {
-            const archive_result = await doArchive(artwork.getID(), this.id, true)
+            const archive_result = await doArtworkArchive(artwork.getID(), this.id, true)
             if (archive_result) {
                 artwork.setArchiveCount('dec')
+                return true
+            }
+        } 
+        return false
+    }
+
+    putExhibitionArchive = async function (exhibition) {
+        const archived_check = await isExhibitionArchived(exhibition.getID(), this.id)
+        if (!archived_check) {
+            const archive_result = await doExhibitionArchive(exhibition.getID(), this.id)
+            if (archive_result) {
+                exhibition.setArchiveCount('inc')
+                return true
+            }
+        } 
+        return false
+    }
+
+    putExhibitionUnarchive = async function (exhibition) {
+        const archived_check = await isExhibitionArchived(exhibition.getID(), this.id)
+        if (archived_check) {
+            const archive_result = await doExhibitionArchive(exhibition.getID(), this.id, true)
+            if (archive_result) {
+                exhibition.setArchiveCount('dec')
                 return true
             }
         } 
