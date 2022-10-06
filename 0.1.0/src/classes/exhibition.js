@@ -29,6 +29,8 @@ export class Exhibition {
     nickname
     link
     information
+    start_date
+    end_date
     is_video
 
     owner
@@ -67,6 +69,8 @@ export class Exhibition {
             this.archive_count = page_data.archive_count
 
             this.is_video = page_data.is_video
+            this.start_date = page_data.start_date
+            this.end_date = page_data.end_date
             this.owner = await new User(page_data.owner_id).init()
 
             const { status: category_status, data: category_data } = await sendRequest('get', '/exhibition/category', {
@@ -142,6 +146,14 @@ export class Exhibition {
 
     getArchiveCount () {
         return this.archive_count
+    }
+
+    getStartDate () {
+        return this.start_date
+    }
+
+    getEndDate () {
+        return this.end_date
     }
 
     isVideo () {
