@@ -49,6 +49,8 @@ export class Exhibition {
             const exhibition_data = data[0][0]
             this.id = exhibition_data.id
             this.name = exhibition_data.name
+            this.start_date = exhibition_data.start_date
+            this.end_date = exhibition_data.end_date
             this.nickname = exhibition_data.nickname
             
             return this
@@ -69,8 +71,6 @@ export class Exhibition {
             this.archive_count = page_data.archive_count
 
             this.is_video = page_data.is_video
-            this.start_date = page_data.start_date
-            this.end_date = page_data.end_date
             this.owner = await new User(page_data.owner_id).init()
 
             const { status: category_status, data: category_data } = await sendRequest('get', '/exhibition/category', {
