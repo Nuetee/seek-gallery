@@ -189,7 +189,6 @@
         },
         async created() {
             if (this.artwork_id_list === undefined) {
-                console.log('0')
                 // 0 ~ 999 까지의 난수 생성
                 this.seed = Math.floor(Math.random() * 1000)
                 this.artwork_id_list = await getRandomArtworks(this.seed, this.offset, this.limit)
