@@ -181,6 +181,7 @@
                 this.$router.replace({
                     path: '/artwork'
                 })
+                return false
             }
             // 유저 썸네일을 빠르게 로드하기 위해 Update history 코드와 분리
             if(isAuth()) {
