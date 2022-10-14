@@ -355,16 +355,21 @@
                         let image_information_list = new Array(0)
 
                         const promises = artwork_images.map(async (image) => {
+                            return await cropImage(image, container_ratio, false)
+                        })
+                        const promises_background = artwork_images.map(async (image) => {
                             return await cropImage(image, container_ratio)
                         })
 
                         const styles = await Promise.all(promises)
+                        const background_styles = await Promise.all(promises_background)
 
                         for (let i = 0; i < artwork_images.length; i++) {
                             let image_information = new Object()
                             image_information.src = artwork_images[i]
                             image_information.style = styles[i]
-
+                            image_information.background_style = background_styles[i]
+                            
                             image_information_list.push(image_information)
                         }
                         
