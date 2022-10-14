@@ -1,0 +1,132 @@
+#mapPage {
+    height: calc(var(--vh, 1vh) * 100);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    ::v-deep(.mainHeader) {
+        overflow-x: visible;
+
+        .left {
+            transform-origin: 0 50%;
+            height: calc(var(--vw, 1vw) * 8);
+            width: auto;
+
+            > img {
+                height: 100%;
+                width: auto;
+            }
+        }
+
+        .right {
+            overflow: visible;
+            transform-origin: 100% 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .body {
+        padding-top: calc(var(--vw, 1vw) * 17.5);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        .controlContainer {
+            width: calc(100% - var(--vw, 1vw) * 6);
+            flex: calc(var(--vw, 1vw) * 55) 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding-left: calc(var(--vw, 1vw) * 3);
+            padding-right: calc(var(--vw, 1vw) * 3);
+
+            .phrase {
+                width: 100%;
+                text-align: left;
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 30px;
+                letter-spacing: -0.04em;
+                color: #000000;
+            }
+
+            .searchContainer {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                input {
+                    flex: 67% 0 0;
+                    height: calc(var(--vw, 1vw) * 13);
+                    border: none;
+                    border-radius: calc(var(--vw, 1vw) * 2);
+                    background-color: #F5F5F5;
+                    padding-left: calc(var(--vw, 1vw) * 3);
+                    padding-right: calc(var(--vw, 1vw) * 3);
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 22px;
+                    letter-spacing: -0.06em;
+                
+                    &::placeholder {
+                        color: #959595;
+                    }
+                }
+
+                .searchButton {
+                    flex: 30% 0 0;
+                    height: calc(var(--vw, 1vw) * 13);
+                    border: none;
+                    border-radius: calc(var(--vw, 1vw) * 2);
+                    background-color: #CCFF00;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 22px;
+                    text-align: center;
+                    letter-spacing: -0.06em;
+                    color: #000000;
+                }
+            }
+
+            .categoryContainer {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: calc(var(--vw, 1vw) * 3);
+                overflow-x: scroll;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                    height: 0;
+                    background: transparent;
+                    -webkit-appearance: none;
+                }
+
+                .category {
+                    flex: calc(var(--vw, 1vw) * 23) 0 0;
+                    height: calc(var(--vw, 1vw) * 9.6);
+                    border-radius: calc(var(--vw, 1vw) * 11.5);
+                    background-color: #F5F5F5;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+
+        #map {
+            width: calc(100 * var(--vw, 1vw));
+            flex: auto 1 0;
+        }
+    }
+}
