@@ -80,14 +80,14 @@ export async function updateHistory (target_id, user_id) {
 // - target_id : artwork's id
 // return true if user has archived the artwork, false if not
 export async function isArtworkArchived (target_id, user_id) {
-    return await sendEventRequest('post', 'user/archive/', 'artwork', target_id, user_id) 
+    return await sendEventRequest('post', 'user/archive', 'artwork', target_id, user_id) 
 }
 
 // Check if user has archived the exhibition
 // - target_id : exhibition's id
 // return true if user has archived the artwork, false if not
 export async function isExhibitionArchived (target_id, user_id) {
-    return await sendEventRequest('post', 'user/archive/', 'exhibition', target_id, user_id) 
+    return await sendEventRequest('post', 'user/archive', 'exhibition', target_id, user_id) 
 }
 
 // Check if user has liked the comment
