@@ -42,6 +42,11 @@ const routes = [
     path: '/auth',
     name: 'AuthPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/AuthPage.vue')
+  },
+  {
+    path: '/map',
+    name: 'MapPage',
+    component: () => import('../views/MapPage.vue')
   }
 ]
 
