@@ -2,7 +2,10 @@
     <div class="artworkImageSlider">
         <swiper v-bind="this.swiperOptions" v-if="this.artwork_image_information_list">
             <swiper-slide v-for="(image_information, i) in this.artwork_image_information_list" :key="i">
-                <img v-if="image_information.style !== 'video'" :src="image_information.src" :style="image_information.style">
+                <div class="image" v-if="image_information.style !== 'video'">
+                    <img class="background" :src="image_information.src" :style="image_information.background_style">
+                    <img class="main" :src="image_information.src" :style="image_information.style">
+                </div>
                 <div v-else class="video">
                     <img :src="image_information.background_src" :style="image_information.background_style">
                     <video @click="this.stopPropagation($event)" :src="image_information.src" controls></video>

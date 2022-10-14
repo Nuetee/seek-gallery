@@ -14,12 +14,29 @@
         .swiper-slide {
             overflow: hidden;
 
-            img {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
+            .image {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+            
+                    .background {
+                        filter: blur(10px);
+                        z-index: 0;
+                    }
+            
+                    .main {
+                        z-index: 1;
+                    }
+            
+                    .main,
+                    .background {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+                
             .video {
                 position: relative;
                 width: 100%;
