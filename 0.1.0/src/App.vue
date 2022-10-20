@@ -10,6 +10,13 @@
 
       // Kakao SDK initialization
       Kakao.init('26b87aab90f717f43d0f8c22cb55c629')
+
+      // prevent pinch zoom
+      // document.documentElement.addEventListener('touchstart', function (event) {
+      //   if (event.touches.length > 1) {
+      //     event.preventDefault()
+      //   }
+      // }, false)
     },
     methods: {
       setVwVh () {
