@@ -6,6 +6,7 @@
     height: calc(var(--vh, 1vh) * 100);
     width: calc(var(--vw, 1vw) * 100);
     overflow-x: visible;
+    touch-action: none;
 
     ::v-deep(.mainHeader) {
         .left {
@@ -67,6 +68,7 @@
         left: calc(-1 * var(--padding, 5vw));
         width: calc(100% + 2 * var(--padding, 5vw));
         height: 100%;
+        touch-action: auto !important;
     }
 
     .buttonContainer {
