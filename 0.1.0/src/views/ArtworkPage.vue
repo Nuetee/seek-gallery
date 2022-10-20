@@ -25,8 +25,8 @@
                     :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
             </div>
         </div>
-        <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="this.setCurrentArtwork">
-            <swiper-slide v-for="(artwork, i) in this.artwork_list" :key="i">
+        <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="async (event) => { await this.setCurrentArtwork(event) }">
+            <swiper-slide class="artworkSlide" v-for="(artwork, i) in this.artwork_list" :key="i">
                 <ArtworkImageSlider :artwork_image_information_list="(artwork ? artwork.image_information : null)"></ArtworkImageSlider>
             </swiper-slide>
         </swiper>
@@ -179,6 +179,8 @@
                 first_load: true,
                 is_first_access: true,
                 timeout_flag: false,
+                active_slide_element: null,
+                touch_distance: 0,
 
                 // 간이 홈 data
                 seed: null,
@@ -266,6 +268,11 @@
                     _this.$refs.commentDrawer.closeDrawer()
                 }
             })
+
+            this.active_slide_element = document.getElementsByClassName('artworkSlide swiper-slide-active')[0]
+            
+            this.active_slide_element.addEventListener('touchstart', this.initializePinchZoom, false)
+            this.active_slide_element.addEventListener('touchmove', this.setPinchZoomRatio, false)
         },
         updated () {
             const _this = this
@@ -289,6 +296,28 @@
             document.body.style.overscrollBehaviorY = 'auto';
         },
         methods: {
+            initializePinchZoom (event) {
+                if (event.changedTouches.length > 1) {
+                    let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
+                    let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
+                    this.touch_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
+                    event.preventDefault()
+                }
+            },
+            setPinchZoomRatio (event) {
+                if (event.changedTouches.length > 1) {
+                    let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
+                    let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
+                    let new_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
+
+                    let zoom_ratio = new_distance/this.touch_distance
+                    event.target.style.width = event.target.clientWidth * zoom_ratio + 'px'
+                    event.target.style.height = event.target.clientHeight * zoom_ratio + 'px'
+                    console.log(event.target)
+                    this.touch_distance = new_distance
+                    event.preventDefault()
+                }
+            },
             setArchivePopUp (is_archive) {
                 if (is_archive) {
                     this.$refs.archivePopUp.classList.add('show')
@@ -432,6 +461,11 @@
                 this.$refs.archivePopUp.classList.remove('show')
                 clearTimeout(this.timeout_flag)
 
+                // active slide element의 event listener를 해제 
+                this.active_slide_element.removeEventListener('touchstart', this.initializePinchZoom)
+                this.active_slide_element.removeEventListener('touchmove', this.setPinchZoomRatio)
+                this.active_slide_element = null
+
                 // 간이 홈화면
                 if (this.seed !== null) {
                     // 끝에서 3번째에 해당하는 slide에 왔을 경우 이후 artwork page id 배열을 로드하여 기존 artwork_id_list와 합친다.
@@ -462,6 +496,12 @@
                         //console.log(error)
                     })
                 }
+                
+                // active_slide_element에 대해 pinch zoom에 대한 event listener 추가
+                this.active_slide_element = document.getElementsByClassName('artworkSlide')[swiper.activeIndex]
+                this.active_slide_element.addEventListener('touchstart', this.initializePinchZoom, false)
+                this.active_slide_element.addEventListener('touchmove', this.setPinchZoomRatio, false)
+                
                 let range = 1;
                 while (range <= 3) {
                     let next = this.current_index + range <= this.artwork_list.length
