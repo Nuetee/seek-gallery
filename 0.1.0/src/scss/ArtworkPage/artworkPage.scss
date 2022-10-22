@@ -7,6 +7,7 @@
     width: calc(var(--vw, 1vw) * 100);
     overflow-x: visible;
     overscroll-behavior-y: none;
+    touch-action: none;
 
     ::v-deep(.mainHeader) {
         .left {

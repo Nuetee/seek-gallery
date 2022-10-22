@@ -25,7 +25,9 @@
                     :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
             </div>
         </div>
-        <swiper class="artworkSlider" v-bind="this.swiper_options" @slideChange="async (event) => { await this.setCurrentArtwork(event) }">
+        <swiper class="artworkSlider" v-bind="this.swiper_options"
+        @slideChange="async (event) => { await this.setCurrentArtwork(event) }"
+        >
             <swiper-slide class="artworkSlide" v-for="(artwork, i) in this.artwork_list" :key="i">
                 <ArtworkImageSlider :artwork_image_information_list="(artwork ? artwork.image_information : null)"></ArtworkImageSlider>
             </swiper-slide>
@@ -180,7 +182,8 @@
                 is_first_access: true,
                 timeout_flag: false,
                 active_slide_element: null,
-                touch_distance: 0,
+                touch_distance: null,
+                initialize_swiper_event_flag: true,
 
                 // 간이 홈 data
                 seed: null,
@@ -249,7 +252,8 @@
                 // console.log(error)
             })
         },
-        mounted() {
+        async mounted() {
+            await this.$nextTick()
             const _this = this  
             // 스크롤로 새로고침 막기
             document.body.style.position = 'fixed';
@@ -268,11 +272,6 @@
                     _this.$refs.commentDrawer.closeDrawer()
                 }
             })
-
-            this.active_slide_element = document.getElementsByClassName('artworkSlide swiper-slide-active')[0]
-            
-            this.active_slide_element.addEventListener('touchstart', this.initializePinchZoom, false)
-            this.active_slide_element.addEventListener('touchmove', this.setPinchZoomRatio, false)
         },
         updated () {
             const _this = this
@@ -291,32 +290,51 @@
                     await _this.$refs.commentComponent.load()
                 }
             })
+
+            if (this.initialize_swiper_event_flag && (document.getElementsByClassName('artworkSlide swiper-slide-active')[0] !== undefined)) {
+                this.initializeSwiperEvent()
+                this.initialize_swiper_event_flag = false
+            }
         },
         beforeMount () {
             document.body.style.overscrollBehaviorY = 'auto';
         },
         methods: {
+            initializeSwiperEvent () {
+                this.active_slide_element = document.getElementsByClassName('artworkSlide swiper-slide-active')[0]
+                
+                this.active_slide_element.addEventListener('touchstart', this.initializePinchZoom, false)
+                this.active_slide_element.addEventListener('touchmove', this.setPinchZoomRatio, false)
+                this.active_slide_element.addEventListener('touchend', this.nullifyTouchDistance, false)
+            },
             initializePinchZoom (event) {
                 if (event.changedTouches.length > 1) {
-                    let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
-                    let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
-                    this.touch_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
-                    event.preventDefault()
+                    if (event.target.classList.contains('main')) {
+                        let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
+                        let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
+                        this.touch_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
+                    }
                 }
+                event.preventDefault()
             },
             setPinchZoomRatio (event) {
                 if (event.changedTouches.length > 1) {
-                    let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
-                    let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
-                    let new_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
+                    if (this.touch_distance !== null) {
+                        let x_gap = Math.abs(event.changedTouches[0].clientX - event.changedTouches[1].clientX)
+                        let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
+                        let new_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
 
-                    let zoom_ratio = new_distance/this.touch_distance
-                    event.target.style.width = event.target.clientWidth * zoom_ratio + 'px'
-                    event.target.style.height = event.target.clientHeight * zoom_ratio + 'px'
-                    console.log(event.target)
-                    this.touch_distance = new_distance
+                        let zoom_ratio = new_distance/this.touch_distance
+                        event.target.style.width = event.target.clientWidth * zoom_ratio + 'px'
+                        event.target.style.height = event.target.clientHeight * zoom_ratio + 'px'
+
+                        this.touch_distance = new_distance
+                    }
                     event.preventDefault()
                 }
+            },
+            nullifyTouchDistance () {
+                this.touch_distance = null
             },
             setArchivePopUp (is_archive) {
                 if (is_archive) {
@@ -430,7 +448,6 @@
                     }
                     resolve(true)
                 })
-                
             },
             /**
              * 
@@ -464,6 +481,7 @@
                 // active slide element의 event listener를 해제 
                 this.active_slide_element.removeEventListener('touchstart', this.initializePinchZoom)
                 this.active_slide_element.removeEventListener('touchmove', this.setPinchZoomRatio)
+                this.active_slide_element.removeEventListener('touchend', this.nullifyTouchDistance)
                 this.active_slide_element = null
 
                 // 간이 홈화면
@@ -501,6 +519,7 @@
                 this.active_slide_element = document.getElementsByClassName('artworkSlide')[swiper.activeIndex]
                 this.active_slide_element.addEventListener('touchstart', this.initializePinchZoom, false)
                 this.active_slide_element.addEventListener('touchmove', this.setPinchZoomRatio, false)
+                this.active_slide_element.addEventListener('touchend', this.nullifyTouchDistance, false)
                 
                 let range = 1;
                 while (range <= 3) {
