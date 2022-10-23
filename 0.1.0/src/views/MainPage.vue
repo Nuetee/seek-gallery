@@ -318,7 +318,9 @@
                 }
             },
             scrollBottom () {
-                window.scrollTo(0, document.getElementById('mainPage').clientHeight)
+                if (document.getElementById('mainPage')) {
+                    window.scrollTo(0, document.getElementById('mainPage').clientHeight)
+                }
             },
             // SideBar component의 openSideBar함수를 실행시켜 sideBar가 열리도록 하는 함수
             openSideBar (event) {
