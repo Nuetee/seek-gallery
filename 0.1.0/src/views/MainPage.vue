@@ -55,7 +55,9 @@
                             :heightUnit="this.vw / 2"
                             :document_element_id="'viewPort'">
                         </TitleHeader>
-                        <ArtworkTrackList ref="artworkTrackList"  :prop_category_list="this.category_list" :prop_artwork_track_list="this.artwork_track_list"></ArtworkTrackList>
+                        <ArtworkTrackList ref="artworkTrackList"  :prop_category_list="this.category_list" :prop_artwork_track_list="this.artwork_track_list"
+                        :element_id="this.element_id"
+                        ></ArtworkTrackList>
                     </div>
                     <div class="exhibitionMoreInformation">
                         <TitleHeader ref="moreInformationTitle" :title="'전시 더보기'" :startHeight="(this.vw * 30)" :heightUnit="this.vw / 2"
@@ -106,6 +108,8 @@
                     ? this.$route.query.utm_source 
                     : '',
                 id: this.$route.query.id,
+                element_id: this.$route.query.element_id ? this.$route.query.element_id: null,
+                element_scroll_flag: true,
                 exhibition: null,
                 artwork_track_list: [],
                 category_list: [],
@@ -132,8 +136,25 @@
                 header_scale: 1,
                 userThumbnail: '',
 
-                interval_return: null
+                interval_return: null,
             };
+        },
+        watch: {
+            'bodyShowFlag': {
+                handler() {
+                    if (this.element_id === null) {
+                        return
+                    }
+                    if (document.getElementById(this.element_id) !== undefined && this.bodyShowFlag) {
+                        if (this.element_scroll_flag) {
+                            document.getElementById('body').style.display = ''
+                            document.getElementById(this.element_id).scrollIntoView({ block: 'start' })
+
+                            this.element_scroll_flag = false
+                        }
+                    }
+                }
+            },
         },
         computed: {
             posterImageElement () {
@@ -277,6 +298,14 @@
         },
         unmounted() {
             window.removeEventListener('scroll', this.scrollBottom)
+        },
+        updated() {
+            if (document.getElementById(this.element_id) !== undefined && this.bodyShowFlag && this.element_scroll_flag) {
+                console.log('no')
+                window.scrollTo(500, 'smooth')
+                // document.getElementById(this.element_id).scrollIntoView({block:'start'})
+                this.element_scroll_flag = false
+            }
         },
         methods: {
             setCategoryAndTrackList() {
