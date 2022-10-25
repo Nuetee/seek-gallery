@@ -4,7 +4,7 @@
             <div class="artworkTrackContainer" v-for="(category, i) in this.category_list">
                 <div class="tracksIncategory">
                     <div class="category">{{ category }}</div>
-                    <div v-for="(track, j) in this.artwork_track_list[i]" :key="j" class="track" @click="this.redirectArtworkPage(i, j)">
+                    <div v-for="(track, j) in this.artwork_track_list[i]" :key="j" class="track" @click="this.redirectArtworkPage(i, j, track)" :id="track.getPageID()">
                         <div class="artwork">
                             <div class="artworkThumbnail">
                                 <div class="imageContainer">
@@ -80,7 +80,7 @@
         beforeUnmount() {},
         unmounted() {},
         methods: {
-            redirectArtworkPage (category_index, artwork_index) {
+            redirectArtworkPage (category_index, artwork_index, artwork) {
                 let track_page_id_array = new Array(0)
                 let artwork_page_index = 0
                 let artwork_count = 0
@@ -101,12 +101,19 @@
                         value: this.artwork_track_list[category_index][artwork_index].getID()
                     })
                 }
-                this.$router.push({
-                    path: '/artwork',
+                this.$router.replace({
                     query: {
-                        array: track_page_id_array,
-                        index: artwork_page_index
-                    }
+                        id: this.$route.query.id,
+                        element_id: artwork.getPageID()
+                    },
+                }).then(() => {
+                    this.$router.push({
+                        path: '/artwork',
+                        query: {
+                            array: track_page_id_array,
+                            index: artwork_page_index
+                        }
+                    })
                 })
             }
             
