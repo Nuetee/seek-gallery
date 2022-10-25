@@ -314,8 +314,9 @@
                         let y_gap = Math.abs(event.changedTouches[0].clientY - event.changedTouches[1].clientY)
                         this.touch_distance = Math.sqrt(Math.pow(x_gap, 2) + Math.pow(y_gap, 2))
                     }
+
+                    event.preventDefault()
                 }
-                event.preventDefault()
             },
             setPinchZoomRatio (event) {
                 if (event.changedTouches.length > 1) {
@@ -329,8 +330,9 @@
                         event.target.style.height = event.target.clientHeight * zoom_ratio + 'px'
 
                         this.touch_distance = new_distance
+
+                        event.preventDefault()
                     }
-                    event.preventDefault()
                 }
             },
             nullifyTouchDistance () {
