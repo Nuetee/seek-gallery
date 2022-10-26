@@ -116,6 +116,18 @@ export class Exhibition {
         }
     }
 
+    getLocation = async function () {
+        const { status, data } = await sendRequest('get', '/exhibition/location', {
+            target_id : this.page_id
+        })
+        if (status < 500) {
+            return data[0][0]
+        }
+        else {
+            return []
+        }
+    }
+
     getLinkList () {
         return this.link
     }

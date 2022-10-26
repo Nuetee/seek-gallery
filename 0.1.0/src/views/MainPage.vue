@@ -301,7 +301,6 @@
         },
         updated() {
             if (document.getElementById(this.element_id) !== undefined && this.bodyShowFlag && this.element_scroll_flag) {
-                console.log('no')
                 window.scrollTo(500, 'smooth')
                 // document.getElementById(this.element_id).scrollIntoView({block:'start'})
                 this.element_scroll_flag = false
