@@ -112,7 +112,7 @@
                     -webkit-appearance: none;
                 }
 
-                .category {
+                div[class^="category"] {
                     flex: calc(var(--vw, 1vw) * 23) 0 0;
                     height: calc(var(--vw, 1vw) * 9.6);
                     border-radius: calc(var(--vw, 1vw) * 11.5);
@@ -120,6 +120,11 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                }
+
+                .selected {
+                    background-color: black !important;
+                    color: white;
                 }
             }
         }
