@@ -1,5 +1,5 @@
 <template>
-    <div class="drawer" :class="this.class" @scroll="this.stopPropagation($event)" @click="this.stopPropagation($event)">
+    <div class="drawer" :class="this.class_name" @scroll="this.stopPropagation($event)" @click="this.stopPropagation($event)">
         <div class="header">
             <div class="drawingBar">
                 <div></div>
@@ -13,7 +13,7 @@
         name: 'Drawer',
         components: {},
         props: {
-            class: String
+            class_name: String
         },
         data() {
             return {
@@ -21,15 +21,13 @@
                 drawing_bar: null,
                 drawer_height: 0,
                 touch_start: 0,
+                last_touch_move: 0,
                 touch_end: 0,
                 drawer_opened: false
             };
         },
-        beforeCreate() {},
-        created() {},
-        beforeMount() {},
         mounted() {
-            let drawer_class = 'drawer' + ' ' + this.class
+            let drawer_class = 'drawer' + ' ' + this.class_name
 
             this.drawer = document.getElementsByClassName(drawer_class)[0]
 
@@ -46,10 +44,6 @@
             this.drawing_bar.addEventListener('touchmove', this.setTouchMove)
             this.drawing_bar.addEventListener('touchend', this.setTouchEnd)
         },
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             stopPropagation (event) {
                 // event 전파 방지
@@ -59,7 +53,7 @@
             showDrawer () {
                 const _this = this
                 if (this.drawer === null) {
-                    let drawer_class = 'drawer' + ' ' + this.class
+                    let drawer_class = 'drawer' + ' ' + this.class_name
                     this.drawer = document.getElementsByClassName(drawer_class)[0]
                 }
                 this.drawer_height = this.drawer.clientHeight
@@ -87,18 +81,23 @@
             setTouchStart(event) {
                 this.stopPropagation(event)
                 this.touch_start = event.changedTouches[0].clientY
+                this.last_touch_move = this.touch_start
                 this.drawer.style.setProperty('transition', 'none')
             },
             setTouchMove (event) {
                 this.stopPropagation(event)
                 let touch_move = event.changedTouches[0].clientY;
                 
-                let distance = touch_move - this.touch_start
-
-                if (distance > 0) {
-                    let drawer_initial_bottom = this.drawer_height - 10
+                let distance = touch_move - this.last_touch_move
+                if (distance) {
+                    //let drawer_initial_bottom = this.drawer_height - 10
+                    let drawer_initial_bottom = parseFloat(this.drawer.style.getPropertyValue('bottom').replace('px', ''))
+                    if (drawer_initial_bottom - distance > this.drawer.clientHeight) {
+                        return
+                    }
 
                     this.drawer.style.setProperty('bottom', `${drawer_initial_bottom - distance}px`)
+                    this.last_touch_move = touch_move
                 }
             },
             setTouchEnd (event) {
