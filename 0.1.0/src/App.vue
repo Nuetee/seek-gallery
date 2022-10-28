@@ -10,13 +10,11 @@
 
       // Kakao SDK initialization
       Kakao.init('26b87aab90f717f43d0f8c22cb55c629')
-
-      // prevent pinch zoom
-      // document.documentElement.addEventListener('touchstart', function (event) {
-      //   if (event.touches.length > 1) {
-      //     event.preventDefault()
-      //   }
-      // }, false)
+    },
+    mounted () {
+      if (this.checkMobile() === 'ios') {
+        document.documentElement.style.setProperty('--blur', '40px')
+      }
     },
     methods: {
       setVwVh () {
@@ -34,6 +32,20 @@
           let vw = screenWidth * 0.01;
           document.documentElement.style.setProperty('--vw', `${vw}px`);
         }
+      },
+      checkMobile () {
+        var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+        
+        if ( varUA.indexOf('android') > -1) {
+            //안드로이드
+            return "android";
+        } else if ( varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1 ) {
+            //IOS
+            return "ios";
+        } else {
+            //아이폰, 안드로이드 외
+            return "other";
+        }
       }
     }
 }
@@ -46,6 +58,7 @@
   --vw: 1vw;
   --vh: 1vh;
   --padding: calc(var(--vw, 1vw) * 5);
+  --blur: 100px
 }
 
 html,
