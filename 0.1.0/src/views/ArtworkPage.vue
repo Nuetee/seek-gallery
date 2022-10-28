@@ -41,13 +41,13 @@
             <ShareButton ref="shareButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" :artwork="this.current_artwork">
             </ShareButton>
         </div>
-        <Drawer ref="commentDrawer" :class="'comment'">
+        <Drawer ref="commentDrawer" :class_name="'comment'">
             <template v-slot:default>
                 <CommentComponent ref="commentComponent" @commentUpdate="this.updateDone" :artwork="this.current_artwork">
                 </CommentComponent>
             </template>
         </Drawer>
-        <Drawer ref="informationDrawer" :class="'information'">
+        <Drawer ref="informationDrawer" :class_name="'information'">
             <template v-slot:default>
                 <ArtworkInformation :artwork="this.current_artwork"></ArtworkInformation>
             </template>
@@ -253,6 +253,7 @@
             })
         },
         async mounted() {
+            document.getElementById('app').style.setProperty('overflow', 'hidden')
             await this.$nextTick()
             const _this = this  
             // 스크롤로 새로고침 막기
@@ -298,6 +299,9 @@
         },
         beforeMount () {
             document.body.style.overscrollBehaviorY = 'auto';
+        },
+        unmounted () {
+            document.getElementById('app').style.setProperty('overflow', 'scroll')
         },
         methods: {
             initializeSwiperEvent () {
