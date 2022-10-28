@@ -70,6 +70,7 @@ body {
   
   // 탭 할 때 하이라이트 컬러 없애기
   -webkit-tap-highlight-color: rgba($color: #000000, $alpha: 0.0);
+  --va-background-primary: white;
 }
 
 body {

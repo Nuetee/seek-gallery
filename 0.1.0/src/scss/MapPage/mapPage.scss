@@ -37,17 +37,17 @@
         justify-content: flex-start;
 
         .controlContainer {
-            width: calc(100% - var(--vw, 1vw) * 6);
+            width: 100%;
             flex: calc(var(--vw, 1vw) * 55) 0 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
-            padding-left: calc(var(--vw, 1vw) * 3);
-            padding-right: calc(var(--vw, 1vw) * 3);
 
             .phrase {
                 width: 100%;
+                padding-left: calc(var(--vw, 1vw) * 5);
+                padding-right: calc(var(--vw, 1vw) * 5);
                 text-align: left;
                 font-weight: 500;
                 font-size: 20px;
@@ -66,6 +66,8 @@
 
                 .search {
                     width: 100%;
+                    padding-left: calc(var(--vw, 1vw) * 5);
+                    padding-right: calc(var(--vw, 1vw) * 5);
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -108,6 +110,8 @@
                 
                 .noResult {
                     width: 100%;
+                    padding-left: calc(var(--vw, 1vw) * 5);
+                    padding-right: calc(var(--vw, 1vw) * 5);
                     text-align: left;
                     font-weight: 400;
                     font-size: 12px;
@@ -118,6 +122,7 @@
 
                 .categoryContainer {
                     width: 100%;
+                    padding-left: calc(var(--vw, 1vw) * 5);
                     display: flex;
                     align-items: center;
                     justify-content: flex-start;
