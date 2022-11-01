@@ -2,7 +2,7 @@
     <div class="navigationBar">
       <va-tabs id="tabs"
           v-model="this.index"
-          color="black"
+          color="#000000"
           grow
       >
           <template #tabs>

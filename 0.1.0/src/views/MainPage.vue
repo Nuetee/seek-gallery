@@ -10,7 +10,7 @@
         </MainHeader>
         <div id="viewPort">
             <div id="loading">
-                <div class="notArchive">
+                <div class="eyes">
                     <div class="eye">
                         <svg class="eyelid" width="36" height="34" viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18.0002 0C13.1921 0 8.67214 1.76831 5.27225 4.97929C1.87235 8.19028 0 12.4591 0 17C0 21.5409 1.87235 25.8101 5.27225 29.0207C8.67179 32.2317 13.1921 34 18.0002 34C22.8083 34 27.3286 32.2317 30.7281 29.0207C32.76 27.1018 34.2897 24.7367 35.1516 22.181L35.2706 21.828H33.571L33.5047 22.0114C32.6954 24.2509 31.3758 26.2454 29.5826 27.9392C26.4888 30.8611 22.3753 32.4703 17.9998 32.4703C13.6243 32.4703 9.51119 30.8611 6.41737 27.9392C3.32356 25.0173 1.70103 21.3148 1.62253 17.2918H35.4767V17.2708H36V17C36 12.4591 34.1277 8.19028 30.7278 4.97929C27.3279 1.76831 22.8079 0 17.9998 0H18.0002ZM18.0002 1.52967C22.3757 1.52967 26.4888 3.13888 29.583 6.06079C31.0027 7.40158 32.1345 8.9458 32.9474 10.6508C33.7173 12.2651 34.1814 13.9833 34.3294 15.7618H1.67128C1.81894 13.9833 2.28344 12.2654 3.05331 10.6508C3.86619 8.9458 4.99806 7.40158 6.41773 6.06079C9.51155 3.13888 13.625 1.52967 18.0002 1.52967Z" fill="white"/>
@@ -38,6 +38,7 @@
                         <img id="posterImage" @load="() => {this.bodyShowFlag = true}" :src="this.poster_image">
                     </div>
                     <div class="exhibitionInformation">
+                        <ArchiveButton :exhibition="this.exhibition"></ArchiveButton>
                         <TitleHeader ref="informationTitle" 
                             :document_element_id="'viewPort'" 
                             :title="this.exhibition.getName()" 
@@ -83,6 +84,7 @@
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import TitleHeader from '@/widgets/TitleHeader.vue';
+    import ArchiveButton from '@/components/ArtworkPage/ArchiveButton.vue'
     import ArtworkTrackList from '@/widgets/ArtworkTrackList.vue';
     import SideBar from '@/widgets/SideBar.vue';
     import RoundProfile from '@/widgets/RoundProfile.vue';
@@ -98,6 +100,7 @@
         components: {
             MainHeader,
             TitleHeader,
+            ArchiveButton,
             SideBar,
             RoundProfile,
             ArtworkTrackList
