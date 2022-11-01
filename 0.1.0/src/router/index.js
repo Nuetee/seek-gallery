@@ -47,6 +47,11 @@ const routes = [
     path: '/map',
     name: 'MapPage',
     component: () => import('../views/MapPage.vue')
+  },
+  {
+     path: '/test',
+    name: 'TestPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/TestPage.vue')
   }
 ]
 

@@ -7,6 +7,8 @@ import {
     doLike,
     doArtworkArchive,
     isArtworkArchived,
+    isExhibitionArchived,
+    doExhibitionArchive,
     isLiked,
     isHistory,
     updateHistory

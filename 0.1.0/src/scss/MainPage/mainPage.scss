@@ -60,7 +60,7 @@
             }
         }
     
-        .notArchive {
+        .eyes {
             transition-property: opacity, padding;
             transition-duration: 0.2s;
             opacity: 1;
@@ -147,12 +147,42 @@
         .exhibitionInformation {
             padding-bottom: calc(var(--vw, 1vw) * 8);
             padding-top: calc(var(--vw, 1vw) * 8);
+            display: grid;
+            grid-template-columns: auto calc(var(--vw, 1vw) * 24);
+            grid-template-rows: auto auto auto;
+            grid-template-areas: 
+                "title archiveButton"
+                "underline underline"
+                "introduction introduction";
+            
+            ::v-deep(.titleHeader) {
+                grid-area: title;
+            }
+
+            ::v-deep(.archiveButton) {
+                align-self: center;
+                grid-area: archiveButton;
+                margin-bottom: calc(var(--vw, 1vw) * 2);
+                width: calc(var(--vw, 1vw) * 24);
+                height: calc(var(--vw, 1vw) * 12.6);
+                border-radius: calc(var(--vw, 1vw) * 6.3);
+                > div {
+                    padding-left: calc(var(--vw, 1vw) * 3.8);
+                    padding-right: calc(var(--vw, 1vw) * 3.8);
+                }
+
+                .notArchive.eye.pupil {
+                    top: 54.5%
+                }
+            }
 
             ::v-deep(.underLine) {
+                grid-area: underline;
                 margin-bottom: calc(var(--vw, 1vw) * 3);
             }
             
             .exhibitionIntroduction {
+                grid-area: introduction;
                 text-align: left;
                 font-weight: 400;
                 font-size: 15px;

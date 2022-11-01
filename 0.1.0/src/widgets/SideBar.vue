@@ -1,6 +1,6 @@
 <template>
     <div class="sideBarContainer">
-        <va-sidebar class="sideBar" :minimized="minimized" color="white" textColor="black" position="right"
+        <va-sidebar class="sideBar" :animated="true" :minimized="minimized" color="#FFFFFF" textColor="#000000" position="right"
             minimizedWidth="0" style="position: absolute;">
             <va-sidebar-item active-color="black" hover-color="white">
                 <va-sidebar-item-content>

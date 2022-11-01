@@ -102,13 +102,19 @@
         isAuth,
         getAuth
     } from '@/modules/auth'
-    import { process } from 'ipaddr.js';
 
     export default {
         name: 'ArchiveButton',
         components: {},
         props: {
-            artwork: Object
+            artwork: {
+                type: Object,
+                default: null
+            },
+            exhibition: {
+                type: Object,
+                default: null
+            },
         },
         data() {
             return {
@@ -132,7 +138,7 @@
                     }
                     await this.setButtonAnimation()
                 }
-            }
+            },
         },
         data() {
             return {
@@ -159,16 +165,30 @@
                 this.user = getAuth()
             }
         },
-        mounted() {
+        async mounted() {
             this.not_archive_element = document.getElementsByClassName('notArchive')[0]
+            console.log(this.not_archive_element)
             this.archiving_element = document.getElementsByClassName('archiving')[0]
             this.archived_element = document.getElementsByClassName('archived')[0]
+
+            if (this.exhibition) {
+                console.log(this.exhibition)
+                document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', '#CCFF00')
+                document.getElementsByClassName('archiveButton')[0].style.
+                    setProperty('--color', '#000000')
+                await this.setButtonAnimation()
+            }
         },
         methods: {
             async setButtonAnimation () {
                 let is_archive
-                if (isAuth() && this.artwork) {
-                    is_archive = await this.user.isArtworkArchived(this.artwork)
+                if (isAuth() && (this.artwork || this.exhibition)) {
+                    if (this.artwork)
+                        is_archive = await this.user.isArtworkArchived(this.artwork)
+                    else if (this.exhibition)
+                        is_archive = await this.user.isExhibitionArchived(this.exhibition)
+                    else
+                        is_archive = false
                 }
                 else {
                     is_archive = false
@@ -194,6 +214,11 @@
                 if (event.stopPropagation) event.stopPropagation();
                 else event.cancelBubble = true; // IE 대응
 
+                if (this.archiveInProgress) {
+                    return
+                }
+                this.archiveInProgress = true
+
                 // No authorization information
                 if (!isAuth()) {
                     if (process.env.NODE_ENV === 'production') {
@@ -211,8 +236,14 @@
                     })
                 }
                 // Authorized user exist
-                else if (!this.archiveInProgress) {
-                    const is_archive = await this.user.isArtworkArchived(this.artwork)
+                else {
+                    let is_archive = false
+                    if (this.artwork) {
+                        is_archive = await this.user.isArtworkArchived(this.artwork)
+                    }
+                    else if (this.exhibition) {
+                        is_archive = await this.user.isExhibitionArchived(this.exhibition)
+                    }
                     
                     if (this.user === null) {
                         this.user = getAuth()
@@ -231,9 +262,13 @@
                         this.not_archive_element.classList.add('show')
                         this.not_archive_element.classList.add('activate')
 
-                        await this.user.putArtworkUnarchive(this.artwork)
-
-                        this.$emit('set-archive-popup', false)
+                        if (this.artwork) {
+                            await this.user.putArtworkUnarchive(this.artwork)
+                            this.$emit('set-archive-popup', false)
+                        }
+                        else if (this.exhibition) {
+                            await this.user.putExhibitionUnarchive(this.exhibition)
+                        }
                     } 
                     else {
                         this.not_archive_element.classList.remove('show')
@@ -248,7 +283,13 @@
                             _this.archived_element.classList.add('activate')
                         }, 1000)
                         
-                        await this.user.putArtworkArchive(this.artwork)
+                        if (this.artwork) {
+                            await this.user.putArtworkArchive(this.artwork)
+                            this.$emit('set-archive-popup', true)
+                        }
+                        else if (this.exhibition) {
+                            await this.user.putExhibitionArchive(this.exhibition)
+                        }
                         if (process.env.NODE_ENV === 'production') {
                             this.$gtag.event('click', {
                                 event_category: 'artwork',
@@ -256,9 +297,10 @@
                                 value: this.artwork.getID()
                             })
                         }
-                        this.$emit('set-archive-popup', true)
                     }
                 }
+
+                this.archiveInProgress = false
             }
         }
     }
