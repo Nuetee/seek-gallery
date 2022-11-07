@@ -4,6 +4,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
+    port: 8080,
     proxy: {
       '/server-api': {
           'target' : process.env.VUE_APP_SERVER_URL,
