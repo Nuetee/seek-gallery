@@ -8,7 +8,7 @@
     import { isAuth, getAuth } from '@/modules/auth';
 
     export default {
-        name: '',
+        name: 'ExhibtionTab',
         components: {
             ArtworkCardList
         },
@@ -33,7 +33,7 @@
         },
         methods: {
             async rebuild (offset, length) {
-                const newQRList = await this.user.getHistoryExhibitions(offset, length)
+                const newQRList = await this.user.getArchiveExhibitions(offset, length)
                 this.qrList = this.qrList.concat(newQRList)
                 if (newQRList.length < 12) {
                     this.nothingToUpdate = true

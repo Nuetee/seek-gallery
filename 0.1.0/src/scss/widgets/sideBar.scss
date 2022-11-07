@@ -7,7 +7,7 @@
     width: auto;
     z-index: 4;
 
-    aside.sideBar {
+    ::v-deep(aside.sideBar) {
         z-index: 4;
         top: 0;
         right: 0;
@@ -16,6 +16,8 @@
         box-shadow: 0 0 calc(var(--vw, 1vw) * 3) rgba(128, 128, 128, 0.3);
 
         .va-sidebar__menu {
+            // vuestic-ui ver 1.5.0 animated 속성 error로 인해 추가한 속성
+            transition: all 0.3s ease !important;
             span {
                 padding-left: calc(var(--vw, 1vw) * 3);
                 padding-right: calc(var(--vw, 1vw) * 3);
