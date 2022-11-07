@@ -167,12 +167,10 @@
         },
         async mounted() {
             this.not_archive_element = document.getElementsByClassName('notArchive')[0]
-            console.log(this.not_archive_element)
             this.archiving_element = document.getElementsByClassName('archiving')[0]
             this.archived_element = document.getElementsByClassName('archived')[0]
 
             if (this.exhibition) {
-                console.log(this.exhibition)
                 document.getElementsByClassName('archiveButton')[0].style.setProperty('--background-color', '#CCFF00')
                 document.getElementsByClassName('archiveButton')[0].style.
                     setProperty('--color', '#000000')

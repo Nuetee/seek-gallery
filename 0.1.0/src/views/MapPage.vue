@@ -58,7 +58,7 @@
         data() {
             return {
                 map: null,
-                category_list: ['\%\%', 'hannam', 'itaewon', 'seongsu'],
+                category_list: ['\%\%', 'hannam', 'seongsu', 'uljiro'],
                 selected_category_index: 0,
                 markers: [],
                 selected_marker: null,
