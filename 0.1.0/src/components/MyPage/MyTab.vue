@@ -4,7 +4,7 @@
         <div class="tabBody">
             <swiper v-bind="this.swiperOptions" @slideChange="this.slideChangeBySwiper">
                 <swiper-slide>
-                    <QRTab ref="qrTab"></QRTab>
+                    <ExhibitionTab ref="qrTab"></ExhibitionTab>
                 </swiper-slide>
                 <swiper-slide>
                     <ArchiveTab ref="archiveTab"></ArchiveTab>
@@ -20,7 +20,7 @@
     import { Swiper, SwiperSlide } from 'swiper/vue';
     import SwiperCore, { Navigation } from 'swiper';
     import ArchiveTab from '../../widgets/ArchiveTab.vue'
-    import QRTab from '../../widgets/QRTab.vue';
+    import ExhibitionTab from '../../widgets/QRTab.vue';
 
     SwiperCore.use([Navigation])
 
@@ -31,7 +31,7 @@
         Swiper,
         SwiperSlide,
         ArchiveTab,
-        QRTab
+        ExhibitionTab
     },
         data() {
             return {

@@ -26,7 +26,7 @@
                     </clipPath>
                     </defs>
                     </svg>
-                    <div class="nonActivate" v-else>최근 전시</div>
+                    <div class="nonActivate" v-else>아카이브 전시</div>
                 </va-tab>
                 <va-tab
                     class="button"
@@ -85,7 +85,7 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="nonActivate" v-else>아카이브</div>
+                    <div class="nonActivate" v-else>아카이브 작품</div>
                 </va-tab>
           </template>
       </va-tabs>
