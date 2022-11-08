@@ -30,8 +30,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
             </div>
             <div id="map"></div>
         </div>
@@ -46,7 +44,7 @@
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import Drawer from '@/widgets/Drawer.vue';
-    // import { getExhibitionsOnArea  } from '@/modules/map'
+    import { getExhibitionsOnArea  } from '@/modules/map'
     import { Exhibition } from '@/classes/exhibition';
 
     export default {
@@ -233,50 +231,50 @@
                 this.$refs.drawer.$el.style.setProperty('bottom', `${this.drawer_height / 3}px`)
             },
             async searchExhibition (keyword) {
-                // let keyword_except_blank = keyword
-                // while (keyword_except_blank.includes(' ')) {
-                //     keyword_except_blank = keyword_except_blank.replace(' ', '')
-                // }
+                let keyword_except_blank = keyword
+                while (keyword_except_blank.includes(' ')) {
+                    keyword_except_blank = keyword_except_blank.replace(' ', '')
+                }
 
-                // const MAX_EXHIBITION_NUMBER = 1000
-                // let whole_exhibition_pageId_list = await getExhibitionsOnArea('\%\%', 0, MAX_EXHIBITION_NUMBER)
-                // let result_exhibition_object_list = new Array()
-                // let coordinate_sum = new Object()
-                // coordinate_sum.latitude = 0
-                // coordinate_sum.longitude = 0
+                const MAX_EXHIBITION_NUMBER = 1000
+                let whole_exhibition_pageId_list = await getExhibitionsOnArea('\%\%', 0, MAX_EXHIBITION_NUMBER)
+                let result_exhibition_object_list = new Array()
+                let coordinate_sum = new Object()
+                coordinate_sum.latitude = 0
+                coordinate_sum.longitude = 0
                 
-                // let i = 0
-                // for (i = 0; i < whole_exhibition_pageId_list.length; i++) {
-                //     let pageId = whole_exhibition_pageId_list[i]
-                //     let exhibition = await new Exhibition(pageId).init()
-                //     let exhibition_name = exhibition.getName()
+                let i = 0
+                for (i = 0; i < whole_exhibition_pageId_list.length; i++) {
+                    let pageId = whole_exhibition_pageId_list[i]
+                    let exhibition = await new Exhibition(pageId).init()
+                    let exhibition_name = exhibition.getName()
                     
-                //     while (exhibition_name.includes(' ')) {
-                //         exhibition_name = exhibition_name.replace(' ', '')
-                //     }
+                    while (exhibition_name.includes(' ')) {
+                        exhibition_name = exhibition_name.replace(' ', '')
+                    }
                     
-                //     if (exhibition_name.match(new RegExp(keyword_except_blank, "i")) !== null) {
-                //         let coordinate = await exhibition.getLocation()
-                //         coordinate_sum.latitude += parseFloat(coordinate.latitude)
-                //         coordinate_sum.longitude += parseFloat(coordinate.longitude)
+                    if (exhibition_name.match(new RegExp(keyword_except_blank, "i")) !== null) {
+                        let coordinate = await exhibition.getLocation()
+                        coordinate_sum.latitude += parseFloat(coordinate.latitude)
+                        coordinate_sum.longitude += parseFloat(coordinate.longitude)
 
-                //         let object = new Object()
-                //         object.pageId = pageId
-                //         object.coordinate = coordinate
-                //         result_exhibition_object_list.push(object)
-                //     }
-                // }
+                        let object = new Object()
+                        object.pageId = pageId
+                        object.coordinate = coordinate
+                        result_exhibition_object_list.push(object)
+                    }
+                }
 
-                // if (result_exhibition_object_list.length === 0) {
-                //     this.no_result = true
-                //     return
-                // }
-                // let mean_latitude = coordinate_sum.latitude / result_exhibition_object_list.length
-                // let mean_longitude = coordinate_sum.longitude / result_exhibition_object_list.length
+                if (result_exhibition_object_list.length === 0) {
+                    this.no_result = true
+                    return
+                }
+                let mean_latitude = coordinate_sum.latitude / result_exhibition_object_list.length
+                let mean_longitude = coordinate_sum.longitude / result_exhibition_object_list.length
 
-                // this.setMapCenter(mean_latitude, mean_longitude)
-                // this.setMarkers(result_exhibition_object_list)
-                // this.no_result = false
+                this.setMapCenter(mean_latitude, mean_longitude)
+                this.setMarkers(result_exhibition_object_list)
+                this.no_result = false
             }
         }
     }
