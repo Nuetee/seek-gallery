@@ -13,6 +13,7 @@ import { authByToken } from '@/modules/kakao'
 import MainPage from '../views/MainPage.vue'
 import ArtworkPage from '../views/ArtworkPage.vue'
 import MyPage from '../views/MyPage.vue'
+import ProfilePage from '../views/ProfilePage.vue'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MyPage
+  },
+  {
+    path: '/profile',
+    name: 'profilePage',
+    component: ProfilePage
   },
   {
     path: '/login',

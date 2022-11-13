@@ -1,0 +1,170 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+#profilePage {
+    padding: 0 !important;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden !important;
+
+    #top {
+        width: 100%;
+        flex-basis: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: calc(var(--vw, 1vw) * 3);
+        padding-bottom: calc(var(--vw, 1vw) * 3);
+        transition: all 0.2s ease;
+        position: relative;
+
+        .profileControlButton {
+            position: absolute;
+            top: calc(var(--vw, 1vw) * 3);
+            right: calc(var(--vw, 1vw) * 4);
+        }
+
+        .profileControlBox {
+            position: absolute;
+            z-index: 1;
+            top: calc(var(--vw, 1vw) * 10);
+            right: calc(var(--vw, 1vw) * 3);
+            width: calc(var(--vw, 1vw) * 58);
+            height: calc(var(--vw, 1vw) * 32);
+            border-radius: calc(var(--vw, 1vw) * 4);
+            background-color: #f3f3f3;
+
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding-left: calc(var(--vw, 1vw) * 3);
+                padding-right: calc(var(--vw, 1vw) * 3);
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 22px;
+                letter-spacing: -0.06em;
+            }
+
+            div:nth-child(1), div:nth-child(2) {
+                border-bottom: 1px solid #C3C3C3;
+            }
+        }
+        
+        .name {
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 125.8%;
+            text-align: center;
+            letter-spacing: -0.06em;
+            color: #000000;
+        }
+
+        ::v-deep(.roundProfile) {
+            height: calc(var(--vw, 1vw) * 21.5);
+            width: calc(var(--vw, 1vw) * 21.5);
+            margin-top: calc(var(--vw, 1vw) * 3);
+            margin-bottom: calc(var(--vw, 1vw) * 3);
+            transition: height 0.2s ease, width 0.2s ease, margin 0.2s ease;
+        }
+
+        .navigationBar {
+            width: 100%;
+            padding-left: calc(var(--vw, 1vw) * 5);
+            padding-right: calc(var(--vw, 1vw) * 5);
+
+            ::v-deep(#tabs) {
+                height: calc(var(--vw, 1vw) * 7.73);
+
+                .va-tabs__slider-wrapper {
+                    height: 100% !important;
+                    transition-duration: 0.2s !important;
+                    background-color: transparent !important;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 0;
+                    
+                    .va-tabs__slider {
+                        height: 100% !important;
+                        width: calc(var(--vw, 1vw) * 14.4);
+                        border-radius: calc(var(--vw, 1vw) * 7.2);
+                        background-color: #000000;
+                    }
+                }
+                
+                .va-tabs__tabs-items {
+                    position: relative;
+                    z-index: 1;
+
+                    .va-tab {
+                        flex: 0 0 33.33%;
+                        .va-tab__content {
+                            font-family: 'Pretendard';
+                            font-style: normal;
+                            font-weight: 400;
+                            font-size: 15px;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        .sortingStrategyTab {
+            width: 100%;
+            height: calc(var(--vw, 1vw) * 10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: calc(var(--vw, 1vw) * 3);
+            svg {
+                rect {
+                    fill: rgb(174, 174, 174);
+                }
+            }
+            svg.sortingStrategy {
+                rect {
+                    fill: rgb(0, 0, 0);
+                }
+            }
+        }
+    }
+
+    #bottom {
+        width: 100%;
+        flex-basis: auto;
+        flex-grow: 1;
+        transition: all 0.2s ease;
+        overflow: hidden;
+
+        ::v-deep(.swiper) {
+            height: 100%;
+    
+            .swiper-slide {
+                height: 100%;
+                overflow: scroll;
+    
+                &::-webkit-scrollbar {
+                    display: none;
+                    height: 0;
+                    background: transparent;
+                    -webkit-appearance: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+.homeTab {
+    ::v-deep(.swiper) {
+        width: 100%;
+        height: calc(var(--vw, 1vw) * 114) !important;
+
+        .swiper-slide {
+            position: relative;
+            height: calc(var(--vw, 1vw) * 104) !important;
+            img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .swiper-pagination-bullet {
+            width: 5px !important;
+            height: 5px !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: black;
+        }
+    }
+
+    .cell {
+        text-align: left;
+        padding-left: calc(var(--vw, 1vw) * 3);
+        padding-right: calc(var(--vw, 1vw) * 3);
+        margin-bottom: calc(var(--vw, 1vw) * 3.5);
+
+        .title {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 36px;
+            letter-spacing: -0.04em;
+            text-transform: none;
+        }
+
+        .content {
+            margin-top: calc(var(--vw, 1vw) * 1);
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 24px
+        }
+    }
+
+    .about {
+        .tagContainer {
+            margin-top: calc(var(--vw, 1vw) * 3.5);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: calc(var(--vw, 1vw) * 2.5);
+
+            .tag {
+                flex-basis: auto;
+                height: calc(var(--vw, 1vw) * 7.74);
+                padding-left: calc(var(--vw, 1vw) * 2.5);
+                padding-right: calc(var(--vw, 1vw) * 2.5);
+                border-radius: calc(var(--vw, 1vw) * 3.87);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background-color: #CCFF00;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 18px;
+            }
+        }
+    }
+}
