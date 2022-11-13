@@ -79,7 +79,6 @@
 import RoundProfile from '@/widgets/RoundProfile.vue';
 import List from '@/widgets/List.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { isAuth, getAuth } from '@/modules/auth';
 import HomeTab from '@/components/ProfilePage/HomeTab.vue';
 import { User } from '@/classes/user';
 
