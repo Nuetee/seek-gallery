@@ -23,6 +23,7 @@
                         <div class="searchButton" @click="async () => { await this.searchExhibition(this.keyword) }">검색</div>
                     </div>
                     <div class="noResult" v-show="this.no_result">검색 결과가 없습니다.</div>
+                    <div class="noExhibition" v-show="this.no_exhibition">해당 카테고리에 진행중인 전시가 없습니다.</div>
                     <div class="categoryContainer">
                         <div :class="['category' + i, { 'selected': (i === this.selected_category_index) }]"
                             v-for="(category, i) in this.category_list" @click="async() => {await this.selectCategory(category, i)}">
@@ -63,7 +64,8 @@
                 marker_image: null,
                 selected_marker_image: null,
                 keyword: '',
-                no_result: false
+                no_result: false,
+                no_exhibition: false,
             };
         },
         beforeCreate() {},
@@ -135,6 +137,11 @@
             async setMapByCategory (category, initialize=false) {
                 const MAX_EXHIBITION_NUMBER = 1000
                 let exhibition_pageId_list = await getExhibitionsOnArea(category, 0, MAX_EXHIBITION_NUMBER)
+                if (exhibition_pageId_list.length === 0) {
+                    this.no_exhibition = true
+                    return
+                }
+                this.no_exhibition = false
                 
                 let exhibition_map_object_list = new Array()
                 let coordinate_sum = new Object()
