@@ -23,7 +23,6 @@ export async function getExhibitionsOnArea (area, offset, limit) {
         limit : limit
     })
     if (status < 400) {
-        print(data[0])
         return data[0].map(x => x.page_id)
     }
     else {
