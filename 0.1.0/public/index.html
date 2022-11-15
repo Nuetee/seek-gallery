@@ -18,10 +18,11 @@
         text-align: center;
         display: flex;
         flex-direction: column;
-        gap: 3vw;
         align-items: center;
-        justify-content: center;
-        z-index: 1;
+        justify-content: space-between;
+        padding-top: 3vw;
+        padding-bottom: 3vw;
+        z-index: 5;
         background-color: white;
         border-radius: 2vw;
       }
@@ -58,7 +59,7 @@
           //노토산스폰트강제설정
           var fonts = document.createElement('link');
           fonts.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap';
-          document.getElementById('redirectToSafari').innerHTML = "<div style='font-weight: bold;flex: 0 0 70%;display: flex;align-items: center;'>인앱 브라우저 호환문제로 인해 Safari에서의 사용을 권장합니다.</div><div style='flex: 1 0 auto;width: 100%;display: flex;align-items: center; justify-content: space-around;'><button style='flex: 0 0 40%;height: 100%;border: none;outline: 0;box-shadow: none;border-radius: 2vw;background-color: #08088A;color: white;' onclick='inappbrowserout();'>Safari로 이용하기</button><button style='flex: 0 0 40%;height: 100%;border: none;outline: 0;box-shadow: none;border-radius: 2vw;background-color: #08088A;color: white;' onclick='closeWindow();'>인앱 브라우저로 계속하기</button></div>";
+          document.getElementById('redirectToSafari').innerHTML = "<div style='font-weight: bold;flex: 0 0 50%;display: flex;align-items: center;'>인앱 브라우저 호환문제로 인해 Safari에서의 사용을 권장합니다.</div><div style='flex: 0 0 40%;width: 100%;display: flex;align-items: center; justify-content: space-around;'><button style='flex: 0 0 40%;height: 100%;border: none;outline: 0;box-shadow: none;border-radius: 2vw;background-color: #08088A;color: white;' onclick='inappbrowserout();'>Safari로 이용하기</button><button style='flex: 0 0 40%;height: 100%;border: none;outline: 0;box-shadow: none;border-radius: 2vw;background-color: #08088A;color: white;' onclick='closeWindow();'>인앱 브라우저로 계속하기</button></div>";
         }else{
           document.getElementById('redirectToSafari').remove()
           location.href='intent://'+location.href.replace(/https?:\/\//i,'')+'#Intent;scheme=http;package=com.android.chrome;end';
