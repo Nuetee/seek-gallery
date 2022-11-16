@@ -164,5 +164,47 @@
 
     ::v-deep(.drawer) {
         height: 60% !important;
+        text-align: left;
+        
+        .exhibitionName {
+            text-align: left;
+            font-size: 26px;
+            letter-spacing: -0.04em;
+            line-height: 115%;
+            font-weight: bold;
+            border-bottom: 1px solid #000000;
+            padding-bottom: calc(var(--vw, 1vw) * 2);
+            margin-bottom: calc(var(--vw, 1vw) * 5);
+        }
+
+        .exhibitionInformation {
+            text-align: left;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            letter-spacing: -0.06em;
+            white-space: pre-line;
+            padding-bottom: calc(var(--vw, 1vw) * 5);
+        }
+
+        .exhibitionDate, .exhibitionTime, .exhibitionPlace {
+            text-align: left;
+            word-break: break-all;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            letter-spacing: -0.06em;
+            white-space: pre-line;
+        }
+
+        .exhibitionPlace {
+            margin-bottom: calc(var(--vw, 1vw) * 7.5);
+        }
+
+        .exhibitionLink {
+            color: black;
+            font-weight: bold;
+            text-align: left;
+        }
     }
 }
