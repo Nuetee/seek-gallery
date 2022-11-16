@@ -143,6 +143,7 @@
                 this.no_result = false
             },
             async setMapByCategory(category, initialize = false) {
+                // 임시 을지로
                 if (category === 'uljiro') {
                     let exhibition_1 = new Object()
                     let exhibition_2 = new Object()
@@ -285,7 +286,8 @@
                     this.map.setBounds(bounds)     
                     return
                 }
-
+                // 임시 을지로
+                
                 const MAX_EXHIBITION_NUMBER = 1000
                 let exhibition_pageId_list = await getExhibitionsOnArea(category, 0, MAX_EXHIBITION_NUMBER)
                 if (exhibition_pageId_list.length === 0) {
