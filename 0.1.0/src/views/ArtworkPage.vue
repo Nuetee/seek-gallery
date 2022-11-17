@@ -19,7 +19,16 @@
                 <ArchiveInfo :archive_count="this.current_artwork ? this.current_artwork.getArchiveCount() : 0" :color="this.current_artwork ? this.current_artwork.getColor() : 'black'"></ArchiveInfo>
             </div>
             <div class="bottom">
-                <div class="artist">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
+                <div class="artist" @click="() => {
+                    if (this.current_artwork) {
+                        this.$router.replace({
+                            path: '/profile',
+                            query: {
+                                artist_page_id: this.current_artwork.getArtist().getPageID()
+                            }
+                        })
+                    }
+                }">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
                 <SNSLink 
                     :artwork_id="this.current_artwork ? this.current_artwork.getArtist().getID().toString() : ''"
                     :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>

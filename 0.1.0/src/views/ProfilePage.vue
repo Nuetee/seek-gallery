@@ -23,7 +23,8 @@
             <div class="name">
                 {{ (this.artist === null ? 'Guest' : this.artist.getNickname()) }}
             </div>
-            <RoundProfile ref="roundProfile" :profile="this.artist_page_id ? this.artist.getProfile() : null"></RoundProfile>
+            <!-- 일단 null. 현재의 getProfile은 로그인한 사용자의 profile -->
+            <RoundProfile ref="roundProfile" :profile="null"></RoundProfile>
             <div class="navigationBar">
                 <va-tabs id="tabs" v-model="this.tab_index" color="#ffffff" grow>
                     <template #tabs>
@@ -63,7 +64,7 @@
                     <List ref="artworkList" 
                     :is_artwork="true"
                     :single_column="this.is_single_column.artwork_list"
-                    :id_list="this.artwork_id_ist"></List>
+                    :id_list="this.artwork_id_list"></List>
                 </swiper-slide>
                 <swiper-slide class="mainSwiper thirdSlide">
                     <List ref="exhibitionList" 
@@ -91,14 +92,15 @@ export default {
         SwiperSlide,
         HomeTab,
     },
-    props: {
-        artist_page_id: {
-            type: String,
-            default: null
-        }
-    },
+    // props: {
+    //     artist_page_id: {
+    //         type: String,
+    //         default: null
+    //     }
+    // },
     data() {
         return {
+            artist_page_id: this.$route.query.artist_page_id,
             artist: null,
             show_control_box: false,
             tab_index: 0,
@@ -138,6 +140,7 @@ export default {
         if (this.artist_page_id) {
             this.artist = await new User(this.artist_page_id).init()
             this.artwork_id_list = await this.rebuildList(1, this.offset_artwork_list, 12, this.artwork_id_list)
+            console.log(this.artwork_id_list)
             this.exhibition_pageId_list = await this.rebuildList(0, this.offset_exhibition_list, 12, this.exhibition_pageId_list)
         }
         else {
