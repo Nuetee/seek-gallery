@@ -224,6 +224,7 @@
                     exhibition_6.link = 'https://instagram.com/sunblanketfoundation?igshid=YmMyMTA2M2Y='
 
                     this.uljiro_exhibition_list = [exhibition_1, exhibition_2, exhibition_3, exhibition_4, exhibition_5, exhibition_6]
+
                     let mean_latitude = 0
                     let mean_longitude = 0
                     for (let exhibition of this.uljiro_exhibition_list) {
