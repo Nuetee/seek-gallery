@@ -252,11 +252,11 @@
                         let marker = new kakao.maps.Marker({
                             map: this.map,
                             position: latlng,
-                            title: i,
+                            title: i.toString(),
                             image: this.marker_image,
                             clickable: true
                         })
-
+                        
                         const _this = this
                         kakao.maps.event.addListener(marker, 'click', function () {
                             if (_this.selected_marker === marker) {
@@ -268,7 +268,6 @@
                             marker.setImage(_this.selected_marker_image)
                             _this.selected_marker = marker
 
-                            
                             _this.$refs.exhibitionName.innerText = _this.uljiro_exhibition_list[marker.getTitle()].name
                             _this.$refs.exhibitionInformation.innerText = _this.uljiro_exhibition_list[marker.getTitle()].introduction
                             _this.$refs.exhibitionDate.innerText = '기간 : ' + _this.uljiro_exhibition_list[marker.getTitle()].date
