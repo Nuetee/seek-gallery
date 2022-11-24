@@ -41,7 +41,7 @@
                 <div class="exhibitionDate" ref="exhibitionDate"></div>
                 <div class="exhibitionTime" ref='exhibitionTime'></div>
                 <div class="exhibitionPlace" ref="exhibitionPlace"></div>
-                <a class="exhibitionLink" ref="exhibitionLink">둘러보기</a>
+                <a class="exhibitionLink" ref="exhibitionLink" target="_blank">둘러보기</a>
             </template>
         </Drawer>
     </div>
@@ -61,7 +61,7 @@
         data() {
             return {
                 map: null,
-                category_list: ['\%\%', 'uljiro', 'seongsu', 'hannam'],
+                category_list: ['\%\%', 'uljiro', 'seongbuk', 'seongsu', 'hannam'],
                 selected_category_index: 0,
                 markers: [],
                 selected_marker: null,
@@ -138,19 +138,19 @@
                         link : 'https://instagram.com/sunblanketfoundation?igshid=YmMyMTA2M2Y='
                     }
                 ],
-                seongsu_exhibition_list: [
+                seongbuk_exhibition_list: [
                     {
-                        gallery: '상업화랑 을지로',
-                        introduction: '2년 반의 펜데믹 기간이 지나고 다시 일상으로 복귀해가고 있는 시점에서, ‘거주’와 ‘집’의 의미를 되새기는 전시\n상업화랑 용산에서도 동일한 전시를 즐길 수 있다고 합니다!',
-                        place: '상업화랑 을지로 (서울 중구 을지로 143 4층)',
+                        gallery: '챔버1965',
+                        introduction: '2년 반의 펜데믹 기간이 지나고 다시 일상으로 복귀해가고 있는 시점에서, ‘거주’와 ‘집’의 의미를 되새기는 전시\n을지로 상업화랑과 함께하는 전시입니다!',
+                        place: '챔버1965 (서울 성북구 동소문로 26-6)',
                         id: 1511830976,
-                        coordinate: { longitude: 126.99394205418, latitude: 37.5666583920689 },
+                        coordinate: { longitude: 127.009035327874, latitude: 37.5893416315225 },
                         name: '<<가택연금>>',
                         artist: ['강홍구', '노충현', '박진영', '서동욱', '안경수', '옥정호', '윤정미', '정성진', '정용국', '정재호', '최선', '최현숙'],
                         date: '2022.11.5 - 2022.12.4',
                         time: '화-금 13시 ~ 19시, 토-일 13시 ~ 18시 (*월 휴무)',
                         price: 0,
-                        link: 'https://www.instagram.com/sahngupgallery/'
+                        link: 'https://www.instagram.com/chamber1965/'
                     },
                     {
                         gallery: '웨스',
@@ -259,6 +259,9 @@
                     case 'seongsu':
                         korean = '성수'
                         break
+                    case 'seongbuk':
+                        korean = '성북'
+                        break
                     case 'bukcheon':
                         korean = '북촌'
                         break
@@ -291,19 +294,19 @@
                 this.$refs.drawer.closeDrawer()
                 this.$refs.drawer.$el.style.setProperty('bottom', '0')
                 // 임시 을지로
-                if (category === 'uljiro' || category === 'seongsu' || category === '\%\%') {
+                if (category === 'uljiro' || category === 'seongbuk' || category === '\%\%') {
                     let exhibition_list = []
 
                     if (category === 'uljiro') {
                         exhibition_list = this.uljiro_exhibition_list
                     }
-                    else if (category === 'seongsu') {
-                        exhibition_list = this.seongsu_exhibition_list
+                    else if (category === 'seongbuk') {
+                        exhibition_list = this.seongbuk_exhibition_list
                     }
                     else {
                         exhibition_list = [
                             ...this.uljiro_exhibition_list,
-                            ...this.seongsu_exhibition_list
+                            ...this.seongbuk_exhibition_list
                         ]
                     }
 
@@ -546,7 +549,7 @@
                 // 임시 프론트 구간
                     let exhibition_list = [
                         ...this.uljiro_exhibition_list,
-                        ...this.seongsu_exhibition_list
+                        ...this.seongbuk_exhibition_list
                     ]
                     for (let i = 0; i < exhibition_list.length; i++) {
                         let exhibition_name = exhibition_list[i].name
