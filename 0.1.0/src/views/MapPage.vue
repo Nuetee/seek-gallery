@@ -61,7 +61,7 @@
         data() {
             return {
                 map: null,
-                category_list: ['\%\%', 'uljiro', 'seongbuk', 'seongsu', 'hannam'],
+                category_list: ['\%\%', 'uljiro', 'seongbuk', 'mapo', 'bukcheon', 'insadong', 'pyeongchangdong', 'gwanghwamun', 'seochon'],
                 selected_category_index: 0,
                 markers: [],
                 selected_marker: null,
@@ -217,12 +217,554 @@
                         price: 0,
                         link: 'https://www.instagram.com/seongbukmuseum/'
                     }
+                ],
+                mapo_exhibition_list: [
+                    {
+                        gallery: '온수공간',
+                        introduction: '',
+                        place: '서울 마포구 월드컵북로1길 74',
+                        id: 1993482544,
+                        coordinate: { longitude: 126.917815663776, latitude: 37.5534898065016 },
+                        name: '《소리, 입자, 열매가 된 사람》,《Post-it All and Stick Them》',
+                        artist: [],
+                        date: '2022.11.19 - 2022.12.10',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/os_gonggan/'
+                    },
+                    {
+                        gallery: '플레이스막1',
+                        introduction: '',
+                        place: '서울 마포구 성미산로 198 동진시장 내',
+                        id: 302728748,
+                        coordinate: { longitude: 126.926736155754, latitude: 37.5623254498867 },
+                        name: '《Blow-up⟫',
+                        artist: ['신선우'],
+                        date: '2022.11.16 - 2022.12.4',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/placemak/'
+                    },
+                    {
+                        gallery: '플레이스막2',
+                        introduction: '',
+                        place: '서울 서대문구 홍제천로4길 39-26',
+                        id: 11922740,
+                        coordinate: { longitude: 126.92654312673675, latitude: 37.57447975885542 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/placemak/'
+                    },
+                    {
+                        gallery: '플레이스막3',
+                        introduction: '',
+                        place: '서울 서대문구 홍연길 96 지하 1층',
+                        id: 1883808062,
+                        coordinate: { longitude: 126.93175954697332, latitude: 37.576888544485584 },
+                        name: '',
+                        artist: [],
+                        date: '2022.11.19 - 2022.12.10',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/placemak/'
+                    },
+                    {
+                        gallery: '합정지구',
+                        introduction: '',
+                        place: '서울 마포구 월드컵로 40',
+                        id: 1422884483,
+                        coordinate: { longitude: 126.912465702581, latitude: 37.5528624711019 },
+                        name: '《대면》',
+                        artist: ['이문주'],
+                        date: '2022.11.18 - 2022.12.18',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/hapjungjigu/'
+                    },
+                    {
+                        gallery: '별관',
+                        introduction: '',
+                        place: '서울 마포구 망원로 74 2층',
+                        id: 745738833,
+                        coordinate: { longitude: 126.90497740913551, latitude: 37.55721931159651 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/outhouse.seoul/'
+                    },
+                    {
+                        gallery: 'www스페이스',
+                        introduction: '',
+                        place: '서울 마포구 망원로6길 37 지하 1층',
+                        id: 250331355,
+                        coordinate: { longitude: 126.903802888715, latitude: 37.5552668005838 },
+                        name: '⟪긍정적 우울⟫',
+                        artist: ['김진형'],
+                        date: '2022.11.23 - 2022.12.4',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/www__space/'
+                    },
+                    {
+                        gallery: '레인보우큐브',
+                        introduction: '',
+                        place: '서울 마포구 토정로2길 6-19',
+                        id: 27583491,
+                        coordinate: { longitude: 126.912914133552, latitude: 37.5448403130809 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/rainbowcube_gallery/'
+                    },
+                    {
+                        gallery: '파도',
+                        introduction: '',
+                        place: '서울 마포구 성미산로 198 ',
+                        id: 227193375,
+                        coordinate: { longitude: 126.91802418609045, latitude: 37.54909308101398 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/pado_spacewave/'
+                    },
+                    {
+                        gallery: '챕터투',
+                        introduction: '',
+                        place: '서울 마포구 동교로27길 54',
+                        id: 927286713,
+                        coordinate: { longitude: 126.921203611709, latitude: 37.5602928429239 },
+                        name: '《물거품, 휘파람(Rales, Wheezes and Crackles)》',
+                        artist: [],
+                        date: '2022.11.16 - 2022.12.17',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/chapterii_/'
+                    },
+                    {
+                        gallery: 'CR Collective',
+                        introduction: '',
+                        place: '서울 마포구 성미산로 120 2층',
+                        id: 711560264,
+                        coordinate: { longitude: 126.92028678196, latitude: 37.5624798470126 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/cr_collective_/'
+                    },
+                    {
+                        gallery: '화인페이퍼',
+                        introduction: '',
+                        place: '서울 마포구 연남동1길30',
+                        id: 695206553,
+                        coordinate: { longitude: 126.92135737062624, latitude: 37.56045152085452 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/finepaper_gallery/'
+                    },
+                    {
+                        gallery: '갤러리 아미디 연남',
+                        introduction: '',
+                        place: '서울 마포구 성미산로29안길 18 2층',
+                        id: 420416612,
+                        coordinate: { longitude: 126.923227927727, latitude: 37.5651784776228 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/gallery_amidi/'
+                    },
+                    {
+                        gallery: '스페이스소',
+                        introduction: '',
+                        place: '서울 마포구 동교로17길 37',
+                        id: 1235106546,
+                        coordinate: { longitude: 126.915091611529, latitude: 37.5565188344795 },
+                        name: '⟪5 FIVE⟫ Vol. II',
+                        artist: [],
+                        date: '2022.11.10 - 2022.12.11',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/space__so/'
+                    },
+                    {
+                        gallery: '예술공간 의식주',
+                        introduction: '',
+                        place: '서울 마포구 월드컵로16길 52-19',
+                        id: 1358490354,
+                        coordinate: { longitude: 126.91280961182888, latitude: 37.55685594631827 },
+                        name: '⟪서사의 현장⟫',
+                        artist: [],
+                        date: '2022.11.22 - 2022.12.4',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/the_necessaries/'
+                    },
+                ],
+                bukcheon_exhibition_list: [
+                    {
+                        gallery: '아트비앤',
+                        introduction: '',
+                        place: '서울 종로구 삼청로 22-31 2층',
+                        id: 1664494795,
+                        coordinate: { longitude: 126.980505718632, latitude: 37.577818464872 },
+                        name: '⟪경계-사이의 풍경⟫',
+                        artist: [],
+                        date: '2022.11.29 - 2022.12.29',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/gallery_artbn/'
+                    },
+                    {
+                        gallery: '갤러리41',
+                        introduction: '',
+                        place: '서울 종로구 삼청로 22-31 1층',
+                        id: 19183348,
+                        coordinate: { longitude: 126.980505717692, latitude: 37.5778220688486 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/gallery41_seoul/'
+                    },
+                    {
+                        gallery: '갤러리진선',
+                        introduction: '',
+                        place: '서울 종로구 삼청로 59 2층',
+                        id: 26786624,
+                        coordinate: { longitude: 126.98046856127404, latitude: 37.5813827907419 },
+                        name: '⟪숲⟫',
+                        artist: ['전영근'],
+                        date: '2022.11.23 - 2022.12.11',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/galleryjinsun/'
+                    },
+                    {
+                        gallery: '킵인터치',
+                        introduction: '',
+                        place: '서울 종로구 북촌로1길 13',
+                        id: 2108894844,
+                        coordinate: { longitude: 126.984948070912, latitude: 37.5773145581055 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/p/Ck-U3UPpBuA/'
+                    },
+                    {
+                        gallery: 'PKM갤러리',
+                        introduction: '',
+                        place: '서울 종로구 삼청로7길 40',
+                        id: 1542000520,
+                        coordinate: { longitude: 126.980073858136, latitude: 37.5840965170627 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/pkmgallery/'
+                    },
+                    {
+                        gallery: '크래프트온더힐',
+                        introduction: '',
+                        place: '서울 종로구 북촌로7길 20 1층',
+                        id: 974437016,
+                        coordinate: { longitude: 126.983890004886, latitude: 37.5806462943974 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/crafts_on_the_hill_/'
+                    },
+                    {
+                        gallery: '코너갤러리',
+                        introduction: '',
+                        place: '서울 종로구 북촌로5길 18',
+                        id: 27139183,
+                        coordinate: { longitude: 126.98394233236853, latitude: 37.5794813164535 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/corner_gallery/'
+                    },
+                    {
+                        gallery: '뮤지엄헤드',
+                        introduction: '',
+                        place: '서울 종로구 계동길 84-3 1층',
+                        id: 983287184,
+                        coordinate: { longitude: 126.98696472317121, latitude: 37.581253042755144 },
+                        name: '⟪Rock & Roll⟫',
+                        artist: ['문이삭'],
+                        date: '2022.11.24 - 2023.1.28',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/museumhead_/'
+                    },
+                    {
+                        gallery: '이목화랑',
+                        introduction: '',
+                        place: '서울 종로구 북촌로 94',
+                        id: 8041993,
+                        coordinate: { longitude: 126.98544011616, latitude: 37.5851965126104 },
+                        name: '⟪투명한 두께⟫',
+                        artist: ['나빈'],
+                        date: '2022.11.25 - 2022.12.16',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/yeemockgallery/'
+                    },
+                    {
+                        gallery: '갤러리마롱',
+                        introduction: '',
+                        place: '서울 종로구 북촌로 143-6',
+                        id: 1991374057,
+                        coordinate: { longitude: 126.982736026845, latitude: 37.587077421354 },
+                        name: '⟪THE GIFT⟫',
+                        artist: [],
+                        date: '2022.11.30 - 2022.12.11',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/gallery_marron/'
+                    }
+                ],
+                insadong_exhibition_list: [
+                    {
+                        gallery: 'ap갤러리',
+                        introduction: '',
+                        place: '서울 종로구 인사동길 40 2층',
+                        id: 1018843728,
+                        coordinate: { longitude: 126.985111746173, latitude: 37.574009730872 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/ap.gallery.seoul/'
+                    },
+                    {
+                        gallery: '갤러리 가이아',
+                        introduction: '',
+                        place: '서울 종로구 인사동길 57-1',
+                        id: 8653346,
+                        coordinate: { longitude: 126.983467821465, latitude: 37.5750943097354 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/galeriegaia/'
+                    },
+                    {
+                        gallery: '인영갤러리',
+                        introduction: '',
+                        place: '서울 종로구 인사동10길 23-4',
+                        id: 321192268,
+                        coordinate: { longitude: 126.98625270075253, latitude: 37.57464056557581 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/inyounggallery/'
+                    },
+                    {
+                        gallery: '관훈갤러리',
+                        introduction: '',
+                        place: '서울 종로구 인사동11길 11',
+                        id: 12447680,
+                        coordinate: { longitude: 126.984237861444, latitude: 37.5738654582578 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/kwanhoongallery/'
+                    }
+                ],
+                pyeongchangdong_exhibition_list: [
+                    {
+                        gallery: '본 갤러리',
+                        introduction: '',
+                        place: '서울 종로구 자하문로 299',
+                        id: 18578840,
+                        coordinate: { longitude: 126.95960522563229, latitude: 37.59910001285726 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/bon__gallery/'
+                    },
+                    {
+                        gallery: '프로젝트 스페이스 미음',
+                        introduction: '',
+                        place: '서울 종로구 평창20길 14',
+                        id: 816509385,
+                        coordinate: { longitude: 126.972230159526, latitude: 37.6085928874806 },
+                        name: '《NJOKOBOK / YOU ARE WELCOME: WE SHARE IT》',
+                        artist: ['아폴로니아 슈시테르쉬치'],
+                        date: '2022.11.18 - 2022.12.15',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/projectspacemium/'
+                    }
+                ],
+                gwanghwamun_exhibition_list: [
+                    {
+                        gallery: '일민미술관',
+                        introduction: '',
+                        place: '서울 종로구 세종대로 152',
+                        id: 11179476,
+                        coordinate: { longitude: 126.977637157186, latitude: 37.5698819940064 },
+                        name: '《다시 그린 세계: 한국화의 단절과 연속》',
+                        artist: [],
+                        date: '2022.10.28 - 2023.1.8',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/ilminmuseumofart/'
+                    },
+                ],
+                seochon_exhibition_list: [
+                    {
+                        gallery: '보안1942',
+                        introduction: '',
+                        place: '서울 종로구 효자로 33',
+                        id: 14562864,
+                        coordinate: { longitude: 126.97362679381301, latitude: 37.57910825301889 },
+                        name: '《스틸라이프 인 드림드림드림》',
+                        artist: ['구나'],
+                        date: '2022.11.26 - 2022.12.18',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/boan1942/'
+                    },
+                    {
+                        gallery: '팩토리2',
+                        introduction: '',
+                        place: '서울 종로구 자하문로10길 15',
+                        id: 12983379,
+                        coordinate: { longitude: 126.972413039149, latitude: 37.5795215318413 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/factory2.seoul/'
+                    },
+                    {
+                        gallery: '프로젝트 스페이스 사루비아',
+                        introduction: '',
+                        place: '서울 종로구 자하문로16길 4 지하',
+                        id: 25051286,
+                        coordinate: { longitude: 126.97142624584727, latitude: 37.581447621821 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/pssarubia/'
+                    },
+                    {
+                        gallery: '갤러리 아트사이드',
+                        introduction: '',
+                        place: '서울 종로구 자하문로6길 15',
+                        id: 8428388,
+                        coordinate: { longitude: 126.97294784304906, latitude: 37.578267471918814 },
+                        name: '',
+                        artist: [],
+                        date: '2022.12.2 - 2022.12.31',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/artsidegallery_/'
+                    },
+                    {
+                        gallery: '갤러리시몬',
+                        introduction: '',
+                        place: '서울 종로구 자하문로6길 20',
+                        id: 8778944,
+                        coordinate: { longitude: 126.97329204906, latitude: 37.5781161832806 },
+                        name: '⟪쌍-댓구 Pairs⟫',
+                        artist: ['윤동천'],
+                        date: '2022.10.20 - 2022.12.31',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/gallery_simon/'
+                    },
+                    {
+                        gallery: '스페이스로',
+                        introduction: '',
+                        place: '서울 종로구 필운대로7길 12 2층',
+                        id: 418628988,
+                        coordinate: { longitude: 126.967847531568, latitude: 37.5815890583045 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/hellospacelo/'
+                    },
+                    {
+                        gallery: 'tya 서촌',
+                        introduction: '',
+                        place: '서울 종로구 자하문로5길 28',
+                        id: 136380522,
+                        coordinate: { longitude: 126.970312542225, latitude: 37.5778172425068 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/yeemockgallery/'
+                    },
+                    {
+                        gallery: '스페이스깨',
+                        introduction: '',
+                        place: '서울 종로구 자하문로5길 15',
+                        id: 1050667060,
+                        coordinate: { longitude: 126.970969217053, latitude: 37.5776290980353 },
+                        name: '',
+                        artist: [],
+                        date: '',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/spaceccae/'
+                    },
+                    {
+                        gallery: '표갤러리',
+                        introduction: '',
+                        place: '서울 종로구 자하문로5길 18-4',
+                        id: 8129692,
+                        coordinate: { longitude: 126.97082873644398, latitude: 37.57789575768786 },
+                        name: '⟪HIT THE ROAD⟫',
+                        artist: ['하정우'],
+                        date: '2022.11.17 - 2022.12.19',
+                        time: '',
+                        price: 0,
+                        link: 'https://www.instagram.com/pyogallery/'
+                    },
                 ]
             };
         },
-        beforeCreate() {},
-        created() {},
-        beforeMount() {},
         async mounted() {
             document.getElementById('app').style.setProperty('overflow', 'hidden')
             let marker_image_src = require('../assets/marker.svg')
@@ -237,9 +779,6 @@
             this.selected_category_index = 2
             await this.setMapByCategory(this.category_list[this.selected_category_index], true)
         },
-        beforeUpdate() {},
-        updated() {},
-        beforeUnmount() {},
         unmounted() {
             document.getElementById('app').style.setProperty('overflow', 'scroll')
         },
@@ -262,8 +801,23 @@
                     case 'seongbuk':
                         korean = '성북'
                         break
+                    case 'mapo':
+                        korean = '마포'
+                        break
                     case 'bukcheon':
                         korean = '북촌'
+                        break
+                    case 'insadong':
+                        korean = '인사동'
+                        break
+                    case 'pyeongchangdong':
+                        korean = '평창동'
+                        break
+                    case 'gwanghwamun':
+                        korean = '광화문'
+                        break
+                    case 'seochon':
+                        korean = '서촌'
                         break
                     case 'nonhyeon':
                         korean = '논현'
@@ -294,7 +848,7 @@
                 this.$refs.drawer.closeDrawer()
                 this.$refs.drawer.$el.style.setProperty('bottom', '0')
                 // 임시 을지로
-                if (category === 'uljiro' || category === 'seongbuk' || category === '\%\%') {
+                if (true) {
                     let exhibition_list = []
 
                     if (category === 'uljiro') {
@@ -303,10 +857,34 @@
                     else if (category === 'seongbuk') {
                         exhibition_list = this.seongbuk_exhibition_list
                     }
+                    else if (category === 'mapo') {
+                        exhibition_list = this.mapo_exhibition_list
+                    }
+                    else if (category === 'bukcheon') {
+                        exhibition_list = this.bukcheon_exhibition_list
+                    }
+                    else if (category === 'insadong') {
+                        exhibition_list = this.insadong_exhibition_list
+                    }
+                    else if (category === 'pyeongchangdong') {
+                        exhibition_list = this.pyeongchangdong_exhibition_list
+                    }
+                    else if (category === 'gwanghwamun') {
+                        exhibition_list = this.gwanghwamun_exhibition_list
+                    }
+                    else if (category === 'seochon') {
+                        exhibition_list = this.seochon_exhibition_list
+                    }
                     else {
                         exhibition_list = [
                             ...this.uljiro_exhibition_list,
-                            ...this.seongbuk_exhibition_list
+                            ...this.seongbuk_exhibition_list,
+                            ...this.mapo_exhibition_list,
+                            ...this.bukcheon_exhibition_list,
+                            ...this.insadong_exhibition_list,
+                            ...this.pyeongchangdong_exhibition_list,
+                            ...this.gwanghwamun_exhibition_list,
+                            ...this.seochon_exhibition_list
                         ]
                     }
 
@@ -549,7 +1127,15 @@
                 // 임시 프론트 구간
                     let exhibition_list = [
                         ...this.uljiro_exhibition_list,
-                        ...this.seongbuk_exhibition_list
+                        ...this.seongbuk_exhibition_list,
+                        ...this.uljiro_exhibition_list,
+                        ...this.seongbuk_exhibition_list,
+                        ...this.mapo_exhibition_list,
+                        ...this.bukcheon_exhibition_list,
+                        ...this.insadong_exhibition_list,
+                        ...this.pyeongchangdong_exhibition_list,
+                        ...this.gwanghwamun_exhibition_list,
+                        ...this.seochon_exhibition_list
                     ]
                     for (let i = 0; i < exhibition_list.length; i++) {
                         let exhibition_name = exhibition_list[i].name
