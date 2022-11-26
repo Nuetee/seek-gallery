@@ -156,7 +156,7 @@
     
             .swiper-slide {
                 height: 100%;
-                overflow: scroll;
+                overflow: hidden;
     
                 &::-webkit-scrollbar {
                     display: none;
