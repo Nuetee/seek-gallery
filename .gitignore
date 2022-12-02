@@ -5,10 +5,10 @@ node_modules
 0.1.0/dist
 
 # local env files
-.env.local
-.env.*.local
-0.1.0/.env.local
-0.1.0/.env.*.local
+.env
+.env.*
+0.1.0/.env
+0.1.0/.env.*
 
 # Log files
 npm-debug.log*
