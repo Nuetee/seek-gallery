@@ -153,10 +153,14 @@
 
         ::v-deep(.swiper) {
             height: 100%;
-    
+            
+            .swiper-slide:first-child {
+                overflow: hidden;
+            }
+
             .swiper-slide {
                 height: 100%;
-                overflow: hidden;
+                overflow: scroll;
     
                 &::-webkit-scrollbar {
                     display: none;
