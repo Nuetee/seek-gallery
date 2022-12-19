@@ -1,0 +1,57 @@
+#myPage {
+    ::v-deep(.mainHeader) {
+        > div {
+            width: auto;
+            border: none;
+
+            img,
+            svg {
+                height: 100%;
+                width: auto;
+            }
+        }
+
+        .left {
+            transform-origin: 0 50%;
+            height: calc(var(--vw, 1vw) * 8);
+            width: auto;
+        }
+
+        .right {
+            .tabs {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: calc(var(--vw, 1vw) * 2);
+
+                .tab {
+                    width: calc(var(--vw, 1vw) * 14.4);
+                    height: calc(var(--vw, 1vw) * 7.74);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1;
+                    font-family: 'Pretendard';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 18px;
+                    text-align: center;
+                    color: #000000;
+                }
+
+                .tab_content {
+                    z-index: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: calc(var(--vw, 1vw) * 14.4);
+                    height: calc(var(--vw, 1vw) * 7.74);
+                    background-color: black;
+                    border-radius: calc(var(--vw, 1vw) * 3.87);
+                    transition: all 0.2s;
+                }
+            }
+        }
+    }
+}
