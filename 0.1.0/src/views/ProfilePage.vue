@@ -74,13 +74,16 @@
                 </swiper-slide>
             </swiper>
         </div>
+        <FloatingButton></FloatingButton>
     </div>
 </template>
 <script>
 import RoundProfile from '@/widgets/RoundProfile.vue';
 import List from '@/widgets/List.vue';
-import { Swiper, SwiperSlide } from 'swiper/vue';
 import HomeTab from '@/components/ProfilePage/HomeTab.vue';
+import FloatingButton from '@/widgets/FloatingButton.vue';
+
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import { User } from '@/classes/user';
 
 export default {
@@ -88,16 +91,11 @@ export default {
     components: {
         RoundProfile,
         List,
+        FloatingButton,
+        HomeTab,
         Swiper,
         SwiperSlide,
-        HomeTab,
     },
-    // props: {
-    //     artist_page_id: {
-    //         type: String,
-    //         default: null
-    //     }
-    // },
     data() {
         return {
             artist_page_id: this.$route.query.artist_page_id,
@@ -140,7 +138,7 @@ export default {
         if (this.artist_page_id) {
             this.artist = await new User(this.artist_page_id).init()
             this.artwork_id_list = await this.rebuildList(1, this.offset_artwork_list, 12, this.artwork_id_list)
-            console.log(this.artwork_id_list)
+            
             this.exhibition_pageId_list = await this.rebuildList(0, this.offset_exhibition_list, 12, this.exhibition_pageId_list)
         }
         else {

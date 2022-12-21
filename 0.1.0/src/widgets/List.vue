@@ -140,6 +140,27 @@ export default {
                             child.appendChild(owner_icon)
                         }
 
+                        const _this = this
+                        child.addEventListener('click', () => {
+                            if (_this.is_artwork) {
+                                _this.$router.push({
+                                    path: '/artwork',
+                                    query: {
+                                        array: [id],
+                                        index: 0
+                                    }
+                                })
+                            }
+                            else {
+                                _this.$router.push({
+                                    path: '/',
+                                    query: {
+                                        id: id.page_id
+                                    }
+                                })
+                            }
+                        })
+
                         list_element.appendChild(child)
 
                         await this.imageLoaded(thumbnail.src)

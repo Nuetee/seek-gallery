@@ -86,137 +86,8 @@
                         price: 0,
                         link: 'https://www.instagram.com/artspace_hyeong/'
                     },
-                    {
-                        gallery: '을지예술센터',
-                        introduction : '누군가의 필요에 의해 만들어지는 용도와 누군가의 쓰임에 의해 인정받는 쓸모의 가치를 탐구하는 3부작 중 마지막 전시\n8명의 아티스트가 용접공에서 비건 디자이너까지, 8명의 페르소나를 위해 만든 작품을 만나보세요! ',
-                        place : '을지예술센터 (서울 중구 창경궁로5다길 18 3층)',
-                        id : 2008866442,
-                        coordinate : { longitude: 126.99659065833822, latitude: 37.56773969328135 },
-                        name : '《용도의 쓸모 - 사용자 친화적》',
-                        artist : ['구수현', '깪', '박소라', '연진영', '이시산', '이윤정', '조효리', '최병석'],
-                        date : '2022.11.08 - 2022.12.07',
-                        time : '화-일 13시 ~ 20시 (*월 휴무)',
-                        link : 'https://www.instagram.com/c.enter_official/'
-                    },
-                    {
-                        gallery : '그블루 갤러리',
-                        introduction : '작업을 통해 카메라 뒤편에 대해 이야기하는 윤호진 작가의 전시\n벽 어딘가에 부착된 QR코드 링크도 따라가보세요!',
-                        place : '그블루 갤러리 (서울 중구 충무로5길 2 3층)',
-                        id : 138252527,
-                        coordinate : { longitude: 126.992472989279, latitude: 37.5652131099018 },
-                        name : '《[Re]:[Re]:[Re]:[Fw]:》',
-                        artist : ['윤호진'],
-                        date : '2022.11.9 - 2022.11.27',
-                        time : '수-일 13시 ~ 20시 (*월,화 휴무)',
-                        price : 0,
-                        link : 'https://www.instagram.com/gblue_gallery/'
-                    },
-                    {
-                        gallery : '상업화랑 을지로',
-                        introduction : '2년 반의 펜데믹 기간이 지나고 다시 일상으로 복귀해가고 있는 시점에서, ‘거주’와 ‘집’의 의미를 되새기는 전시\n상업화랑 용산에서도 동일한 전시를 즐길 수 있다고 합니다!',
-                        place : '상업화랑 을지로 (서울 중구 을지로 143 4층)',
-                        id : 1511830976,
-                        coordinate : { longitude: 126.99394205418, latitude: 37.5666583920689 },
-                        name : '<<가택연금>>',
-                        artist : ['강홍구', '노충현', '박진영', '서동욱', '안경수', '옥정호', '윤정미', '정성진', '정용국', '정재호', '최선', '최현숙'],
-                        date : '2022.11.5 - 2022.12.4',
-                        time : '화-금 13시 ~ 19시, 토-일 13시 ~ 18시 (*월 휴무)',
-                        price : 0,
-                        link : 'https://www.instagram.com/sahngupgallery/'
-                    },
-                    {
-                        gallery : '햇빛담요재단',
-                        introduction : '리투아니아 루벤아트파운데이션에 소장된 젊은 작가들의 작품을 마주할 수 있는 전시\n발트 지역의 신선한 예술적 시각과 통찰을 경험해보세요!',
-                        place : '햇빛담요재단 (서울 중구 을지로 95)',
-                        id : 1546954217,
-                        coordinate : { longitude: 126.98849991280093, latitude: 37.56633903482297 },
-                        name : '⟪루벤 아트파운데이션 소장품전⟫',
-                        artist : [],
-                        date : '2022.9.16 - 2022.11.26',
-                        time : '화-토 11시 ~ 18시 반 (*일,월 휴무)',
-                        price : 0,
-                        link : 'https://instagram.com/sunblanketfoundation?igshid=YmMyMTA2M2Y='
-                    }
                 ],
                 seongbuk_exhibition_list: [
-                    {
-                        gallery: '챔버1965',
-                        introduction: '2년 반의 펜데믹 기간이 지나고 다시 일상으로 복귀해가고 있는 시점에서, ‘거주’와 ‘집’의 의미를 되새기는 전시\n을지로 상업화랑과 함께하는 전시입니다!',
-                        place: '챔버1965 (서울 성북구 동소문로 26-6)',
-                        id: 1511830976,
-                        coordinate: { longitude: 127.009035327874, latitude: 37.5893416315225 },
-                        name: '<<가택연금>>',
-                        artist: ['강홍구', '노충현', '박진영', '서동욱', '안경수', '옥정호', '윤정미', '정성진', '정용국', '정재호', '최선', '최현숙'],
-                        date: '2022.11.5 - 2022.12.4',
-                        time: '화-금 13시 ~ 19시, 토-일 13시 ~ 18시 (*월 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/chamber1965/'
-                    },
-                    {
-                        gallery: '웨스',
-                        introduction: '‘방언’이 공공의 언어와 공명하며 동시대와 맺는 관계에 주목하는 전시\n1층 입구에서<동행자 스마트 워크맨>의 음성 안내를 들으며 전시장에 들어가보세요!',
-                        place: '웨스 (서울 성북구 창경궁로 320 2층)',
-                        id: 680706599,
-                        coordinate: { longitude: 127.005117652004, latitude: 37.5878426147537 },
-                        name: '《바위와 가장자리》',
-                        artist: [],
-                        date: '2022.11.5 - 2022.12.2',
-                        time: '목-일 13시 ~ 17시 (*월,화,수 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/wess.seoul/'
-                    },
-                    {
-                        gallery: '00의00',
-                        introduction: '00의00에서 열리는 사진 설치와 관련한 전시\n홍익대학교 시각디자인과 사진예술 소모임 HIPS가 사진이라는 매체를 바라보는 방식을 엿보세요.',
-                        place: '00의00 (서울 성북구 성북로 2길 8)',
-                        id: 849604574,
-                        coordinate: { longitude: 127.006374519181, latitude: 37.5889994280658 },
-                        name: '《사진-설치》',
-                        artist: [],
-                        date: '2022.11.22 - 2022.12.4',
-                        time: '수-일 13시 ~ 19시',
-                        price: 0,
-                        link: 'https://www.instagram.com/00.00.seoul/'
-                    },
-                    {
-                        gallery: '오트',
-                        introduction: '카와카마 요시로 작가의 한국 최초로 열리는 개인전\n어른이 되어서도 애니메이션을 보듯이, 소년의 모습 그대로 늙어감을 표현한 회화 작업들을 만나보세요!',
-                        place: '오트 서울 (서울 성북구 성북로 91)',
-                        id: 460538035,
-                        coordinate: { longitude: 126.998695589765, latitude: 37.5929026912513 },
-                        name: '《Dear Ambivalence》',
-                        artist: ['카와카마 요시로'],
-                        date: '2022.10.27 - 2022.12.4',
-                        time: '수-일 13시 반 ~ 18시 (*월,화 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/aughtpress/'
-                    },
-                    {
-                        gallery: 'BB&M',
-                        introduction: "우정수 작가의 자기애적 감수성의 흥미로운 이면들을 '나르키소스 신화'의 상징적 이미지로 표현한 전시\n고전 회화 속 신화의 장면들을 특유의 감각과 시점으로 재조합한 작품들을 마주하실 수 있습니다.",
-                        place: 'BB&M (서울 성북구 성북로23길 10)',
-                        id: 1386203123,
-                        coordinate: { longitude: 126.99538924259, latitude: 37.5933819360811 },
-                        name: '《Palindrome》',
-                        artist: ['우정수'],
-                        date: '2022.11.5 - 2022.12.17',
-                        time: '화-토 11시 ~ 18시 (*일,월 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/gallerybbm/'
-                    },
-                    {
-                        gallery: '성북구립미술관',
-                        introduction: "평생 ‘인체’를 화두로, ‘인간’과 ‘조각’의 본질을 탐구한 조각가 정현의 30년 여정을 총 망라한 전시\n매일 오전 11시에는 전시해설도 진행됩니다.",
-                        place: '성북구립미술관 (서울 성북구 성북로 134)',
-                        id: 12293765,
-                        coordinate: { longitude: 126.994886397801, latitude: 37.5948451259332 },
-                        name: '《시간의 초상》',
-                        artist: ['정현'],
-                        date: '2022.10.5 - 2022.12.4',
-                        time: '화-일 10시 ~ 18시 (*월 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/seongbukmuseum/'
-                    }
                 ],
                 mapo_exhibition_list: [
                     {
@@ -231,19 +102,6 @@
                         time: '',
                         price: 0,
                         link: 'https://www.instagram.com/os_gonggan/'
-                    },
-                    {
-                        gallery: '플레이스막1',
-                        introduction: '',
-                        place: '서울 마포구 성미산로 198 동진시장 내',
-                        id: 302728748,
-                        coordinate: { longitude: 126.926736155754, latitude: 37.5623254498867 },
-                        name: '《Blow-up⟫',
-                        artist: ['신선우'],
-                        date: '2022.11.16 - 2022.12.4',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/placemak/'
                     },
                     {
                         gallery: '플레이스막2',
@@ -262,7 +120,7 @@
                         gallery: '플레이스막3',
                         introduction: '',
                         place: '서울 서대문구 홍연길 96 지하 1층',
-                        id: 1883808062,
+                        www스페이스d: 1883808062,
                         coordinate: { longitude: 126.93175954697332, latitude: 37.576888544485584 },
                         name: '',
                         artist: [],
@@ -270,19 +128,6 @@
                         time: '',
                         price: 0,
                         link: 'https://www.instagram.com/placemak/'
-                    },
-                    {
-                        gallery: '합정지구',
-                        introduction: '',
-                        place: '서울 마포구 월드컵로 40',
-                        id: 1422884483,
-                        coordinate: { longitude: 126.912465702581, latitude: 37.5528624711019 },
-                        name: '《대면》',
-                        artist: ['이문주'],
-                        date: '2022.11.18 - 2022.12.18',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/hapjungjigu/'
                     },
                     {
                         gallery: '별관',
@@ -388,32 +233,6 @@
                         price: 0,
                         link: 'https://www.instagram.com/gallery_amidi/'
                     },
-                    {
-                        gallery: '스페이스소',
-                        introduction: '',
-                        place: '서울 마포구 동교로17길 37',
-                        id: 1235106546,
-                        coordinate: { longitude: 126.915091611529, latitude: 37.5565188344795 },
-                        name: '⟪5 FIVE⟫ Vol. II',
-                        artist: [],
-                        date: '2022.11.10 - 2022.12.11',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/space__so/'
-                    },
-                    {
-                        gallery: '예술공간 의식주',
-                        introduction: '',
-                        place: '서울 마포구 월드컵로16길 52-19',
-                        id: 1358490354,
-                        coordinate: { longitude: 126.91280961182888, latitude: 37.55685594631827 },
-                        name: '⟪서사의 현장⟫',
-                        artist: [],
-                        date: '2022.11.22 - 2022.12.4',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/the_necessaries/'
-                    },
                 ],
                 bukcheon_exhibition_list: [
                     {
@@ -441,19 +260,6 @@
                         time: '',
                         price: 0,
                         link: 'https://www.instagram.com/gallery41_seoul/'
-                    },
-                    {
-                        gallery: '갤러리진선',
-                        introduction: '',
-                        place: '서울 종로구 삼청로 59 2층',
-                        id: 26786624,
-                        coordinate: { longitude: 126.98046856127404, latitude: 37.5813827907419 },
-                        name: '⟪숲⟫',
-                        artist: ['전영근'],
-                        date: '2022.11.23 - 2022.12.11',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/galleryjinsun/'
                     },
                     {
                         gallery: '킵인터치',
@@ -520,32 +326,6 @@
                         price: 0,
                         link: 'https://www.instagram.com/museumhead_/'
                     },
-                    {
-                        gallery: '이목화랑',
-                        introduction: '',
-                        place: '서울 종로구 북촌로 94',
-                        id: 8041993,
-                        coordinate: { longitude: 126.98544011616, latitude: 37.5851965126104 },
-                        name: '⟪투명한 두께⟫',
-                        artist: ['나빈'],
-                        date: '2022.11.25 - 2022.12.16',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/yeemockgallery/'
-                    },
-                    {
-                        gallery: '갤러리마롱',
-                        introduction: '',
-                        place: '서울 종로구 북촌로 143-6',
-                        id: 1991374057,
-                        coordinate: { longitude: 126.982736026845, latitude: 37.587077421354 },
-                        name: '⟪THE GIFT⟫',
-                        artist: [],
-                        date: '2022.11.30 - 2022.12.11',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/gallery_marron/'
-                    }
                 ],
                 insadong_exhibition_list: [
                     {
@@ -615,19 +395,6 @@
                         price: 0,
                         link: 'https://www.instagram.com/bon__gallery/'
                     },
-                    {
-                        gallery: '프로젝트 스페이스 미음',
-                        introduction: '',
-                        place: '서울 종로구 평창20길 14',
-                        id: 816509385,
-                        coordinate: { longitude: 126.972230159526, latitude: 37.6085928874806 },
-                        name: '《NJOKOBOK / YOU ARE WELCOME: WE SHARE IT》',
-                        artist: ['아폴로니아 슈시테르쉬치'],
-                        date: '2022.11.18 - 2022.12.15',
-                        time: '',
-                        price: 0,
-                        link: 'https://www.instagram.com/projectspacemium/'
-                    }
                 ],
                 gwanghwamun_exhibition_list: [
                     {
@@ -704,7 +471,7 @@
                         id: 8428388,
                         coordinate: { longitude: 126.97290000000000, latitude: 37.578260000000000 },
                         name: '《New Memories in Holiday》',
-                        artist: [],
+                        artist: [], 
                         date: '2022.12.2 - 2022.12.31',
                         time: '화-토 10시 ~ 18시 (*일,월 휴무)',
                         price: 0,
@@ -774,19 +541,6 @@
                         time: '',
                         price: 0,
                         link: 'https://www.instagram.com/spaceccae/'
-                    },
-                    {
-                        gallery: '표갤러리',
-                        introduction: '하정우 작가가 영화 촬영을 위해 떠난 모로코에서 보고 느낀 것을 표현한 전시\n코로나19로 인해 경험하지 못한 해외여행을, 이국적인 풍의 작품들을 통해 대리 만족해보세요.',
-                        place: '서울 종로구 자하문로5길 18-4',
-                        id: 8129692,
-                        coordinate: { longitude: 126.97082873644398, latitude: 37.57789575768786 },
-                        name: '⟪HIT THE ROAD⟫',
-                        artist: ['하정우'],
-                        date: '2022.11.17 - 2022.12.19',
-                        time: '월-토 9시 ~ 18시 (*일 휴무)',
-                        price: 0,
-                        link: 'https://www.instagram.com/pyogallery/'
                     },
                 ]
             };

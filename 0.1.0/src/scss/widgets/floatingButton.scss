@@ -1,0 +1,29 @@
+.FloatingButton {
+    position: fixed;
+    bottom: calc(var(--vw, 1vw) * 10);
+    left: 50%;
+    width: calc(var(--vw, 1vw) * 27);
+    height: calc(var(--vw, 1vw) * 14);
+    border-radius: calc(var(--vw, 1vw) * 7);
+    z-index: 1;
+
+    transform: translate(-50%, 0);
+
+    padding-top: calc(var(--vw, 1vw) * 1);
+    padding-left: calc(var(--vw, 1vw) * 1);
+    padding-bottom: calc(var(--vw, 1vw) * 1);
+    background-color: black;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 115%;
+    color: #CCFF00;
+
+    .phrase {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
