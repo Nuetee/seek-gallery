@@ -1,24 +1,14 @@
 <template>
     <div id="artworkPage">
-        <MainHeader :background_color="'transparent'">
-            <template v-slot:left>
-                <div class="backButton" @click="this.back($event)">
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 13L1 7L7 1" :stroke="(this.current_artwork ? this.current_artwork.getColor() : 'black')" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </div>
-            </template>
-            <template v-slot:right>
-                <RoundProfile :profile="this.profile" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" @click="this.openSideBar($event)"></RoundProfile>
-            </template>
-        </MainHeader>
         <div class="artworkInformation" :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
-            <div class="top">
-                <div class="artworkTitle poppins">{{ this.current_artwork ? this.current_artwork.getName() : '' }}</div>
-                <ArchiveInfo :archive_count="this.current_artwork ? this.current_artwork.getArchiveCount() : 0" :color="this.current_artwork ? this.current_artwork.getColor() : 'black'"></ArchiveInfo>
+            <div class="left">
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 13L1 7L7 1" stroke="white"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
             </div>
-            <div class="bottom">
+            <div class="middle">
+                <div class="artworkTitle poppins">{{ this.current_artwork ? this.current_artwork.getName() : '' }}</div>
                 <div class="artist" @click="() => {
                     if (this.current_artwork) {
                         this.$router.replace({
@@ -28,34 +18,41 @@
                             }
                         })
                     }
-                }">{{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}</div>
-                <SNSLink 
-                    :artwork_id="this.current_artwork ? this.current_artwork.getArtist().getID().toString() : ''"
-                    :sns_link="this.current_artwork ? this.current_artwork.getArtist().getSNS() : ''"></SNSLink>
+                }">
+                    {{ this.current_artwork ? this.current_artwork.getArtistName() : '' }}
+                </div>
+            </div>
+            <div class="right">
+                <RoundProfile v-if="this.profile_load_flag" :profile="this.profile" :color="'black'" @click="this.openSideBar($event)"></RoundProfile>
             </div>
         </div>
         <swiper class="artworkSlider" v-bind="this.swiper_options"
         @slideChange="async (event) => { await this.setCurrentArtwork(event) }"
         >
-            <swiper-slide class="artworkSlide" v-for="(artwork, i) in this.artwork_list" :key="i">
+            <swiper-slide class="artworkSlide" v-for="(artwork, i) in this.artwork_list" :key="i" @click="this.fullImageScreen(artwork)">
                 <ArtworkImageSlider :artwork_image_information_list="(artwork ? artwork.image_information : null)"></ArtworkImageSlider>
             </swiper-slide>
         </swiper>
         <div class="buttonContainer">
-            <CommentButton ref="commentButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" @click="this.showComment($event)"></CommentButton>
             <ArchiveButton ref="archiveButton" 
                 :artwork="this.current_artwork"
                 @set-archive-popup="this.setArchivePopUp">
             </ArchiveButton>
-            <ShareButton ref="shareButton" :color="(this.current_artwork ? this.current_artwork.getColor() : 'black')" :artwork="this.current_artwork">
-            </ShareButton>
+            <div class="instructionButton" @click="this.showInstruction($event)">
+                <svg width="34" height="35" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19.8337 3.33325H8.50033C7.74888 3.33325 7.02821 3.63176 6.49686 4.16312C5.9655 4.69447 5.66699 5.41514 5.66699 6.16659V28.8333C5.66699 29.5847 5.9655 30.3054 6.49686 30.8367C7.02821 31.3681 7.74888 31.6666 8.50033 31.6666H25.5003C26.2518 31.6666 26.9724 31.3681 27.5038 30.8367C28.0351 30.3054 28.3337 29.5847 28.3337 28.8333V11.8333L19.8337 3.33325Z"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M19.833 3.33325V11.8333H28.333" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M22.6663 18.9167H11.333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22.6663 24.5833H11.333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14.1663 13.25H12.7497H11.333" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <div>설명</div>
+            </div>
         </div>
-        <Drawer ref="commentDrawer" :class_name="'comment'">
-            <template v-slot:default>
-                <CommentComponent ref="commentComponent" @commentUpdate="this.updateDone" :artwork="this.current_artwork">
-                </CommentComponent>
-            </template>
-        </Drawer>
         <Drawer ref="informationDrawer" :class_name="'information'">
             <template v-slot:default>
                 <ArtworkInformation :artwork="this.current_artwork"></ArtworkInformation>
@@ -96,12 +93,6 @@
                 <p>스크롤해서<br>다음 작품으로!</p>
             </div>
         </div>
-        <div class="tap poppins"
-            v-if="this.is_first_access && this.current_artwork"
-            @click="this.tapClick()"
-            :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
-            Tap!
-        </div>
         <div class="loading" v-if="!this.current_artwork" @click="this.stopPropagation($event)">
             <div class="notArchive">
                 <div class="eye">
@@ -132,14 +123,9 @@
     import SideBar from '@/widgets/SideBar.vue';
     import RoundProfile from '@/widgets/RoundProfile.vue';
     import ArtworkImageSlider from '@/components/ArtworkPage/ArtworkImageSlider.vue';
-    import CommentButton from '@/components/ArtworkPage/CommentButton.vue'
     import ArchiveButton from '@/components/ArtworkPage/ArchiveButton.vue'
-    import ShareButton from '@/widgets/ShareButton.vue';
-    import CommentComponent from '@/components/ArtworkPage/CommentComponent.vue'
     import Drawer from '@/widgets/Drawer.vue';
     import ArtworkInformation from '@/components/ArtworkPage/ArtworkInformation.vue';
-    import ArchiveInfo from '@/widgets/ArchiveInfo.vue';
-    import SNSLink from '@/widgets/SNSLink.vue';
 
     import { Swiper, SwiperSlide } from 'swiper/vue';
     import 'swiper/css';
@@ -159,14 +145,9 @@
             Swiper,
             SwiperSlide,
             ArtworkImageSlider,
-            CommentButton,
             ArchiveButton,
-            ShareButton,
             Drawer,
             ArtworkInformation,
-            CommentComponent,
-            ArchiveInfo,
-            SNSLink
         },
         data() {
             return {
@@ -175,6 +156,7 @@
                 initialize_artwork_list: false,
                 current_artwork: null,
                 profile: '',
+                profile_load_flag: false,
                 current_index: parseInt(this.$route.query.index),
                 swiper_options: {
                     direction: 'vertical',
@@ -185,7 +167,6 @@
                     centeredSlides: true,
                     resistanceRatio: 0,
                 },
-                update_in_progress: false,
                 abortController: null,
                 first_load: true,
                 is_first_access: true,
@@ -198,7 +179,7 @@
                 seed: null,
                 offset: 0,
                 limit: 10,
-                update_in_progress: false
+                update_in_progress: false,
             };
         },
         async created() {
@@ -220,6 +201,7 @@
             if (isAuth()) {
                 let user = getAuth()
                 this.profile = user.getProfile()
+                this.profile_load_flag = true
             }
 
             const cookies = useCookies().cookies
@@ -268,38 +250,24 @@
             // 스크롤로 새로고침 막기
             document.body.style.position = 'fixed';
             document.body.style.overflow = 'hidden'
-            
-            // - Drawer들 (Comment, Information)이 click event에 의해 여닫아 지는 것을 control하는 code.
-            document.getElementById('artworkPage').addEventListener('click', function () {
-                if (_this.$refs.informationDrawer.drawer_opened) {
-                    _this.$refs.informationDrawer.closeDrawer()
-                    _this.$refs.commentDrawer.closeDrawer()
-                }
-                else if (!_this.$refs.commentDrawer.drawer_opened) {
-                    _this.$refs.informationDrawer.showDrawer()
-                }
-                else {
-                    _this.$refs.commentDrawer.closeDrawer()
-                }
-            })
         },
         updated () {
             const _this = this
             // Scroll Listener
-            document.getElementsByClassName('drawer comment')[0].addEventListener('scroll', async function (event) {
-                if (_this.update_in_progress) {
-                    return false
-                }
+            // document.getElementsByClassName('drawer comment')[0].addEventListener('scroll', async function (event) {
+            //     if (_this.update_in_progress) {
+            //         return false
+            //     }
 
-                let scroll_height = event.target.scrollHeight
-                let scroll_top = parseInt(event.target.scrollTop) + 1
-                let offset_height = parseInt(event.target.offsetHeight) + 1
+            //     let scroll_height = event.target.scrollHeight
+            //     let scroll_top = parseInt(event.target.scrollTop) + 1
+            //     let offset_height = parseInt(event.target.offsetHeight) + 1
 
-                if (scroll_height <= scroll_top + offset_height) {
-                    _this.update_in_progress = true
-                    await _this.$refs.commentComponent.load()
-                }
-            })
+            //     if (scroll_height <= scroll_top + offset_height) {
+            //         _this.update_in_progress = true
+            //         await _this.$refs.commentComponent.load()
+            //     }
+            // })
 
             if (this.initialize_swiper_event_flag && (document.getElementsByClassName('artworkSlide swiper-slide-active')[0] !== undefined)) {
                 this.initializeSwiperEvent()
@@ -369,10 +337,6 @@
                 document.getElementsByClassName('scrollPopUpContainer')[0].style.setProperty('display', 'none')
                 this.stopPropagation(event)
             },
-            tapClick () {
-                this.is_first_access = false
-                document.getElementById('artworkPage').click()
-            },
             back (event) {
                 this.stopPropagation(event)
                 window.history.back()
@@ -385,11 +349,16 @@
             openSideBar (event) {
                 this.$refs.sideBar.openSideBar(event)
             },
-            showComment (event) {
+            showInstruction(event) {
                 if (event.stopPropagation) event.stopPropagation();
                 else event.cancelBubble = true; // IE 대응
 
-                this.$refs.commentDrawer.showDrawer()
+                if (this.$refs.informationDrawer.drawer_opened) {
+                    this.$refs.informationDrawer.closeDrawer()
+                }
+                else {
+                    this.$refs.informationDrawer.showDrawer()
+                }
             },
             pushArtworkInList (index, abortSignal) {
                 return new Promise(async (resolve, reject) => {
@@ -444,14 +413,9 @@
                             
                             if (video.src !== null) {
                                 video.style = 'video'
-                                if (image_information_list.length !== 0) {
-                                    video.background_src = await artwork.getThumbnailImage()
-                                    video.background_style = await cropImage(video.background_src, container_ratio)
-                                }
-                                else {
-                                    video.background_src = ''
-                                    video.background_style = ''
-                                }
+
+                                video.background_src = await artwork.getThumbnailImage()
+                                video.background_style = await cropImage(video.background_src, container_ratio)
 
                                 image_information_list.splice(video_index, 0, video)
                             }
@@ -563,6 +527,9 @@
                 for (let i = this.current_index + 4; i < this.artwork_list.length; i++) {
                     this.artwork_list[i] = null
                 }
+            },
+            fullImageScreen (artwork) {
+
             },
             updateDone () {
                 this.update_in_progress = false
