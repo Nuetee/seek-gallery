@@ -1,6 +1,5 @@
 <template>
     <div class="artworkMoreInfo normal">
-        <div class="label">설명</div>
         <div class="content">
             <pre class="information">
                 {{ this.artwork ? this.artwork.getInformation() : '' }}

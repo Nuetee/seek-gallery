@@ -54,9 +54,7 @@
         beforeCreate() {},
         created() {},
         beforeMount() {},
-        mounted() {
-            console.log(this.artwork_image_information_list)
-        },
+        mounted() {},
         beforeUpdate() {},
         updated() {},
         beforeUnmount() {},

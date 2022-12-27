@@ -70,17 +70,6 @@
         left: calc(-1 * var(--padding, 5vw));
         width: calc(100% + 2 * var(--padding, 5vw));
         height: 100%;
-
-        // ::v-deep(.artworkImageSlider) {
-        //     .swiper-slide {
-        //         overflow: hidden;
-        //         position: relative;
-
-        //         .image {
-                    
-        //         }
-        //     }
-        // }
     }
 
     .buttonContainer {
@@ -113,19 +102,28 @@
 
     .scrollPopUpContainer {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // width: 100%;
+        // height: 100%;
         z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         animation-name: scrollPopUp;
-        animation-duration: 0.5s;
+        animation-duration: 2s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
+        padding: calc(var(--vw, 1vw) * 5.3);
+
+        .scrollPopUp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .popUp {
@@ -133,20 +131,22 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: white;
-        border-radius: calc(var(--vw, 1vw) * 3);
-        width: calc(var(--vw, 1vw) * 43);
-        height: calc(var(--vw, 1vw) * 46);
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(25px);
+        border-radius: calc(var(--vw, 1vw) * 5.3);
+        width: calc(var(--vw, 1vw) * 40.8);
+        height: calc(var(--vw, 1vw) * 47.5);
 
         p {
             padding-top: calc(var(--vw, 1vw) * 2);
-            font-weight: 400;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
             font-size: 15px;
-            line-height: 150%;
+            line-height: 22px;
             text-align: center;
-            letter-spacing: -0.06em;
 
-            color: #000000;
+            color: white;
         }
     }
 
@@ -301,8 +301,17 @@
         opacity: 0;
     }
 
-    100% {
+    10% {
         opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
     }
 }
 

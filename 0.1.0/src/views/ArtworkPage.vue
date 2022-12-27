@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="right">
-                <RoundProfile v-if="this.profile_load_flag" :profile="this.profile" :color="'black'" @click="this.openSideBar($event)"></RoundProfile>
+                <RoundProfile v-if="this.profile_load_flag" :profile="this.profile" :color="'white'" @click="this.openSideBar($event)"></RoundProfile>
             </div>
         </div>
         <swiper class="artworkSlider" v-bind="this.swiper_options"
@@ -64,10 +64,10 @@
                 <g clip-path="url(#clip0_404_573)">
                     <path
                         d="M2.44952 15.396C2.05636 14.9172 1.34866 14.847 0.86882 15.2394C0.388984 15.6317 0.31872 16.3379 0.711881 16.8167L16.4695 36.0067C16.8627 36.4855 17.5704 36.5556 18.0502 36.1633C18.53 35.771 18.6003 35.0648 18.2071 34.586L2.44952 15.396Z"
-                        fill="black" />
+                        fill="white" />
                     <path
                         d="M47.1869 2.30891C47.5902 1.83857 47.535 1.13106 47.0637 0.728643C46.5923 0.326225 45.8833 0.381286 45.48 0.851625L16.5336 34.6107C16.1303 35.0811 16.1855 35.7886 16.6568 36.191C17.1282 36.5934 17.8372 36.5384 18.2405 36.068L47.1869 2.30891Z"
-                        fill="black" />
+                        fill="white" />
                 </g>
                 <defs>
                     <clipPath id="clip0_404_573">
@@ -77,18 +77,22 @@
             </svg>
             <p>아카이빙 완료!</p>
         </div>
-        <div class="scrollPopUpContainer"
-            v-if="this.is_first_access && this.current_artwork"
-            @click="this.scrollPopUpClick($event)"
+        <!-- <div class="scrollPopUpContainer"
+            
             >
-            <div class="popUp">
+            
+        </div> -->
+        <div class="scrollPopUpContainer popUp" v-if="this.is_first_access && this.current_artwork">
+            <div class="scrollPopUp">
                 <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.5 30.875V8.125" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8.125 19.5L19.5 8.125L30.875 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.5 30.875V8.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.125 19.5L19.5 8.125L30.875 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
                 <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.5 8.125V30.875" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M30.875 19.5L19.5 30.875L8.125 19.5" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.5 8.125V30.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M30.875 19.5L19.5 30.875L8.125 19.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
                 <p>스크롤해서<br>다음 작품으로!</p>
             </div>
@@ -201,8 +205,9 @@
             if (isAuth()) {
                 let user = getAuth()
                 this.profile = user.getProfile()
-                this.profile_load_flag = true
             }
+
+            this.profile_load_flag = true
 
             const cookies = useCookies().cookies
             if(cookies.isKey("isFirstAccess")) {
@@ -332,10 +337,6 @@
                     clearTimeout(this.timeout_flag)
                     this.$refs.archivePopUp.classList.remove('show')
                 }
-            },
-            scrollPopUpClick (event) {
-                document.getElementsByClassName('scrollPopUpContainer')[0].style.setProperty('display', 'none')
-                this.stopPropagation(event)
             },
             back (event) {
                 this.stopPropagation(event)
