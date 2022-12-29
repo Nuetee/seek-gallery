@@ -10,7 +10,7 @@
     background-color: white;
     border-top-left-radius: calc(var(--vw, 1vw) * 5);
     border-top-right-radius: calc(var(--vw, 1vw) * 5);
-    padding: var(--padding, 5vw);
+    padding: calc(var(--vw, 1vw) * 5);
     padding-top: 0;
     overflow-y: scroll;
     -ms-overflow-style: none;
@@ -23,7 +23,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(var(--vw, 1vw) * 12);
+        height: calc(var(--vw, 1vw) * 10.5);
         padding-bottom: calc(var(--vw, 1vw) * 4);
         background-color: white;
 
@@ -33,7 +33,7 @@
 
         .drawingBar {
             height: 100%;
-            width: calc(var(--vw, 1vw) * 8);
+            width: calc(var(--vw, 1vw) * 13.6);
 
             div {
                 display: inline-block;
@@ -43,6 +43,12 @@
                 background-color: #D9D9D9;
             }
         }
+    }
+
+    .closeButton {
+        position: absolute;
+        top: calc(var(--vw, 1vw) * 6.4);
+        right: calc(var(--vw, 1vw) * 6.4);
     }
 }
 

@@ -63,7 +63,7 @@
 :root {
   --vw: 1vw;
   --vh: 1vh;
-  --padding: calc(var(--vw, 1vw) * 5);
+  --padding: calc(var(--vw, 1vw) * 3);
   --blur: 100px
 }
 

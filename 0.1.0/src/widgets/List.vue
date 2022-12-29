@@ -107,6 +107,7 @@ export default {
                             owner_icon.classList.add('ownerIcon')
                         }
                         
+                        child.classList.add('unshow')
                         child.classList.add('child')
                         thumbnail.classList.add('thumbnail')
                         name.classList.add('name')
@@ -208,7 +209,6 @@ export default {
          * @param {Boolean} width_transition // child DOM Element에 width_transition이 적용되지 않았으면 false
          */
         setChildStyle(child, width_transition = false) {
-            
             if (this.single_column) {
                 let name = child.children[1]
 
@@ -253,6 +253,7 @@ export default {
                     }
                     child.style.setProperty("padding-left", "calc(var(--vw, 1vw) * 1.5)")
                 }
+                child.classList.remove('unshow')
             }
         },
         imageLoaded(src) {
@@ -304,6 +305,9 @@ div.list {
             z-index: 1;
             transition: top 0.2s ease, right 0.3s ease;
         }
+    }
+    .unshow {
+        opacity: 0;
     }
 }
 .list.singleColumn {

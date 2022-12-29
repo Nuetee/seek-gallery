@@ -1,0 +1,46 @@
+.subPageMy {
+    .profile {
+        padding-top: calc(var(--vw, 1vw) * 2.6);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: calc(var(--vw, 1vw) * 2.6);
+
+        ::v-deep(.roundProfile) {
+            width: calc(var(--vw, 1vw) * 24);
+            height: calc(var(--vw, 1vw) * 24);
+        }
+
+        .name {
+            height: calc(var(--vw, 1vw) * 7.5);
+            display: flex;
+            align-items: center;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 28px;
+        }
+    }
+    
+    .sortingStrategyTab {
+        width: 100%;
+        height: calc(var(--vw, 1vw) * 10);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--vw, 1vw) * 3);
+    
+        svg {
+            rect {
+                fill: rgb(174, 174, 174);
+            }
+        }
+    
+        svg.sortingStrategy {
+            rect {
+                fill: rgb(0, 0, 0);
+            }
+        }
+    }
+}

@@ -1,42 +1,76 @@
 <template>
-    <div id="myPage">
-        <MainHeader>
-            <template v-slot:left>
+    <div id="myPage2">
+        <div class="header" :class="this.tab_index ? 'hidingSearchBox' : ''">
+            <div class="logo">
                 <img src="../assets/seek_logo.png">
-            </template>
-            <template v-slot:right>
-                <div class="tabs">
-                    <div
-                        class="tab"
-                        v-for="tab, tab_index in ['MY', '탐색']"
-                        :key="tab"
-                        @click="this.clickTab(tab_index)"
-                    >
-                        {{ tab }}
-                    </div>
-                    <div class="tab_content"></div>
+            </div>
+            <div class="searchBox">
+                <div class="searchButton">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                            stroke="#8A8A8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17.5 17.5L13.875 13.875" stroke="#8A8A8A" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
                 </div>
-            </template>
-        </MainHeader>
-        <div class="subPages">
-            <SubPageMy></SubPageMy>
+                <div class="keyword">
+                    <input type="text" placeholder="키워드를 검색하세요!">
+                </div>
+            </div>
         </div>
+        <div class="tabsBackground">
+            <div class="tabs">
+                <div class="tab" v-for="tab, tab_index in ['탐색', 'MY']" :key="tab" @click="this.clickTab(tab_index)">
+                    {{ tab }}
+                </div>
+                <div class="tab_content"></div>
+            </div>
+        </div>
+        <swiper class="subPages" v-bind="this.swiperOptions">
+            <swiper-slide>
+                <SubPageSearch></SubPageSearch>
+            </swiper-slide>
+            <swiper-slide>
+                <SubPageMy></SubPageMy>
+            </swiper-slide>
+            <div class="nextButton"></div>
+            <div class="prevButton"></div>
+        </swiper>
     </div>
 </template>
 <script>
     import MainHeader from '@/widgets/MainHeader.vue';
     import SubPageMy from '../components/MyPage/SubPage_my.vue'
     import SubPageSearch from '../components/MyPage/SubPage_search.vue'
+    import { Swiper, SwiperSlide } from 'swiper/vue';
+    import SwiperCore, { Navigation } from 'swiper';
+
+    SwiperCore.use([Navigation])
 
     export default {
         name: 'MyPage',
         components: {
             MainHeader,
             SubPageMy,
-            SubPageSearch
+            SubPageSearch,
+            Swiper,
+            SwiperSlide,
         },
         data() {
             return {
+                timeout_flag: null,
+                tab_index: 0,
+                swiperOptions: {
+                    slidesPerView: 1,
+                    loop: false,
+                    centeredSlides: true,
+                    allowTouchMove: false,
+                    navigation: {
+                        nextEl: '.nextButton',
+                        prevEl: '.prevButton'
+                    }
+                },
             };
         },
         beforeCreate() {},
@@ -44,7 +78,10 @@
         beforeMount() {},
         mounted() {
             document.getElementsByClassName('tab')[0].style.color = 'white'
-            document.getElementsByClassName('tab')[1 - tab_index].style.color = 'black'
+            document.getElementsByClassName('tab')[1 - this.tab_index].style.color = 'black'
+            clearTimeout(this.timeout_flag)
+            let searchBox = document.getElementsByClassName('searchBox')[0]
+            searchBox.style.visibility = 'visible'
         },
         beforeUpdate() {},
         updated() {},
@@ -58,11 +95,21 @@
                 if (tab_index === 0) {
                     document.getElementsByClassName('tab_content')[0].style.left = 0
                     document.getElementsByClassName('tab_content')[0].style.transform = 'translate(0, 0)'
+                    clearTimeout(this.timeout_flag)
+                    let searchBox = document.getElementsByClassName('searchBox')[0]
+                    searchBox.style.visibility = 'visible'
+                    document.getElementsByClassName('prevButton')[0].click()
                 }
                 else {
                     document.getElementsByClassName('tab_content')[0].style.left = '100%'
                     document.getElementsByClassName('tab_content')[0].style.transform = 'translate(-100%, 0)'
+                    document.getElementsByClassName('nextButton')[0].click()
+                    this.timeout_flag = setTimeout(() => {
+                        let searchBox = document.getElementsByClassName('searchBox')[0]
+                        searchBox.style.visibility = 'hidden'
+                    }, 250)
                 }
+                this.tab_index = tab_index
             }
         }
     }
