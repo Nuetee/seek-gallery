@@ -9,59 +9,60 @@
     overscroll-behavior-y: none;
     touch-action: none;
 
-    ::v-deep(.mainHeader) {
-        .left {
-            .backButton {
-                width: calc(var(--vw, 1vw) * 8);
-                height: calc(var(--vw, 1vw) * 8);
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-            }
+    > .artworkInformation {
+        position: fixed;
+        z-index: 2;
+        top: calc(var(--vw, 1vw) * 13.3);
+        left: 0;
+        width: 100%;
+        overflow: visible;
+        display: grid;
+        grid-template-columns: 1fr calc(var(--vw, 1vw) * 71.2) 1fr;
+        align-items: center;
+        
+        .left, .right {
+            width: 100%;
+            height: calc(var(--vw, 1vw) * 7.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .right {
-            .roundProfile {
-                height: calc(var(--vw, 1vw) * 7.7);
-                width: calc(var(--vw, 1vw) * 7.7);
+        .middle {
+            width: 100%;
+            height: calc(var(--vw, 1vw) * 7.5);
+            align-self: start;
+            overflow: visible;
+            color: #ffffff;
+
+            .artworkTitle {
+                width: 100%;
+                height: calc(var(--vw, 1vw) * 7.5);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 28px;
+            }
+
+            .artist {
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 18px;
             }
         }
     }
 
-    > .artworkInformation {
-        position: fixed;
-        z-index: 2;
-        // mainHeader의 높이
-        top: calc(var(--vw, 1vw) * 17.5);
-        width: calc(100% - var(--padding, 5vw) * 2);
-
-        .top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .artworkTitle {
-                font-weight: 600;
-                font-size: 24px;
-                line-height: 115%;
-                letter-spacing: -0.04em;
-                text-align: left;
-            }
-        }
-
-        .bottom {
-            padding-top: calc(var(--vw, 1vw) * 3);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: calc(var(--vw, 1vw) * 2);
-
-            .artist {
-                font-weight: 700;
-                font-size: 13px;
-                line-height: 115%;
-                letter-spacing: -0.06em;
-            }
+    .right {
+        ::v-deep(.roundProfile) {
+            width: calc(var(--vw, 1vw) * 6.4);
+            height: calc(var(--vw, 1vw) * 6.4);
         }
     }
     
@@ -82,23 +83,47 @@
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+
+        .instructionButton {
+            position: absolute;
+            right: calc(var(--vw, vw) * 7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 18px;
+            text-align: center;
+            color: white;
+        }
     }
 
     .scrollPopUpContainer {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // width: 100%;
+        // height: 100%;
         z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
         animation-name: scrollPopUp;
-        animation-duration: 0.5s;
+        animation-duration: 2s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
+        padding: calc(var(--vw, 1vw) * 5.3);
+
+        .scrollPopUp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .popUp {
@@ -106,20 +131,22 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: white;
-        border-radius: calc(var(--vw, 1vw) * 3);
-        width: calc(var(--vw, 1vw) * 43);
-        height: calc(var(--vw, 1vw) * 46);
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(25px);
+        border-radius: calc(var(--vw, 1vw) * 5.3);
+        width: calc(var(--vw, 1vw) * 40.8);
+        height: calc(var(--vw, 1vw) * 47.5);
 
         p {
             padding-top: calc(var(--vw, 1vw) * 2);
-            font-weight: 400;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
             font-size: 15px;
-            line-height: 150%;
+            line-height: 22px;
             text-align: center;
-            letter-spacing: -0.06em;
 
-            color: #000000;
+            color: white;
         }
     }
 
@@ -274,8 +301,17 @@
         opacity: 0;
     }
 
-    100% {
+    10% {
         opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
     }
 }
 

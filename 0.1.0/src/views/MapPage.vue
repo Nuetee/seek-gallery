@@ -859,6 +859,7 @@
                         exhibition_list = [
                             ...this.uljiro_exhibition_list,
                             ...this.seongbuk_exhibition_list,
+                            ...this.itaewon_exhibition_list,
                             ...this.mapo_exhibition_list,
                             ...this.bukcheon_exhibition_list,
                             ...this.insadong_exhibition_list,
@@ -918,11 +919,18 @@
                             marker.setImage(_this.selected_marker_image)
                             _this.selected_marker = marker
                             _this.selected_marker.setZIndex(1)
-                            _this.$refs.exhibitionName.innerText = exhibition_list[marker.getTitle()].name
+
+                            let title = ''
+                            for (let i = 0; i < exhibition_list[marker.getTitle()].artist.length; i++) {
+                                title += exhibition_list[marker.getTitle()].artist[i] + ' '
+                            }
+                            title += ': '
+                            title += exhibition_list[marker.getTitle()].name
+                            _this.$refs.exhibitionName.innerText = title
                             _this.$refs.exhibitionInformation.innerText = exhibition_list[marker.getTitle()].introduction
+                            _this.$refs.exhibitionPlace.innerText = '장소 : ' + exhibition_list[marker.getTitle()].gallery + ' (' + exhibition_list[marker.getTitle()].place + ')'
                             _this.$refs.exhibitionDate.innerText = '기간 : ' + exhibition_list[marker.getTitle()].date
                             _this.$refs.exhibitionTime.innerText = '시간 : ' + exhibition_list[marker.getTitle()].time
-                            _this.$refs.exhibitionPlace.innerText = '장소 : ' + exhibition_list[marker.getTitle()].place
                             _this.$refs.exhibitionLink.setAttribute('href', exhibition_list[marker.getTitle()].link)
                             _this.drawer_height = _this.$refs.drawer.$el.clientHeight
                             _this.$refs.drawer.$el.style.setProperty('bottom', `${_this.drawer_height / 3}px`)

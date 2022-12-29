@@ -1,6 +1,6 @@
 .artworkInfo {
     display: grid;
-    grid-template-rows: auto calc(var(--vw, 1vw) * 10);
+    grid-template-rows: auto calc(var(--vw, 1vw) * 8);
     align-items: center;
     width: 100%;
     text-align: left;
@@ -11,25 +11,24 @@
     }
 
     .artworkTitle {
-        font-size: 32px;
-        letter-spacing: -0.04em;
-        line-height: 115%;
-        font-weight: bold;
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 140%;
     }
 
     .artist {
-        font-weight: 700;
-        font-size: 13px;
-        line-height: 115%;
-        letter-spacing: -0.06em;
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 18px;
         color: #000000;
 
         display: flex;
         align-items: center;
         justify-content: flex-start;
         gap: calc(var(--vw, 1vw) * 2);
-
-        padding-bottom: calc(var(--vw, 1vw) * 3);
-        border-bottom: 1px solid black;
     }
 }

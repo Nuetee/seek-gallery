@@ -1,28 +1,17 @@
 .archiveButton {
-    --background-color: black;
-    --color: white;
-    
     border: none;
     box-shadow: none;
     outline: 0;
     overflow: hidden;
     position: relative;
-    width: calc(var(--vw, 1vw) * 33);
-    height: calc(var(--vw, 1vw) * 18);
-    background-color: var(--background-color, black);
-    border-radius: calc(var(--vw, 1vw) * 9);
+    width: calc(var(--vw, 1vw) * 34.4);
+    height: calc(var(--vw, 1vw) * 14.4);
+    background-color: #CCFF00;
+    border-radius: calc(var(--vw, 1vw) * 7.2);
 
     > div {
-        background-color: var(--background-color, black);
-        border-radius: calc(var(--vw, 1vw) * 9);
-        
-        svg {
-            fill: var(--color, white);
-
-            path, g {
-                fill: var(--color, white);
-            }
-        }
+        background-color: #CCFF00;
+        border-radius: calc(var(--vw, 1vw) * 7.2);
     }
 
     .inner {
@@ -30,41 +19,22 @@
         transition-duration: 0.2s;
         opacity: 0;
         position: absolute;
-        width: 100%;
-        height: 100%;
+        // width: 100%;
+        // height: 100%;
         top: 0;
         left: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        // display: flex;
+        // justify-content: space-between;
+        // align-items: center;
         padding-left: calc(var(--vw, 1vw) * 6);
         padding-right: calc(var(--vw, 1vw) * 6);
-        
 
-        .eye {
-            width: 50%;
-            height: 100%;
-            position: relative;
-
-            svg {
-                position: absolute;
-            }
-
-            .eyelid {
-                top: 49%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 77%;
-                height: auto;
-            }
-
-            .pupil {
-                top: 50%;
-                left: 50%;
-                width: 45%;
-                transform: translate(-50%, -50%) scale(1, 1) rotate(0deg);
-            }
-        }
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--eyewidth, 1vw) * 1);
     }
 
     .show {
@@ -72,19 +42,17 @@
     }
 
     .notArchive {
-        // background-color: var(--not-archive, black);
-
-        .phrase {
+         .phrase {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--color, white);
+            color: black;
             opacity: 0;
             font-style: normal;
+            font-weight: 600;
             font-size: 20px;
-            font-weight: 500;
-            line-height: 115%;
+            line-height: 30px;
             letter-spacing: -0.04em;
         }
 
@@ -93,6 +61,27 @@
                 top: 54%;
                 left: 65%;
                 transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    .archiving {
+        .eye {
+            position: relative;
+            width: calc(var(--vw, 1vw) * 6.87);
+            height: calc(var(--vw, 1vw) * 7.62);
+
+            .eyelid {
+                width: 100%;
+                height: 100%;
+            }
+            .pupil {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 54%;
+                height: 48%;
+                transform: translate(-50%, -50%) scale(1, 1) rotate(0deg);
             }
         }
     }
@@ -108,7 +97,7 @@
             animation-fill-mode: none;
         }
 
-        .eye {
+        ::v-deep(.eyes) {
             animation-name: fade_in;
             animation-duration: 4s;
             animation-timing-function: linear;
@@ -118,13 +107,13 @@
             animation-fill-mode: none;
 
             .pupil {
-                animation-name: eyeroll;
-                animation-duration: 4s;
-                animation-timing-function: linear;
-                animation-delay: 0s;
-                animation-iteration-count: infinite;
-                animation-direction: normal;
-                animation-fill-mode: none;
+                animation-name: eyeroll!important;
+                animation-duration: 4s!important;
+                animation-timing-function: linear!important;
+                animation-delay: 0s!important;
+                animation-iteration-count: infinite!important;
+                animation-direction: normal!important;
+                animation-fill-mode: none!important;
             }
         }
     }
@@ -139,20 +128,26 @@
             animation-direction: normal;
             animation-fill-mode: none;
             
-            path {
-                animation-name: eyeColor;
-                animation-duration: 0.65s;
-                animation-timing-function: linear;
-                animation-delay: 0s;
-                animation-iteration-count: 1;
-                animation-direction: normal;
-                animation-fill-mode: none;
-            }
+            // path {
+            //     animation-name: eyeColor;
+            //     animation-duration: 0.65s;
+            //     animation-timing-function: linear;
+            //     animation-delay: 0s;
+            //     animation-iteration-count: 1;
+            //     animation-direction: normal;
+            //     animation-fill-mode: none;
+            // }
         }
     }
 
     .archived {
         animation-iteration-count: infinite;
+        
+
+        svg {
+            width: calc(var(--vw, 1vw) * 6.87);
+            height: calc(var(--vw, 1vw) * 7.62);
+        }
     }
 }
 
@@ -194,35 +189,35 @@
 
 @keyframes eyeroll {
     0% {
-        left: 65%;
+        left: calc(var(--eyewidth) * 3.1);
     }
 
     5% {
-        left: 53%;
+        left: calc(var(--eyewidth, 1vw) * 2);
     }
 
     10% {
-        left: 41%;
+        left: calc(var(--eyewidth, 1vw) * 1);
     }
 
     12.5% {
-        left: 35%;
+        left: calc(var(--eyewidth, 1vw) * 0.65);
     }
 
     15% {
-        left: 41%;
+        left: calc(var(--eyewidth, 1vw) * 1);
     }
 
     20% {
-        left: 53%;
+        left: calc(var(--eyewidth, 1vw) * 2);
     }
 
     25% {
-        left: 65%;
+        left: calc(var(--eyewidth) * 3.1);
     }
 
     100% {
-        left: 65%;
+        left: calc(var(--eyewidth) * 3.1);
     }
 }
 
@@ -231,46 +226,46 @@
         fill: #CCFF00;
     }
 }
+
 @keyframes twinkling {
     0% {
         transform: translate(-50%, -50%) scale(1, 1) rotate(0deg)
     }
 
     10% {
-        transform: translate(-50%, -50%) scale(1.5, 1.5) rotate(-8deg)
+        transform: translate(-50%, -50%) scale(1.2, 1.2) rotate(-8deg)
     }
 
     20% {
-        transform: translate(-50%, -50%) scale(1.8, 1.8) rotate(-15deg)
+        transform: translate(-50%, -50%) scale(1.4, 1.4) rotate(-15deg)
     }
 
     30% {
-        transform: translate(-50%, -50%) scale(2.0, 2.0) rotate(-21deg)
+        transform: translate(-50%, -50%) scale(1.55, 1.55) rotate(-21deg)
     }
 
     40% {
-        transform: translate(-50%, -50%) scale(2.15, 2.15) rotate(-26deg)
+        transform: translate(-50%, -50%) scale(1.7, 1.7) rotate(-26deg)
     }
 
     50% {
-        fill: #FFD600;
-        transform: translate(-50%, -50%) scale(2.2, 2.2) rotate(-30deg)
+        transform: translate(-50%, -50%) scale(1.8, 1.8) rotate(-30deg)
     }
 
     60% {
-        transform: translate(-50%, -50%) scale(2.15, 2.15) rotate(-26deg)
+        transform: translate(-50%, -50%) scale(1.7, 1.7) rotate(-26deg)
     }
 
     70% {
-        transform: translate(-50%, -50%) scale(2.0, 2.0) rotate(-21deg)
+        transform: translate(-50%, -50%) scale(1.55, 1.55) rotate(-21deg)
     }
 
     80% {
-        transform: translate(-50%, -50%) scale(1.8, 1.8) rotate(-15deg)
+        transform: translate(-50%, -50%) scale(1.4, 1.4) rotate(-15deg)
     }
 
     90% {
-        transform: translate(-50%, -50%) scale(1.5, 1.5) rotate(-8deg)
+        transform: translate(-50%, -50%) scale(1.2, 1.2) rotate(-8deg)
     }
 
     100% {
