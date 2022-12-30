@@ -1,7 +1,7 @@
 <template>
     <div id="artworkPage">
         <div class="artworkInformation" :style="'color: ' + (this.current_artwork ? this.current_artwork.getColor() : 'black')">
-            <div class="left">
+            <div class="left" @click="this.back()">
                 <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 13L1 7L7 1" stroke="white"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -338,8 +338,7 @@
                     this.$refs.archivePopUp.classList.remove('show')
                 }
             },
-            back (event) {
-                this.stopPropagation(event)
+            back () {
                 window.history.back()
             },
             stopPropagation (event) {

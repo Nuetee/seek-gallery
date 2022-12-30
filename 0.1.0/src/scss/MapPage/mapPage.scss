@@ -6,14 +6,21 @@
 
     ::v-deep(.mainHeader) {
         overflow-x: visible;
+        padding: var(--padding, 3vw);
+        height: auto !important;
 
         .left {
             transform-origin: 0 50%;
-            height: calc(var(--vw, 1vw) * 8);
+            height: calc(var(--vw, 1vw) * 10);
+            padding-left: calc(var(--vw, 1vw) * 3);
             width: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden;
 
             > img {
-                height: 100%;
+                height: calc(var(--vw, 1vw) * 6.13);
                 width: auto;
             }
         }
@@ -28,7 +35,7 @@
     }
 
     .body {
-        padding-top: calc(var(--vw, 1vw) * 17.5);
+        padding-top: calc(var(--vw, 1vw) * 16);
         height: 100%;
         width: 100%;
         display: flex;
