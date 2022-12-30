@@ -20,8 +20,13 @@
                 <rect y="8" width="14" height="6" rx="2" />
             </svg>
         </div>
+        <List 
+            :is_artwork="true"
+            :single_column="this.is_single_column"
+            :id_list="this.archived_list"
+            :list_id="'archivedArtworkList'">
+        </List>
     </div>
-    <List :is_artwork="true" :single_column="this.is_single_column"></List>
 </template>
 <script>
     import RoundProfile from '@/widgets/RoundProfile.vue';
@@ -97,6 +102,9 @@
                 if (!this.nothingToUpdate) {
                     await this.rebuild(this.archived_list.length, 12)
                 }
+            },
+            shrinkProfileHeight(is_shrink) {
+
             }
         }
     }

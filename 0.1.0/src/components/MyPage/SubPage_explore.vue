@@ -1,6 +1,10 @@
 <template>
-    <div class="subPageSearch">
-        <List :single_column="false" :is_artwork="true" :id_list="this.artwork_id_list"></List>
+    <div class="subPageExplore">
+        <List 
+            :single_column="false" 
+            :is_artwork="true"
+            :id_list="this.artwork_id_list"
+            :list_id="'exploreList'"></List>
     </div>
 </template>
 <script>
@@ -8,7 +12,7 @@
     import List from '@/widgets/List.vue';
 
     export default {
-        name: 'SubPageSearch',
+        name: 'SubPageExplore',
         components: {
             List
         },

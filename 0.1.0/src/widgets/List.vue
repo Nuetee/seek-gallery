@@ -1,5 +1,5 @@
 <template>
-    <div class="list" :class="is_artwork?'artwork_list':'exhibition_list'">
+    <div class="list" :id="this.list_id">
     </div>
     <div v-if="!this.id_list || !this.id_list.length">{{ ((this.is_artwork) ? '작업' : '전시') + ' 없음' }}</div>
 </template>
@@ -11,6 +11,10 @@ export default {
     name: 'List',
     components: {},
     props: {
+        list_id: {
+            type: String,
+            default: 'list'
+        },
         single_column: {
             type: Boolean,
             default: true
@@ -71,13 +75,14 @@ export default {
                 })
                 
                 let list_element = null
-                if (this.is_artwork) {
-                    list_element = document.getElementsByClassName("list artwork_list")[0]
-                }
-                else {
-                    list_element = document.getElementsByClassName("list exhibition_list")[0]
-                }
-                
+                // if (this.is_artwork) {
+                //     list_element = document.getElementsByClassName("list artwork_list")[0]
+                // }
+                // else {
+                //     list_element = document.getElementsByClassName("list exhibition_list")[0]
+                // }
+                list_element = document.getElementById(this.list_id)
+
                 if (!list_element) {
                     resolve(true)
                 }
@@ -177,12 +182,13 @@ export default {
             this.first_column_height = 0
             this.second_column_height = 0
             let list_element = null
-            if (this.is_artwork) {
-                list_element = document.getElementsByClassName("list artwork_list")[0]
-            }
-            else {
-                list_element = document.getElementsByClassName("list exhibition_list")[0]
-            }
+            // if (this.is_artwork) {
+            //     list_element = document.getElementsByClassName("list artwork_list")[0]
+            // }
+            // else {
+            //     list_element = document.getElementsByClassName("list exhibition_list")[0]
+            // }
+            list_element = document.getElementById(this.list_id)
             
             for (let child of list_element.children) {
                 child.style.setProperty('transition', 'transform 0.3s ease, width 0.3s ease')

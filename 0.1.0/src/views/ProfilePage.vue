@@ -64,13 +64,15 @@
                     <List ref="artworkList" 
                     :is_artwork="true"
                     :single_column="this.is_single_column.artwork_list"
-                    :id_list="this.artwork_id_list"></List>
+                    :id_list="this.artwork_id_list"
+                    :list_id="'artworkList'"></List>
                 </swiper-slide>
                 <swiper-slide class="mainSwiper thirdSlide">
                     <List ref="exhibitionList" 
                     :is_artwork="false"
                     :single_column="this.is_single_column.exhibition_list"
-                    :id_list="this.exhibition_pageId_list"></List>
+                    :id_list="this.exhibition_pageId_list"
+                    :list_id="'exhibitionList'"></List>
                 </swiper-slide>
             </swiper>
         </div>
@@ -261,8 +263,8 @@ export default {
                     await this.load(0)
             }
         },
-        shrinkProfileHeight (shrink) {
-            if (shrink) {
+        shrinkProfileHeight (is_shrink) {
+            if (is_shrink) {
                 if (this.is_profile_shrink) return
                 this.$refs.roundProfile.$el.style.setProperty('height', '0')
                 this.$refs.roundProfile.$el.style.setProperty('width', '0')
