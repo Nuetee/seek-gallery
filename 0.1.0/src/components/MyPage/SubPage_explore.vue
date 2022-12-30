@@ -4,7 +4,8 @@
             :single_column="false" 
             :is_artwork="true"
             :id_list="this.artwork_id_list"
-            :list_id="'exploreList'"></List>
+            :list_id="'exploreList'">
+        </List>
     </div>
 </template>
 <script>
