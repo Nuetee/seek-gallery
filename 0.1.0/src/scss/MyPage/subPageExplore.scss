@@ -1,0 +1,12 @@
+.subPageExplore {
+    padding-top: calc(var(--vw, 1vw) * 33);
+    height: 100vh;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+        height: 0;
+        background: transparent;
+        -webkit-appearance: none;
+    }
+}

@@ -83,13 +83,13 @@
             let searchBox = document.getElementsByClassName('searchBox')[0]
             searchBox.style.visibility = 'visible'
 
-            const _this = this
-            let subpage_slides = document.getElementsByClassName('swiper-slide')
-            for (let swiper_slide of subpage_slides) {
-                swiper_slide.addEventListener('scroll', async function (event) {
-                    _this.swiperSlideScrollEventFunction(event.currentTarget)
-                })
-            }
+            // const _this = this
+            // let subpage_slides = document.getElementsByClassName('swiper-slide')
+            // for (let swiper_slide of subpage_slides) {
+            //     swiper_slide.addEventListener('scroll', async function (event) {
+            //         _this.swiperSlideScrollEventFunction(event.currentTarget)
+            //     })
+            // }
         },
         beforeUpdate() {},
         updated() {},
@@ -119,37 +119,6 @@
                 }
                 this.tab_index = tab_index
             },
-            async swiperSlideScrollEventFunction(targetElement) {
-                const scroll_height = targetElement.scrollHeight
-                const scroll_top = targetElement.scrollTop
-                const offset_height = targetElement.offsetHeight
-
-                if (targetElement.classList.contains('explorePageSlide')) {
-                    if (scroll_height === scroll_top + offset_height) {
-                        await this.load(0)
-                    }
-                }
-                else {
-                    if (scroll_top > 5) {
-                        this.$refs.subPageMy.shrinkProfileHeight(true)
-                    }
-                    else {
-                        this.$refs.subPageMy.shrinkProfileHeight(false)
-
-                        if (scroll_height === scroll_top + offset_height) {
-                            await this.load(1)
-                        }
-                    }
-                }
-            },
-            async load(is_mypage) {
-                if (is_mypage) {
-                    await this.$refs.subPageMy.load()
-                }
-                else {
-                    await this.$refs.subPageExplore.load()
-                }
-            }
         }
     }
 </script>

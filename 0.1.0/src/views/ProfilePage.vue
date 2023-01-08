@@ -272,8 +272,13 @@ export default {
                 this.is_profile_shrink = true
             }
             else {
-                let height = window.innerWidth * 0.215
-                let margin = window.innerWidth * 0.03
+                let vw = window.innerWidth * 0.01
+                if (window.innerWidth >= 768) {
+                    vw = 4.8
+                }
+
+                let height = vw * 21.5
+                let margin = vw * 3
                 this.$refs.roundProfile.$el.style.setProperty('height', `${height}px`)
                 this.$refs.roundProfile.$el.style.setProperty('width', `${height}px`)
                 this.$refs.roundProfile.$el.style.setProperty('margin-top', `${margin}px`)

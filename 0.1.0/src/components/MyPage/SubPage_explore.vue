@@ -21,7 +21,7 @@
             return {
                 seed: null,
                 offset: 0,
-                limit: 15,
+                limit: 30,
                 artwork_id_list: null
             };
         },
@@ -41,3 +41,4 @@
         methods: {}
     }
 </script>
+<style lang="scss" scoped src="../../scss/MyPage/subPageExplore.scss"></style>

@@ -47,11 +47,13 @@ export default {
                 const _this = this
                 this.abortController.abort()
                 this.abortController = null
+                console.log('loadChildren')
                 this.abortController = new AbortController()
                 this.loadChildren(this.abortController.signal)
                 .catch(function (err) { 
                     console.log('Load is cutting off.')
-                    _this.switchChildrenSorting(_this.id_list)
+                    
+                    // _this.switchChildrenSorting(_this.id_list)
                 })
             }
         }
@@ -75,12 +77,6 @@ export default {
                 })
                 
                 let list_element = null
-                // if (this.is_artwork) {
-                //     list_element = document.getElementsByClassName("list artwork_list")[0]
-                // }
-                // else {
-                //     list_element = document.getElementsByClassName("list exhibition_list")[0]
-                // }
                 list_element = document.getElementById(this.list_id)
 
                 if (!list_element) {
@@ -90,6 +86,8 @@ export default {
                     let loaded_elements_number = list_element.children.length
                     let id_list = this.id_list.slice(loaded_elements_number)
 
+                    // console.log('append: ')
+                    // console.log(id_list)
                     if (this.single_column) {
                         list_element.classList.remove('doubleColumn')
                         list_element.classList.add('singleColumn')
@@ -182,12 +180,7 @@ export default {
             this.first_column_height = 0
             this.second_column_height = 0
             let list_element = null
-            // if (this.is_artwork) {
-            //     list_element = document.getElementsByClassName("list artwork_list")[0]
-            // }
-            // else {
-            //     list_element = document.getElementsByClassName("list exhibition_list")[0]
-            // }
+            
             list_element = document.getElementById(this.list_id)
             
             for (let child of list_element.children) {
@@ -298,6 +291,9 @@ div.list {
         }
         .name {
             text-align: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             font-weight: 500;
             font-size: 15px;
             height: calc(var(--vw, 1vw) * 9);

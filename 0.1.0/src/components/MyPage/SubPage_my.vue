@@ -1,31 +1,33 @@
 <template>
     <div class="subPageMy">
-        <div class="profile">
-            <RoundProfile v-if="this.user_flag" :profile="this.user ? this.user.getProfile() : null"></RoundProfile>
-            <div class="name">
-                {{ this.user.getNickname() }}
+        <div class="top">
+            <div class="profile">
+                <RoundProfile v-if="this.user_flag" :profile="this.user ? this.user.getProfile() : null" ref="roundProfile">
+                </RoundProfile>
+                <div class="myName">
+                    {{ this.user.getNickname() }}
+                </div>
+            </div>
+            <div class="sortingStrategyTab">
+                <svg class="doubleColumnStrategy sortingStrategy" @click="this.setSortingStrategy($event)" width="14" height="14"
+                    viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="6.30695" height="6.30695" rx="2" />
+                    <rect y="7.45361" width="6.30695" height="6.30695" rx="2" />
+                    <rect x="7.45361" width="6.30695" height="6.30695" rx="2" />
+                    <rect x="7.45361" y="7.45361" width="6.30695" height="6.30695" rx="2" />
+                </svg>
+                <svg class="singleColumnStrategy" @click="this.setSortingStrategy($event)" width="14" height="14"
+                    viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="14" height="6" rx="2" />
+                    <rect y="8" width="14" height="6" rx="2" />
+                </svg>
             </div>
         </div>
-        <div class="sortingStrategyTab">
-            <svg class="doubleColumnStrategy sortingStrategy" @click="this.setSortingStrategy($event)" width="14" height="14"
-                viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="6.30695" height="6.30695" rx="2" />
-                <rect y="7.45361" width="6.30695" height="6.30695" rx="2" />
-                <rect x="7.45361" width="6.30695" height="6.30695" rx="2" />
-                <rect x="7.45361" y="7.45361" width="6.30695" height="6.30695" rx="2" />
-            </svg>
-            <svg class="singleColumnStrategy" @click="this.setSortingStrategy($event)" width="14" height="14" viewBox="0 0 14 14"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="14" height="6" rx="2" />
-                <rect y="8" width="14" height="6" rx="2" />
-            </svg>
+        <div class="bottom">
+            <List :is_artwork="true" :single_column="this.is_single_column" :id_list="this.archived_list"
+                :list_id="'archivedArtworkList'">
+            </List>
         </div>
-        <List 
-            :is_artwork="true"
-            :single_column="this.is_single_column"
-            :id_list="this.archived_list"
-            :list_id="'archivedArtworkList'">
-        </List>
     </div>
 </template>
 <script>
@@ -46,27 +48,41 @@
             return {
                 user: null,
                 profile: null,
+                is_profile_shrink: false,
                 user_flag: false,
                 is_single_column: false,
                 archived_list: [],
-                nothingToUpdate: false
+                nothingToUpdate: false,
+                update_in_progress: false
             };
         },
+        // watch: {
+        //     'archived_list': {
+        //         handler() {
+        //             console.log(this.archived_list)
+        //         }
+        //     }
+        // },
         beforeCreate() {},
         async created() {
             if (isAuth()) {
                 this.user = getAuth()
                 // await user.putUserSession()
-                await this.rebuild(0, 12)
+                await this.rebuild(0, 30)
                 this.user_flag = true
             }
             else {
                 
             }
-
         },
         beforeMount() {},
-        mounted() {},
+        mounted() {
+            let bottom = document.getElementsByClassName('bottom')[0]
+            const _this = this
+            bottom.addEventListener('scroll', async function (event) {
+                _this.swiperSlideScrollEventFunction(event.currentTarget)
+            })
+        },
         beforeUpdate() {},
         updated() {},
         beforeUnmount() {},
@@ -92,19 +108,68 @@
                 return
             },
             async rebuild(offset, length) {
+                // console.log('rebuild')
                 const newArchiveList = await this.user.getArchiveArtworks(offset, length)
+                if (newArchiveList.length === 0) {
+                    return
+                }
                 this.archived_list = this.archived_list.concat(newArchiveList)
-                if (newArchiveList.length < 12) {
+                if (newArchiveList.length < 30) {
                     this.nothingToUpdate = true
                 }
             },
             async load() {
+                // console.log(this.update_in_progress)
+                if (this.archived_list.length % 30 !== 0 || this.load_flag) {
+                    return false
+                }
+
                 if (!this.nothingToUpdate) {
-                    await this.rebuild(this.archived_list.length, 12)
+                    this.load_flag = true
+                    await this.rebuild(this.archived_list.length, 30)
+                    this.load_flag = false
+                }
+            },
+            async swiperSlideScrollEventFunction(targetElement) {
+                const scroll_height = targetElement.scrollHeight
+                const scroll_top = targetElement.scrollTop
+                const offset_height = targetElement.offsetHeight
+
+                if (scroll_top > 5) {
+                    this.shrinkProfileHeight(true)
+                }
+                else {
+                    this.shrinkProfileHeight(false)
+                }
+
+                if (scroll_height === scroll_top + offset_height) {
+                    await this.load()
                 }
             },
             shrinkProfileHeight(is_shrink) {
+                if (is_shrink) {
+                    if (this.is_profile_shrink) return
+                    this.$refs.roundProfile.$el.style.setProperty('height', '0')
+                    this.$refs.roundProfile.$el.style.setProperty('width', '0')
+                    document.getElementsByClassName('myName')[0].style.setProperty('height', '0')
+                    document.getElementsByClassName('profile')[0].style.setProperty('padding-top', '0')
+                    document.getElementsByClassName('profile')[0].style.setProperty('gap', '0')
+                    this.is_profile_shrink = true
+                }
+                else {
+                    let vw = window.innerWidth * 0.01
+                    if (window.innerWidth >= 768) {
+                        vw = 4.8
+                    }
 
+                    let height = vw * 24
+                    this.$refs.roundProfile.$el.style.setProperty('height', `${height}px`)
+                    this.$refs.roundProfile.$el.style.setProperty('width', `${height}px`)
+                    document.getElementsByClassName('myName')[0].style.setProperty('height', `${vw * 7.5}px`)
+                    document.getElementsByClassName('profile')[0].style.setProperty('padding-top', `${vw * 2.6}px`)
+                    document.getElementsByClassName('profile')[0].style.setProperty('gap', `${vw * 2.6}px`)
+                    this.is_profile_shrink = false
+                }
             }
         }
     }

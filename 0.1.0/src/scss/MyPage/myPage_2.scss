@@ -157,13 +157,13 @@
                 color: #000000;
             }
 
-            &:first-child {
-                padding-top: calc(var(--vw, 1vw) * 33);
-            }
+            // &:first-child {
+            //     padding-top: calc(var(--vw, 1vw) * 33);
+            // }
 
-            &:nth-child(2) {
-                padding-top: calc(var(--vw, 1vw) * 16);
-            }
+            // &:nth-child(2) {
+            //     padding-top: calc(var(--vw, 1vw) * 16);
+            // }
         }
     }
 }
