@@ -12,8 +12,8 @@ import { authByToken } from '@/modules/kakao'
 
 import MainPage from '../views/MainPage.vue'
 import ArtworkPage from '../views/ArtworkPage.vue'
+import MyPage_legacy from '../views/MyPage_legacy.vue'
 import MyPage from '../views/MyPage.vue'
-import MyPage_2 from '../views/MyPage_2.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 
 const routes = [
@@ -28,14 +28,14 @@ const routes = [
     component: ArtworkPage
   },
   {
+    path: '/mypage_legacy',
+    name: 'mypage_legacy',
+    component: MyPage_legacy
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: MyPage
-  },
-  {
-    path: '/my',
-    name: 'mypage2',
-    component: MyPage_2
   },
   {
     path: '/profile',
