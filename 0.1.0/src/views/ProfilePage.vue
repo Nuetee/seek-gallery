@@ -65,14 +65,22 @@
                     :is_artwork="true"
                     :single_column="this.is_single_column.artwork_list"
                     :id_list="this.artwork_id_list"
-                    :list_id="'artworkList'"></List>
+                    :list_id="'artworkList'"
+                    @load-complete="(is_load) => {
+                        this.updateInProgress[1] = !is_load
+                    }"
+                ></List>
                 </swiper-slide>
                 <swiper-slide class="mainSwiper thirdSlide">
                     <List ref="exhibitionList" 
                     :is_artwork="false"
                     :single_column="this.is_single_column.exhibition_list"
                     :id_list="this.exhibition_pageId_list"
-                    :list_id="'exhibitionList'"></List>
+                    :list_id="'exhibitionList'"
+                    @load-complete="(is_load) => {
+                        this.updateInProgress[0] = !is_load
+                    }"
+                ></List>
                 </swiper-slide>
             </swiper>
         </div>
@@ -111,6 +119,8 @@ export default {
             exhibition_pageId_list: [],
             offset_artwork_list: 0,
             offset_exhibition_list: 0,
+
+            load_number: 5,
             nothingToUpdate: [
                 false,
                 false
@@ -139,9 +149,9 @@ export default {
     async created() {
         if (this.artist_page_id) {
             this.artist = await new User(this.artist_page_id).init()
-            this.artwork_id_list = await this.rebuildList(1, this.offset_artwork_list, 12, this.artwork_id_list)
+            this.artwork_id_list = await this.rebuildList(1, this.offset_artwork_list, this.load_number, this.artwork_id_list)
             
-            this.exhibition_pageId_list = await this.rebuildList(0, this.offset_exhibition_list, 12, this.exhibition_pageId_list)
+            this.exhibition_pageId_list = await this.rebuildList(0, this.offset_exhibition_list, this.load_number, this.exhibition_pageId_list)
         }
         else {
             this.artwork_id_list = []
@@ -211,7 +221,6 @@ export default {
             let newList = []
             if (is_artwork) {
                 newList = await this.artist.getOwnArtworks(offset, offset + length)
-
                 this.offset_artwork_list += length
             }
             else {
@@ -220,12 +229,11 @@ export default {
                 this.offset_exhibition_list += length
             }
 
-            if (newList.length < 12) {
+            if (newList.length < this.load_number) {
                 this.nothingToUpdate[is_artwork] = true
             }
 
             return list.concat(newList)
-            
         },
         async load(is_artwork) {
             if (this.updateInProgress[is_artwork]) {
@@ -235,14 +243,12 @@ export default {
 
             if (!this.nothingToUpdate[is_artwork]) {
                 if (is_artwork) {
-                    await this.rebuildList(true, this.offset_artwork_list, 12, this.artwork_id_list)
+                    this.artwork_id_list = await this.rebuildList(true, this.offset_artwork_list, this.load_number, this.artwork_id_list)
                 }
                 else {
-                    await this.rebuildList(false, this.offset_exhibition_list, 12, this.exhibition_pageId_list)
+                    this.exhibition_pageId_list = await this.rebuildList(false, this.offset_exhibition_list, this.load_number, this.exhibition_pageId_list)
                 }
             }
-
-            this.updateInProgress[is_artwork] = false
         },
         async swiperSlideScrollEventFunction(targetElement) {
             const scroll_height = targetElement.scrollHeight
@@ -257,10 +263,12 @@ export default {
             }
 
             if (scroll_height === scroll_top + offset_height) {
-                if (targetElement.classList.contains('secondSlide'))
+                if (targetElement.classList.contains('secondSlide')) {
                     await this.load(1)
-                else if (targetElement.classList.contains('thirdSlide'))
+                }
+                else if (targetElement.classList.contains('thirdSlide')) {
                     await this.load(0)
+                }
             }
         },
         shrinkProfileHeight (is_shrink) {

@@ -24,8 +24,13 @@
             </div>
         </div>
         <div class="bottom">
-            <List :is_artwork="true" :single_column="this.is_single_column" :id_list="this.archived_list"
-                :list_id="'archivedArtworkList'">
+            <List 
+                :is_artwork="true" 
+                :single_column="this.is_single_column" 
+                :id_list="this.archived_list"
+                :list_id="'archivedArtworkList'"
+                @load-complete="(is_loaded) => {this.load_flag = !is_loaded}"
+            >
             </List>
         </div>
     </div>
@@ -53,22 +58,15 @@
                 is_single_column: false,
                 archived_list: [],
                 nothingToUpdate: false,
+                load_flag: false,
                 update_in_progress: false
             };
         },
-        // watch: {
-        //     'archived_list': {
-        //         handler() {
-        //             console.log(this.archived_list)
-        //         }
-        //     }
-        // },
         beforeCreate() {},
         async created() {
             if (isAuth()) {
                 this.user = getAuth()
-                // await user.putUserSession()
-                await this.rebuild(0, 30)
+                await this.rebuild(0, 10)
                 this.user_flag = true
             }
             else {
@@ -108,26 +106,24 @@
                 return
             },
             async rebuild(offset, length) {
-                // console.log('rebuild')
                 const newArchiveList = await this.user.getArchiveArtworks(offset, length)
                 if (newArchiveList.length === 0) {
                     return
                 }
                 this.archived_list = this.archived_list.concat(newArchiveList)
-                if (newArchiveList.length < 30) {
+                if (newArchiveList.length < 10) {
                     this.nothingToUpdate = true
                 }
+                return
             },
             async load() {
-                // console.log(this.update_in_progress)
-                if (this.archived_list.length % 30 !== 0 || this.load_flag) {
+                if (this.load_flag) {
                     return false
                 }
 
                 if (!this.nothingToUpdate) {
                     this.load_flag = true
-                    await this.rebuild(this.archived_list.length, 30)
-                    this.load_flag = false
+                    await this.rebuild(this.archived_list.length, 10)
                 }
             },
             async swiperSlideScrollEventFunction(targetElement) {
