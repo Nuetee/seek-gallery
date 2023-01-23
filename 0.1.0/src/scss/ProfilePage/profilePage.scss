@@ -31,14 +31,11 @@
             top: calc(var(--vw, 1vw) * 10);
             right: calc(var(--vw, 1vw) * 3);
             width: calc(var(--vw, 1vw) * 58);
-            height: calc(var(--vw, 1vw) * 32);
-            border-radius: calc(var(--vw, 1vw) * 4);
+            border-radius: calc(var(--vw, 1vw) * 3);
             background-color: #f3f3f3;
-
-            display: grid;
-            grid-template-rows: repeat(3, 1fr);
             
             div {
+                height: calc(var(--vw, 1vw) * 10);
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;

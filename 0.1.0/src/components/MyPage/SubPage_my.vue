@@ -1,5 +1,5 @@
 <template>
-    <div class="subPageMy">
+    <div class="subPageMy" v-if="this.user !== null">
         <div class="top">
             <div class="profile">
                 <RoundProfile v-if="this.user_flag" :profile="this.user ? this.user.getProfile() : null" ref="roundProfile">
@@ -9,6 +9,7 @@
                 </div>
             </div>
             <div class="sortingStrategyTab">
+                <div class="loving">Loving</div>
                 <svg class="doubleColumnStrategy sortingStrategy" @click="this.setSortingStrategy($event)" width="14" height="14"
                     viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="6.30695" height="6.30695" rx="2" />
@@ -33,6 +34,10 @@
             >
             </List>
         </div>
+    </div>
+    <div class="toLogin" v-else>
+        <div class="phrase">로그인하면<br>MY페이지를 볼 수 있어요!</div>
+        <div class="loginButton" @click="this.logIn()">로그인</div>
     </div>
 </template>
 <script>
@@ -63,23 +68,24 @@
             };
         },
         beforeCreate() {},
-        async created() {
+        created() {
+        },
+        beforeMount() {},
+        async mounted() {
             if (isAuth()) {
                 this.user = getAuth()
                 await this.rebuild(0, 10)
                 this.user_flag = true
+                let bottom = document.getElementsByClassName('bottom')[0]
+                const _this = this
+                bottom.addEventListener('scroll', async function (event) {
+                    _this.swiperSlideScrollEventFunction(event.currentTarget)
+                })
             }
             else {
-                
+                this.user = null
             }
-        },
-        beforeMount() {},
-        mounted() {
-            let bottom = document.getElementsByClassName('bottom')[0]
-            const _this = this
-            bottom.addEventListener('scroll', async function (event) {
-                _this.swiperSlideScrollEventFunction(event.currentTarget)
-            })
+            
         },
         beforeUpdate() {},
         updated() {},
@@ -166,6 +172,16 @@
                     document.getElementsByClassName('profile')[0].style.setProperty('gap', `${vw * 2.6}px`)
                     this.is_profile_shrink = false
                 }
+            },
+
+            logIn() {
+                this.$router.replace({
+                    path: '/login',
+                    query: {
+                        redirect: this.$route.fullPath
+                    }
+                })
+                return
             }
         }
     }

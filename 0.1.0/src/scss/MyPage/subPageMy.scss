@@ -38,13 +38,26 @@
         }
     
         .sortingStrategyTab {
+            position: relative;
             width: 100%;
             height: calc(var(--vw, 1vw) * 10);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: calc(var(--vw, 1vw) * 3);
-    
+            
+            .loving {
+                position: absolute;
+                top: 50%;
+                left: var(--padding, 3vw);
+                transform: translate(0, -50%);
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 28px;
+            }
+
             svg {
                 rect {
                     fill: rgb(174, 174, 174);
@@ -70,5 +83,41 @@
             background: transparent;
             -webkit-appearance: none;
         }
+    }
+}
+
+.toLogin {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--vw, 1vw) * 3);
+
+    .phrase {
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+        text-align: center;
+        color: #8A8A8A;
+    }
+
+    .loginButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(var(--vw, 1vw) * 28.5);
+        height: calc(var(--vw, 1vw) * 12);
+        border-radius: calc(var(--vw, 1vw) * 6);
+        background: #CCFF00;
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #000000;
     }
 }
