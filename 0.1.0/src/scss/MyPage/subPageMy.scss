@@ -1,46 +1,123 @@
 .subPageMy {
-    .profile {
-        padding-top: calc(var(--vw, 1vw) * 2.6);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: calc(var(--vw, 1vw) * 2.6);
+    padding-top: calc(var(--vw, 1vw) * 16);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
-        ::v-deep(.roundProfile) {
-            width: calc(var(--vw, 1vw) * 24);
-            height: calc(var(--vw, 1vw) * 24);
+    .top {
+        flex-basis: auto;
+        overflow: visible;
+
+        .profile {
+            transition: all 0.2s;
+            padding-top: calc(var(--vw, 1vw) * 2.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: calc(var(--vw, 1vw) * 2.6);
+    
+            ::v-deep(.roundProfile) {
+                width: calc(var(--vw, 1vw) * 24);
+                height: calc(var(--vw, 1vw) * 24);
+                transition: all 0.2s;
+            }
+    
+            .myName {
+                overflow: hidden;
+                transition: all 0.2s;
+                height: calc(var(--vw, 1vw) * 7.5);
+                display: flex;
+                align-items: center;
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 28px;
+            }
         }
-
-        .name {
-            height: calc(var(--vw, 1vw) * 7.5);
+    
+        .sortingStrategyTab {
+            position: relative;
+            width: 100%;
+            height: calc(var(--vw, 1vw) * 10);
             display: flex;
             align-items: center;
-            font-family: 'Pretendard';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 28px;
+            justify-content: center;
+            gap: calc(var(--vw, 1vw) * 3);
+            
+            .loving {
+                position: absolute;
+                top: 50%;
+                left: var(--padding, 3vw);
+                transform: translate(0, -50%);
+                font-family: 'Pretendard';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 28px;
+            }
+
+            svg {
+                rect {
+                    fill: rgb(174, 174, 174);
+                }
+            }
+    
+            svg.sortingStrategy {
+                rect {
+                    fill: rgb(0, 0, 0);
+                }
+            }
         }
     }
     
-    .sortingStrategyTab {
-        width: 100%;
-        height: calc(var(--vw, 1vw) * 10);
+    .bottom {
+        flex: 1 0 auto;
+        transition: all 0.2s ease;
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+            height: 0;
+            background: transparent;
+            -webkit-appearance: none;
+        }
+    }
+}
+
+.toLogin {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--vw, 1vw) * 3);
+
+    .phrase {
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+        text-align: center;
+        color: #8A8A8A;
+    }
+
+    .loginButton {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: calc(var(--vw, 1vw) * 3);
-    
-        svg {
-            rect {
-                fill: rgb(174, 174, 174);
-            }
-        }
-    
-        svg.sortingStrategy {
-            rect {
-                fill: rgb(0, 0, 0);
-            }
-        }
+        width: calc(var(--vw, 1vw) * 28.5);
+        height: calc(var(--vw, 1vw) * 12);
+        border-radius: calc(var(--vw, 1vw) * 6);
+        background: #CCFF00;
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #000000;
     }
 }
