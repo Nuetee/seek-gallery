@@ -79,7 +79,6 @@
 <script>
 import MainHeader from "@/widgets/MainHeader.vue";
 import Drawer from "@/widgets/Drawer.vue";
-import { getExhibitionsOnArea } from "@/modules/map";
 import { Exhibition } from "@/classes/exhibition";
 
 export default {
@@ -1831,9 +1830,7 @@ export default {
             _this.$refs.exhibitionName.innerText = title;
             _this.$refs.exhibitionInformation.innerText = exhibition_list[
               marker.getTitle()
-            ].introduction
-              ? exhibition_list[marker.getTitle()].introduction
-              : ".";
+            ].introduction;
             _this.$refs.exhibitionPlace.innerText =
               exhibition_list[marker.getTitle()].gallery +
               " (" +
