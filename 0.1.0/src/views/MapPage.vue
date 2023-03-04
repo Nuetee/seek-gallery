@@ -104,7 +104,7 @@ export default {
         "insadong",
         "pyeongchangdong",
         "cityhall",
-        "yaksu",
+        // "yaksu",
         "yongsan",
         "yeouido"
       ],
