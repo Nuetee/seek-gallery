@@ -1317,7 +1317,7 @@ export default {
           place: "서울 종로구 자하문로 48-1 2층",
           id: 17672709,
           coordinate: {
-            longitude: 26.97147535423674,
+            longitude: 126.97147535423674,
             latitude: 37.58032859949282,
           },
           name: "《마산, 가린혹》",
