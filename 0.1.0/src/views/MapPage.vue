@@ -99,7 +99,7 @@ export default {
         "jamsil",
         "seongsu",
         "gangnam",
-        // "seongbuk",
+        "seongbuk",
         "itaewon",
         "insadong",
         "myeongdong",
